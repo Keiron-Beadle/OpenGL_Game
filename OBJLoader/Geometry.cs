@@ -28,13 +28,13 @@ namespace OpenGL_Game.OBJLoader
     /// <summary>
     /// This is the object that we use to store our geometry that we will use to render in the game
     /// </summary>
-    public class Geometry
+    public class OpenGLGeometry : IGeometry
     {
         List<Group> groups = new List<Group>();
 
         string path;
 
-        public Geometry()
+        public OpenGLGeometry()
         {
         }
 

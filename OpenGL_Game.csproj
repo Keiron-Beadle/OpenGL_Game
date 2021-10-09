@@ -128,6 +128,7 @@
     <Compile Include="OBJLoader\Geometry.cs" />
     <Compile Include="Components\IComponent.cs" />
     <Compile Include="Main.cs" />
+    <Compile Include="OBJLoader\IGeometry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Managers\ResourceManager.cs" />
     <Compile Include="Scenes\GameScene.cs" />

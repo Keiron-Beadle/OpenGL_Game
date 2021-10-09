@@ -4,12 +4,13 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using OpenTK.Graphics.OpenGL;
 using OpenGL_Game.OBJLoader;
+using OpenGL_Game.Systems;
 
 namespace OpenGL_Game.Managers
 {
     static class ResourceManager
     {
-        static Dictionary<string, Geometry> geometryDictionary = new Dictionary<string, Geometry>();
+        static Dictionary<string, IGeometry> geometryDictionary = new Dictionary<string, IGeometry>();
         static Dictionary<string, int> textureDictionary = new Dictionary<string, int>();
 
         public static void RemoveAllAssets()
@@ -26,13 +27,14 @@ namespace OpenGL_Game.Managers
             textureDictionary.Clear();
         }
 
-        public static Geometry LoadGeometry(string filename)
+        public static IGeometry LoadGeometry(string filename, ISystem renderSystem)
         {
-            Geometry geometry;
+            IGeometry geometry;
             geometryDictionary.TryGetValue(filename, out geometry);
             if (geometry == null)
             {
-                geometry = new Geometry();
+                if (renderSystem is OpenGLRenderer)
+                    geometry = new OpenGLGeometry();
                 geometry.LoadObject(filename);
                 geometryDictionary.Add(filename, geometry);
             }

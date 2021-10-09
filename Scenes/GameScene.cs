@@ -7,6 +7,7 @@ using OpenGL_Game.Managers;
 using OpenGL_Game.Objects;
 using System.Drawing;
 using System;
+using System.Diagnostics;
 
 namespace OpenGL_Game.Scenes
 {
@@ -18,6 +19,7 @@ namespace OpenGL_Game.Scenes
         public static float dt = 0;
         EntityManager entityManager;
         SystemManager systemManager;
+        ISystem renderSystem;
 
         public Camera camera;
 
@@ -28,7 +30,7 @@ namespace OpenGL_Game.Scenes
             gameInstance = this;
             entityManager = new EntityManager();
             systemManager = new SystemManager();
-
+            renderSystem = new OpenGLRenderer();
             // Set the title of the window
             sceneManager.Title = "Game";
             // Set the Render and Update delegates to the Update and Render methods of this class
@@ -48,10 +50,8 @@ namespace OpenGL_Game.Scenes
             // Set Camera
             camera = new Camera(new Vector3(0, 4, 7), new Vector3(0, 0, 0), (float)(sceneManager.Width) / (float)(sceneManager.Height), 0.1f, 100f);
 
-            CreateEntities();
             CreateSystems();
-
-
+            CreateEntities();
         }
 
         private void CreateEntities()
@@ -60,28 +60,27 @@ namespace OpenGL_Game.Scenes
             const string STARSHIP_OBJ_RELPATH = "Geometry/Wraith_Raider_Starship/Wraith_Raider_Starship.obj";
             newEntity = new Entity("Moon");
             newEntity.AddComponent(new ComponentPosition(-2.5f, 0.0f, 0.0f));
-            newEntity.AddComponent(new ComponentGeometry("Geometry/Moon/moon.obj"));
+            newEntity.AddComponent(new ComponentGeometry("Geometry/Moon/moon.obj", renderSystem));
             entityManager.AddEntity(newEntity);
 
             //Excercise 1 - Add raider starship
             starshipEntity = new Entity("Wraith_Raider_Starship");
             starshipEntity.AddComponent(new ComponentPosition(2.5f, 0.0f, 0.0f));
-            starshipEntity.AddComponent(new ComponentGeometry(STARSHIP_OBJ_RELPATH));
+            starshipEntity.AddComponent(new ComponentGeometry(STARSHIP_OBJ_RELPATH, renderSystem));
             entityManager.AddEntity(starshipEntity);
 
             //Excercise 2 - Add intergalactic Starship
             intergalacticShip = new Entity("Intergalactic Ship");
             intergalacticShip.AddComponent(new ComponentPosition(0.4f, 0.0f, 0.0f));
-            intergalacticShip.AddComponent(new ComponentGeometry(STARSHIP_OBJ_RELPATH));
+            intergalacticShip.AddComponent(new ComponentGeometry(STARSHIP_OBJ_RELPATH, renderSystem));
             entityManager.AddEntity(intergalacticShip);
         }
 
         private void CreateSystems()
         {
-            ISystem newSystem;
+            //ISystem newSystem; //For future systems
 
-            newSystem = new OpenGLRenderer();
-            systemManager.AddSystem(newSystem);
+            systemManager.AddSystem(renderSystem);
         }
 
         /// <summary>
@@ -96,8 +95,6 @@ namespace OpenGL_Game.Scenes
 
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();
-
-            // TODO: Add your update logic here
 
         }
 

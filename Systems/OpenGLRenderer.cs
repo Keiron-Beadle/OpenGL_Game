@@ -7,8 +7,6 @@ using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace OpenGL_Game.Systems
 {
@@ -17,11 +15,6 @@ namespace OpenGL_Game.Systems
         public OpenGLRenderer()
         {
             Name = "OpenGL Renderer";
-            InitialiseOpenGL();
-        }
-      
-        protected override void InitialiseOpenGL()
-        {
             pgmID = GL.CreateProgram();
             LoadShader("Shaders/vs.glsl", ShaderType.VertexShader, pgmID, out vsID);
             LoadShader("Shaders/fs.glsl", ShaderType.FragmentShader, pgmID, out fsID);
@@ -34,7 +27,7 @@ namespace OpenGL_Game.Systems
             uniform_diffuse = GL.GetUniformLocation(pgmID, "v_diffuse");     // OBJ NEW
         }
 
-        void LoadShader(String filename, ShaderType type, int program, out int address)
+        void LoadShader(string filename, ShaderType type, int program, out int address)
         {
             address = GL.CreateShader(type);
             using (StreamReader sr = new StreamReader(filename))
@@ -56,7 +49,7 @@ namespace OpenGL_Game.Systems
                 {
                     return component.ComponentType == ComponentTypes.COMPONENT_GEOMETRY;
                 });
-                Geometry geometry = ((ComponentGeometry)geometryComponent).Geometry();
+                OpenGLGeometry geometry = (OpenGLGeometry)((ComponentGeometry)geometryComponent).Geometry();
 
                 IComponent positionComponent = components.Find(delegate (IComponent component)
                 {
@@ -69,7 +62,7 @@ namespace OpenGL_Game.Systems
             }
         }
 
-        public override void Draw(Matrix4 model, Geometry geometry)
+        public override void Draw(Matrix4 model, OpenGLGeometry geometry)
         {
             GL.UseProgram(pgmID);
 

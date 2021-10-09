@@ -28,8 +28,7 @@ namespace OpenGL_Game.Systems
             Name = "System Render";
         }
 
-        protected abstract void InitialiseOpenGL();
         public abstract void OnAction(Entity entity);
-        public abstract void Draw(Matrix4 mat4, Geometry geom);
+        public abstract void Draw(Matrix4 mat4, OpenGLGeometry geom);
     }
 }

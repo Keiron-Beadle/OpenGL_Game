@@ -17,7 +17,7 @@ namespace OpenGL_Game.Scenes
             sceneManager.renderer = Render;
             sceneManager.updater = Update;
 
-            sceneManager.mouseDelegate += Mouse_BottonPressed;
+            sceneManager.mouseDelegate += Mouse_ButtonPressed;
         }
 
         public override void Update(FrameEventArgs e)
@@ -42,7 +42,7 @@ namespace OpenGL_Game.Scenes
             GUI.Render();
         }
 
-        public void Mouse_BottonPressed(MouseButtonEventArgs e)
+        public void Mouse_ButtonPressed(MouseButtonEventArgs e)
         {
             switch (e.Button)
             {
@@ -54,7 +54,7 @@ namespace OpenGL_Game.Scenes
 
         public override void Close()
         {
-            sceneManager.mouseDelegate -= Mouse_BottonPressed;
+            sceneManager.mouseDelegate -= Mouse_ButtonPressed;
         }
     }
 }

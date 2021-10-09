@@ -7,6 +7,7 @@ namespace OpenGL_Game.Managers
     class SystemManager
     {
         List<ISystem> systemList = new List<ISystem>();
+        
 
         public SystemManager()
         {
