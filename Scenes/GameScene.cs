@@ -56,24 +56,30 @@ namespace OpenGL_Game.Scenes
 
         private void CreateEntities()
         {
-            Entity newEntity, starshipEntity, intergalacticShip;
+            Entity newEntity, starshipEntity, intergalacticShip, skyBox;
             const string STARSHIP_OBJ_RELPATH = "Geometry/Wraith_Raider_Starship/Wraith_Raider_Starship.obj";
-            newEntity = new Entity("Moon");
-            newEntity.AddComponent(new ComponentPosition(-2.5f, 0.0f, 0.0f));
-            newEntity.AddComponent(new ComponentGeometry("Geometry/Moon/moon.obj", renderSystem));
-            entityManager.AddEntity(newEntity);
+            //const string SKYBOX_TEX_RELPATH = "Geometry/Skybox/skybox.obj";
+            //newEntity = new Entity("Moon");
+            //newEntity.AddComponent(new ComponentPosition(-2.5f, 0.0f, 0.0f));
+            //newEntity.AddComponent(new ComponentGeometry("Geometry/Moon/moon.obj", renderSystem));
+            //entityManager.AddEntity(newEntity);
 
-            //Excercise 1 - Add raider starship
-            starshipEntity = new Entity("Wraith_Raider_Starship");
-            starshipEntity.AddComponent(new ComponentPosition(2.5f, 0.0f, 0.0f));
-            starshipEntity.AddComponent(new ComponentGeometry(STARSHIP_OBJ_RELPATH, renderSystem));
-            entityManager.AddEntity(starshipEntity);
+            ////Excercise 1 - Add raider starship
+            //starshipEntity = new Entity("Wraith_Raider_Starship");
+            //starshipEntity.AddComponent(new ComponentPosition(2.5f, 0.0f, 0.0f));
+            //starshipEntity.AddComponent(new ComponentGeometry(STARSHIP_OBJ_RELPATH, renderSystem));
+            //entityManager.AddEntity(starshipEntity);
 
-            //Excercise 2 - Add intergalactic Starship
-            intergalacticShip = new Entity("Intergalactic Ship");
-            intergalacticShip.AddComponent(new ComponentPosition(0.4f, 0.0f, 0.0f));
-            intergalacticShip.AddComponent(new ComponentGeometry(STARSHIP_OBJ_RELPATH, renderSystem));
-            entityManager.AddEntity(intergalacticShip);
+            ////Excercise 2 - Add intergalactic Starship
+            //intergalacticShip = new Entity("Intergalactic Ship");
+            //intergalacticShip.AddComponent(new ComponentPosition(0.4f, 0.0f, 0.0f));
+            //intergalacticShip.AddComponent(new ComponentGeometry(STARSHIP_OBJ_RELPATH, renderSystem));
+            //entityManager.AddEntity(intergalacticShip);
+
+            //skyBox = new Entity("Skybox");
+            //skyBox.AddComponent(new ComponentPosition(0.0f, 3.0f, 5.0f));
+            //skyBox.AddComponent(new ComponentGeometry(SKYBOX_TEX_RELPATH, renderSystem));
+            //entityManager.AddEntity(skyBox);
         }
 
         private void CreateSystems()

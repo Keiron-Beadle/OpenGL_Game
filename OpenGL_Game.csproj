@@ -159,6 +159,12 @@
     <None Include="Geometry\Moon\moon.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Geometry\Skybox\skybox.mtl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Geometry\Skybox\skybox.obj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Geometry\Wraith_Raider_Starship\Wraith_Raider_Starship.mtl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

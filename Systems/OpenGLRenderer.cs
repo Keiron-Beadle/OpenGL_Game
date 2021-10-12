@@ -68,6 +68,13 @@ namespace OpenGL_Game.Systems
                 Vector3 position = ((ComponentPosition)positionComponent).Position;
                 Matrix4 model = Matrix4.CreateTranslation(position);
 
+                //if (entity.Name == "Skybox")
+                //{
+                //    GL.CullFace(CullFaceMode.Front);
+                //}
+                //else
+                //    GL.CullFace(CullFaceMode.Back);
+
                 Draw(model, geometry);
             }
         }
