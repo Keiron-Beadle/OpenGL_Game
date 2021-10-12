@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using OpenTK.Graphics.OpenGL;
 using OpenGL_Game.Managers;
 using OpenTK;
+using OpenGL_Game.Systems;
 
 namespace OpenGL_Game.OBJLoader
 {
@@ -17,7 +18,7 @@ namespace OpenGL_Game.OBJLoader
         public PrimitiveType primitiveType;
         public int primitiveScale = 0;
         public int numberOfFaces = 0;
-        public int texture = 0;
+        public ITexture texture = null;
         // handles to vao and vbos
         public int vao_Handle;
         public int vbo_verts;
@@ -40,6 +41,7 @@ namespace OpenGL_Game.OBJLoader
 
         public void LoadObject(string filename)
         {
+            ISystem tempRenderer = new OpenGLRenderer();
             try
             {
                 // This OBJ parser library is developed by chrisjansson and available at https://github.com/chrisjansson/ObjLoader
@@ -56,18 +58,18 @@ namespace OpenGL_Game.OBJLoader
                         if (index < 0)
                         {
                             // A: NO, so just add the geometery path
-                            newGroup.texture = ResourceManager.LoadTexture(path + group.Material.DiffuseTextureMap);
+                            newGroup.texture = ResourceManager.LoadTexture(path + group.Material.DiffuseTextureMap, tempRenderer);
                         }
                         else
                         {
                             // A: YES, so remove the path and then add the geometery path
                             string diffuseTextureMap = group.Material.DiffuseTextureMap.Substring(index+1);
-                            newGroup.texture = ResourceManager.LoadTexture(path + diffuseTextureMap);
+                            newGroup.texture = ResourceManager.LoadTexture(path + diffuseTextureMap, tempRenderer);
                         }
                     }
                     else
                     {
-                        newGroup.texture = ResourceManager.LoadTexture("Geometry\\Default\\default.png");   // OBJ NEW 
+                        newGroup.texture = ResourceManager.LoadTexture("Geometry\\Default\\default.png", tempRenderer);   // OBJ NEW 
                     }
                     bool error = false;
                     string errorMessage = "";
@@ -202,11 +204,11 @@ namespace OpenGL_Game.OBJLoader
         {
             foreach (var group in groups)
             {
-                if (group.texture > 0)
+                if (group.texture != null)
                 {
                     GL.Uniform3(uniform_diffuse, group.diffuse);    // OBJ NEW
                     GL.BindVertexArray(group.vao_Handle);
-                    GL.BindTexture(TextureTarget.Texture2D, group.texture);
+                    GL.BindTexture(TextureTarget.Texture2D, group.texture.ID);
                     GL.DrawArrays(group.primitiveType, 0, group.numberOfFaces * group.primitiveScale);
                 }
             }

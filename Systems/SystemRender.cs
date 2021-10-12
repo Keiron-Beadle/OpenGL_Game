@@ -14,13 +14,6 @@ namespace OpenGL_Game.Systems
     {
         protected const ComponentTypes MASK = (ComponentTypes.COMPONENT_POSITION | ComponentTypes.COMPONENT_GEOMETRY);
 
-        protected int pgmID;
-        protected int vsID;
-        protected int fsID;
-        protected int uniform_stex;
-        protected int uniform_mmodelviewproj;
-        protected int uniform_mmodel;
-        protected int uniform_diffuse;  // OBJ NEW
         public string Name { get; protected set; }
 
         public SystemRender()
@@ -28,6 +21,7 @@ namespace OpenGL_Game.Systems
             Name = "System Render";
         }
 
+        public abstract ITexture LoadTexture(string filepath, ref Dictionary<string, ITexture> textureDictionary);
         public abstract void OnAction(Entity entity);
         public abstract void Draw(Matrix4 mat4, OpenGLGeometry geom);
     }

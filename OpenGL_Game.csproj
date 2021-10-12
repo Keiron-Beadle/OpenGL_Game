@@ -125,10 +125,12 @@
     <Compile Include="Managers\SceneManager.cs" />
     <Compile Include="Objects\Entity.cs" />
     <Compile Include="Managers\EntityManager.cs" />
-    <Compile Include="OBJLoader\Geometry.cs" />
+    <Compile Include="OBJLoader\OpenGLGeometry.cs" />
     <Compile Include="Components\IComponent.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="OBJLoader\IGeometry.cs" />
+    <Compile Include="OBJLoader\ITexture.cs" />
+    <Compile Include="OBJLoader\OpenGLTexture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Managers\ResourceManager.cs" />
     <Compile Include="Scenes\GameScene.cs" />
