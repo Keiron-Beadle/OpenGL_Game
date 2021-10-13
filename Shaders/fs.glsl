@@ -12,9 +12,9 @@ out vec4 Color;
 void main()
 {
 	vec4 lightColor = vec4(1,1,1,1);
-	vec4 lightAmbient = vec4(0.1, 0.1, 0.1, 1.0);
-	vec4 lightSpec = vec4(0.04,0.04,0.04,1.0);
-	float fSpecularPower = 0.1;
+	vec4 lightAmbient = vec4(0.1, 0.1, 0.1, 0.0);
+	vec4 lightSpec = vec4(0.1,0.1,0.1,0.0);
+	float fSpecularPower = 10.0;
 
 	vec3 fvLightDirection = normalize(v_LightDir);
 	vec3 fvNormal = normalize(v_Normal);
@@ -29,7 +29,7 @@ void main()
 	vec4 totalDiffuse = lightColor * fNDotL * fvBaseColour;
 	vec4 totalSpec = lightSpec * (pow(fRDotV, fSpecularPower));
 	totalDiffuse.w = 1;
-	Color = totalDiffuse;
-	//Color = (totalAmb + vec4(totalDiffuse,0) + totalSpec);
+	//Color = totalDiffuse;
+	Color = (totalDiffuse);
     //Color = lightAmbient + (vec4(v_diffuse, 1) * texture2D(s_texture, v_TexCoord) * vec4(diffuse, 0));  // OBJ CHANGED
 }
