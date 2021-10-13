@@ -75,7 +75,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
-    <Compile Include="Managers\InputManager.cs" />
+    <Compile Include="Components\ComponentTransform.cs" />
     <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Common\StringExtensions.cs" />
     <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Data\DataStore\DataStore.cs" />
     <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Data\DataStore\IDataStore.cs" />
@@ -122,7 +122,6 @@
     <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\VertexParser.cs" />
     <Compile Include="Components\ComponentGeometry.cs" />
     <Compile Include="Components\ComponentTexture.cs" />
-    <Compile Include="Components\ComponentPosition.cs" />
     <Compile Include="Managers\SceneManager.cs" />
     <Compile Include="Objects\Entity.cs" />
     <Compile Include="Managers\EntityManager.cs" />

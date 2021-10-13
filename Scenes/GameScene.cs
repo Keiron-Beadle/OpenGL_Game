@@ -19,15 +19,17 @@ namespace OpenGL_Game.Scenes
         public static float dt = 0;
         EntityManager entityManager;
         SystemManager systemManager;
-        InputManager inputManager;
         ISystem renderSystem;
 
-        //temps
+        //temp input control
         float mouseHAngle = 0.0f;
         float mouseVAngle = 0.0f;
         Vector2 prevMouse;
         const float mouseSpd = 0.5f;
         bool firstRun = true;
+
+        //Temp variables
+        Entity skyBox;
 
         public Camera camera;
 
@@ -67,29 +69,29 @@ namespace OpenGL_Game.Scenes
 
         private void CreateEntities()
         {
-            Entity newEntity, starshipEntity, intergalacticShip, skyBox;
+            Entity newEntity, starshipEntity, intergalacticShip;
             const string STARSHIP_OBJ_RELPATH = "Geometry/Wraith_Raider_Starship/Wraith_Raider_Starship.obj";
             const string SKYBOX_TEX_RELPATH = "Geometry/Skybox/skybox.obj";
 
             skyBox = new Entity("Skybox"); //Skybox needs to be rendered first, as Depth first is disabled for the draw
-            skyBox.AddComponent(new ComponentPosition(0.0f, 3.0f, 5.0f));
+            skyBox.AddComponent(new ComponentTransform(0.0f, 0.0f, 0.0f));
             skyBox.AddComponent(new ComponentGeometry(SKYBOX_TEX_RELPATH, renderSystem));
             entityManager.AddEntity(skyBox);
 
             newEntity = new Entity("Moon");
-            newEntity.AddComponent(new ComponentPosition(-2.5f, 0.0f, 0.0f));
+            newEntity.AddComponent(new ComponentTransform(-2.5f, 0.0f, 0.0f));
             newEntity.AddComponent(new ComponentGeometry("Geometry/Moon/moon.obj", renderSystem));
             entityManager.AddEntity(newEntity);
 
             //Excercise 1 - Add raider starship
             starshipEntity = new Entity("Wraith_Raider_Starship");
-            starshipEntity.AddComponent(new ComponentPosition(2.5f, 0.0f, 0.0f));
+            starshipEntity.AddComponent(new ComponentTransform(new Vector3(2.5f,0.0f,0.0f), Vector3.One, new Vector3(1.78f, 0.0f, 0.0f)));
             starshipEntity.AddComponent(new ComponentGeometry(STARSHIP_OBJ_RELPATH, renderSystem));
             entityManager.AddEntity(starshipEntity);
 
             //Excercise 2 - Add intergalactic Starship
             intergalacticShip = new Entity("Intergalactic Ship");
-            intergalacticShip.AddComponent(new ComponentPosition(0.4f, 0.0f, 0.0f));
+            intergalacticShip.AddComponent(new ComponentTransform(0.4f, 0.0f, 0.0f));
             intergalacticShip.AddComponent(new ComponentGeometry(STARSHIP_OBJ_RELPATH, renderSystem));
             entityManager.AddEntity(intergalacticShip);
         }
@@ -126,6 +128,7 @@ namespace OpenGL_Game.Scenes
             camera.cameraDirection = dir; //Update camera dir & up vectors with our new calculated ones
             camera.cameraUp = up;
             camera.UpdateView(); //Update the view
+
             prevMouse = new Vector2(xPos, yPos); //Set the prevmouse vector to be the current mouse vector at the end
         }
 

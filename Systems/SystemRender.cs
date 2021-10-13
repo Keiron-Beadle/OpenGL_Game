@@ -12,7 +12,7 @@ namespace OpenGL_Game.Systems
 {
     abstract class SystemRender : ISystem
     {
-        protected const ComponentTypes MASK = (ComponentTypes.COMPONENT_POSITION | ComponentTypes.COMPONENT_GEOMETRY);
+        protected const ComponentTypes MASK = (ComponentTypes.COMPONENT_TRANSFORM | ComponentTypes.COMPONENT_GEOMETRY);
 
         public string Name { get; protected set; }
 

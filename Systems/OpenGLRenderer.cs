@@ -61,12 +61,18 @@ namespace OpenGL_Game.Systems
                 });
                 OpenGLGeometry geometry = (OpenGLGeometry)((ComponentGeometry)geometryComponent).Geometry();
 
-                IComponent positionComponent = components.Find(delegate (IComponent component)
+                IComponent transformComponent = components.Find(delegate (IComponent component)
                 {
-                    return component.ComponentType == ComponentTypes.COMPONENT_POSITION;
+                    return component.ComponentType == ComponentTypes.COMPONENT_TRANSFORM;
                 });
-                Vector3 position = ((ComponentPosition)positionComponent).Position;
-                Matrix4 model = Matrix4.CreateTranslation(position);
+                Vector3 position = ((ComponentTransform)transformComponent).Position;
+                Vector3 scale = ((ComponentTransform)transformComponent).Scale;
+                Vector3 rotation = ((ComponentTransform)transformComponent).Rotation;
+                Matrix4 xRot = Matrix4.CreateRotationZ(rotation.X);
+                Matrix4 yRot = Matrix4.CreateRotationZ(rotation.Y);
+                Matrix4 zRot = Matrix4.CreateRotationZ(rotation.Z);
+                Matrix4 overallRot = xRot * yRot * zRot;
+                Matrix4 model = Matrix4.CreateScale(scale) * overallRot * Matrix4.CreateTranslation(position);
 
                 if (entity.Name == "Skybox")
                 {
