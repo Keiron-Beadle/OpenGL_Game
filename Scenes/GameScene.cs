@@ -19,7 +19,14 @@ namespace OpenGL_Game.Scenes
         public static float dt = 0;
         EntityManager entityManager;
         SystemManager systemManager;
+        InputManager inputManager;
         ISystem renderSystem;
+
+        //temps
+        float mouseHAngle = 0.0f;
+        float mouseVAngle = 0.0f;
+        float prevX, prevY;
+        const float mouseSpd = 2.5f;
 
         public Camera camera;
 
@@ -38,7 +45,8 @@ namespace OpenGL_Game.Scenes
             sceneManager.updater = Update;
             // Set Keyboard events to go to a method in this class
             sceneManager.keyboardDownDelegate += Keyboard_KeyDown;
-
+           // sceneManager.CursorVisible = false;
+            sceneManager.CursorGrabbed = true;
             // Enable Depth Testing
             GL.Enable(EnableCap.DepthTest);
             GL.DepthMask(true);
@@ -90,6 +98,33 @@ namespace OpenGL_Game.Scenes
             systemManager.AddSystem(renderSystem);
         }
 
+        private void UpdateCameraLookAt()
+        {
+            float xPos, yPos;
+            xPos = Mouse.GetCursorState().X ;
+            yPos = Mouse.GetCursorState().Y ;
+
+            mouseHAngle += -mouseSpd * dt * (float)(xPos - prevX);
+            mouseVAngle += -mouseSpd * dt * (float)(yPos - prevY);
+            //Console.WriteLine(xPos);
+            //Console.WriteLine(prevX);
+            //Console.WriteLine(mouseVAngle);
+            mouseVAngle = MathHelper.Clamp(mouseVAngle, -1.4f, 1.4f);
+            //Console.WriteLine(mouseVAngle);
+            Vector3 dir = new Vector3((float)Math.Cos(mouseVAngle) * (float)Math.Sin(mouseHAngle),
+                                       (float)Math.Sin(mouseVAngle),
+                                       (float)Math.Cos(mouseVAngle) * (float)Math.Cos(mouseHAngle));
+            Vector3 right = new Vector3(
+                                (float)Math.Sin(mouseHAngle - MathHelper.PiOver2),
+                                 0.0f,
+                                 (float)Math.Cos(mouseHAngle - MathHelper.PiOver2));
+            Vector3 up = Vector3.Cross(right, dir);
+            camera.view = Matrix4.LookAt(camera.cameraPosition, camera.cameraPosition + dir, up);
+            //Mouse.SetPosition(sceneManager.Width / 2, sceneManager.Height / 2);
+            prevX = xPos;
+            prevY = yPos;
+        }
+
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -103,6 +138,7 @@ namespace OpenGL_Game.Scenes
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();
 
+            UpdateCameraLookAt(); //Updates camera rotation movement
         }
 
         /// <summary>
@@ -137,17 +173,19 @@ namespace OpenGL_Game.Scenes
             switch (e.Key)
             {
                 case Key.Up:
+                case Key.W:
                     camera.MoveForward(0.1f);
                     break;
+                case Key.S:
                 case Key.Down:
                     camera.MoveForward(-0.1f);
                     break;
-                case Key.Left:
-                    camera.RotateY(-0.01f);
-                    break;
-                case Key.Right:
-                    camera.RotateY(0.01f);
-                    break;
+                //case Key.Left:
+                //    camera.RotateY(-0.01f);
+                //    break;
+                //case Key.Right:
+                //    camera.RotateY(0.01f);
+                //    break;
                 case Key.M:
                     sceneManager.StartMenu();
                     break;

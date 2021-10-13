@@ -16,7 +16,8 @@ namespace OpenGL_Game.Scenes
             // Set the Render and Update delegates to the Update and Render methods of this class
             sceneManager.renderer = Render;
             sceneManager.updater = Update;
-
+            sceneManager.CursorVisible = true;
+            sceneManager.CursorGrabbed = false;
             sceneManager.mouseDelegate += Mouse_ButtonPressed;
         }
 
