@@ -23,6 +23,8 @@ namespace OpenGL_Game.Managers
         public delegate void MouseDelegate(MouseButtonEventArgs e);
         public MouseDelegate mouseDelegate;
 
+        public delegate void MouseMoveDelegate(MouseMoveEventArgs e);
+        public MouseMoveDelegate mouseMoveDelegate;
 
         public SceneManager() : base(width, height, new OpenTK.Graphics.GraphicsMode(new OpenTK.Graphics.ColorFormat(8, 8, 8, 8), 16))
         {
@@ -51,6 +53,7 @@ namespace OpenGL_Game.Managers
 
         protected override void OnMouseMove(MouseMoveEventArgs e)
         {
+            if (mouseMoveDelegate != null) mouseMoveDelegate.Invoke(e);
             base.OnMouseMove(e);
         }
 

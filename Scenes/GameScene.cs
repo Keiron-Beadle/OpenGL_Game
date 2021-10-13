@@ -25,8 +25,9 @@ namespace OpenGL_Game.Scenes
         //temps
         float mouseHAngle = 0.0f;
         float mouseVAngle = 0.0f;
-        float prevX, prevY;
-        const float mouseSpd = 2.5f;
+        Vector2 prevMouse;
+        const float mouseSpd = 0.5f;
+        bool firstRun = true;
 
         public Camera camera;
 
@@ -45,7 +46,8 @@ namespace OpenGL_Game.Scenes
             sceneManager.updater = Update;
             // Set Keyboard events to go to a method in this class
             sceneManager.keyboardDownDelegate += Keyboard_KeyDown;
-           // sceneManager.CursorVisible = false;
+            sceneManager.mouseMoveDelegate += OnMouseMove;
+            sceneManager.CursorVisible = false;
             sceneManager.CursorGrabbed = true;
             // Enable Depth Testing
             GL.Enable(EnableCap.DepthTest);
@@ -57,7 +59,8 @@ namespace OpenGL_Game.Scenes
 
             // Set Camera
             camera = new Camera(new Vector3(0, 4, 7), new Vector3(0, 0, 0), (float)(sceneManager.Width) / (float)(sceneManager.Height), 0.1f, 100f);
-
+            prevMouse = new Vector2(0, 0);
+            //Mouse.SetPosition(sceneManager.Width / 2, sceneManager.Height / 2);
             CreateSystems();
             CreateEntities();
         }
@@ -98,19 +101,19 @@ namespace OpenGL_Game.Scenes
             systemManager.AddSystem(renderSystem);
         }
 
+        /// <summary>
+        /// Method is called in the OnMouseMove callback
+        /// </summary>
         private void UpdateCameraLookAt()
         {
-            float xPos, yPos;
-            xPos = Mouse.GetCursorState().X ;
-            yPos = Mouse.GetCursorState().Y ;
-
-            mouseHAngle += -mouseSpd * dt * (float)(xPos - prevX);
-            mouseVAngle += -mouseSpd * dt * (float)(yPos - prevY);
-            //Console.WriteLine(xPos);
-            //Console.WriteLine(prevX);
-            //Console.WriteLine(mouseVAngle);
-            mouseVAngle = MathHelper.Clamp(mouseVAngle, -1.4f, 1.4f);
-            //Console.WriteLine(mouseVAngle);
+            float xPos = Mouse.GetState().X; //Get current mouse data
+            float yPos = Mouse.GetState().Y;
+            if (firstRun) { prevMouse = new Vector2(xPos, yPos); firstRun = false; return; }
+            float deltaX = xPos - prevMouse.X;
+            float deltaY = yPos - prevMouse.Y;
+            mouseHAngle += -mouseSpd * dt * deltaX; //Append a new delta mouse change
+            mouseVAngle += -mouseSpd * dt * deltaY;
+            mouseVAngle = MathHelper.Clamp(mouseVAngle, -1.4f, 1.4f); //Clamp vertical so we can't look upside down
             Vector3 dir = new Vector3((float)Math.Cos(mouseVAngle) * (float)Math.Sin(mouseHAngle),
                                        (float)Math.Sin(mouseVAngle),
                                        (float)Math.Cos(mouseVAngle) * (float)Math.Cos(mouseHAngle));
@@ -120,9 +123,10 @@ namespace OpenGL_Game.Scenes
                                  (float)Math.Cos(mouseHAngle - MathHelper.PiOver2));
             Vector3 up = Vector3.Cross(right, dir);
             camera.view = Matrix4.LookAt(camera.cameraPosition, camera.cameraPosition + dir, up);
-            //Mouse.SetPosition(sceneManager.Width / 2, sceneManager.Height / 2);
-            prevX = xPos;
-            prevY = yPos;
+            camera.cameraDirection = dir; //Update camera dir & up vectors with our new calculated ones
+            camera.cameraUp = up;
+            camera.UpdateView(); //Update the view
+            prevMouse = new Vector2(xPos, yPos); //Set the prevmouse vector to be the current mouse vector at the end
         }
 
         /// <summary>
@@ -138,7 +142,6 @@ namespace OpenGL_Game.Scenes
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();
 
-            UpdateCameraLookAt(); //Updates camera rotation movement
         }
 
         /// <summary>
@@ -191,5 +194,12 @@ namespace OpenGL_Game.Scenes
                     break;
             }
         }
+
+        public void OnMouseMove(MouseMoveEventArgs e)
+        {
+            UpdateCameraLookAt(); //Update player camera movement
+            Mouse.SetPosition(sceneManager.Width / 2, sceneManager.Height / 2);
+        }
+        
     }
 }
