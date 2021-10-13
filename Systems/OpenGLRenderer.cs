@@ -25,7 +25,7 @@ namespace OpenGL_Game.Systems
         public OpenGLRenderer()
         {
             Name = "OpenGL Renderer";
-            pgmID = GL.CreateProgram();
+            pgmID = GL.CreateProgram(); //Generic shader for walls / objects
             LoadShader("Shaders/vs.glsl", ShaderType.VertexShader, pgmID, out vsID);
             LoadShader("Shaders/fs.glsl", ShaderType.FragmentShader, pgmID, out fsID);
             GL.LinkProgram(pgmID);
@@ -68,15 +68,24 @@ namespace OpenGL_Game.Systems
                 Vector3 position = ((ComponentPosition)positionComponent).Position;
                 Matrix4 model = Matrix4.CreateTranslation(position);
 
-                //if (entity.Name == "Skybox")
-                //{
-                //    GL.CullFace(CullFaceMode.Front);
-                //}
-                //else
-                //    GL.CullFace(CullFaceMode.Back);
-
-                Draw(model, geometry);
+                if (entity.Name == "Skybox")
+                {
+                    DrawSkybox(geometry);
+                }
+                else
+                    Draw(model, geometry);
             }
+        }
+
+        private void DrawSkybox(OpenGLGeometry geometry)
+        {
+            GL.DepthMask(false);
+            GL.CullFace(CullFaceMode.Front);
+            Matrix4 model = Matrix4.CreateTranslation(GameScene.gameInstance.camera.cameraPosition);
+            //Matrix4 model = Matrix4.CreateTranslation(Vector3.Zero);
+            Draw(model, geometry);
+            GL.CullFace(CullFaceMode.Back);
+            GL.DepthMask(true);
         }
 
         public override void Draw(Matrix4 model, OpenGLGeometry geometry)
