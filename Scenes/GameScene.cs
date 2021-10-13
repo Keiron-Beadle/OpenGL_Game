@@ -69,9 +69,11 @@ namespace OpenGL_Game.Scenes
 
         private void CreateEntities()
         {
-            Entity newEntity, starshipEntity, intergalacticShip;
+            Entity newEntity, starshipEntity, intergalacticShip, sussybaka;
             const string STARSHIP_OBJ_RELPATH = "Geometry/Wraith_Raider_Starship/Wraith_Raider_Starship.obj";
+            const string INTERGALACTIC_SHIP_OBJ_RELPATH = "Geometry/Intergalactic_Ship/Intergalactic_Spaceship.obj";
             const string SKYBOX_TEX_RELPATH = "Geometry/Skybox/skybox.obj";
+            const string SUSSY_OBJ_RELPATH = "Geometry/Amogus/amogus.obj";
 
             skyBox = new Entity("Skybox"); //Skybox needs to be rendered first, as Depth first is disabled for the draw
             skyBox.AddComponent(new ComponentTransform(0.0f, 0.0f, 0.0f));
@@ -91,9 +93,15 @@ namespace OpenGL_Game.Scenes
 
             //Excercise 2 - Add intergalactic Starship
             intergalacticShip = new Entity("Intergalactic Ship");
-            intergalacticShip.AddComponent(new ComponentTransform(0.4f, 0.0f, 0.0f));
-            intergalacticShip.AddComponent(new ComponentGeometry(STARSHIP_OBJ_RELPATH, renderSystem));
+            intergalacticShip.AddComponent(new ComponentTransform(new Vector3(0.4f, 0.0f, 0.0f), new Vector3(0.2f,0.2f,0.2f), Vector3.Zero));
+            intergalacticShip.AddComponent(new ComponentGeometry(INTERGALACTIC_SHIP_OBJ_RELPATH, renderSystem));
             entityManager.AddEntity(intergalacticShip);
+
+            //Exercise 3 - Add custom model, it's kinda sus
+            sussybaka = new Entity("Sus man");
+            sussybaka.AddComponent(new ComponentTransform(new Vector3(0.0f, 0.6f, -2.0f), new Vector3(20.0f,20.0f,20.0f), Vector3.Zero));
+            sussybaka.AddComponent(new ComponentGeometry(SUSSY_OBJ_RELPATH, renderSystem));
+            entityManager.AddEntity(sussybaka);
         }
 
         private void CreateSystems()
