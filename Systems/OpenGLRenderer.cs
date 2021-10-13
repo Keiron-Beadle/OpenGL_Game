@@ -19,8 +19,10 @@ namespace OpenGL_Game.Systems
         private int fsID;
         private int uniform_stex;
         private int uniform_mmodelviewproj;
+        private int uniform_mmodelview;
         private int uniform_mmodel;
         private int uniform_diffuse;  // OBJ NEW
+        private int uniform_EyePosition;
 
         public OpenGLRenderer()
         {
@@ -33,8 +35,10 @@ namespace OpenGL_Game.Systems
 
             uniform_stex = GL.GetUniformLocation(pgmID, "s_texture");
             uniform_mmodelviewproj = GL.GetUniformLocation(pgmID, "ModelViewProjMat");
+            uniform_mmodelview = GL.GetUniformLocation(pgmID, "ModelViewMat");
             uniform_mmodel = GL.GetUniformLocation(pgmID, "ModelMat");
             uniform_diffuse = GL.GetUniformLocation(pgmID, "v_diffuse");     // OBJ NEW
+            uniform_EyePosition = GL.GetUniformLocation(pgmID, "EyePosition");
         }
 
         void LoadShader(string filename, ShaderType type, int program, out int address)
@@ -74,6 +78,8 @@ namespace OpenGL_Game.Systems
                 Matrix4 overallRot = xRot * yRot * zRot;
                 Matrix4 model = Matrix4.CreateScale(scale) * overallRot * Matrix4.CreateTranslation(position);
 
+                GL.Uniform3(uniform_EyePosition, GameScene.gameInstance.camera.cameraPosition);
+
                 if (entity.Name == "Skybox")
                 {
                     DrawSkybox(geometry);
@@ -102,7 +108,9 @@ namespace OpenGL_Game.Systems
             GL.ActiveTexture(TextureUnit.Texture0);
 
             GL.UniformMatrix4(uniform_mmodel, false, ref model);
-            Matrix4 modelViewProjection = model * GameScene.gameInstance.camera.view * GameScene.gameInstance.camera.projection;
+            Matrix4 modelView = model * GameScene.gameInstance.camera.view;
+            GL.UniformMatrix4(uniform_mmodelview, false, ref modelView);
+            Matrix4 modelViewProjection = modelView * GameScene.gameInstance.camera.projection;
             GL.UniformMatrix4(uniform_mmodelviewproj, false, ref modelViewProjection);
 
             geometry.Render(uniform_diffuse);   // OBJ CHANGED

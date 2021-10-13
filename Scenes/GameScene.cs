@@ -85,7 +85,7 @@ namespace OpenGL_Game.Scenes
 
             //Excercise 1 - Add raider starship
             starshipEntity = new Entity("Wraith_Raider_Starship");
-            starshipEntity.AddComponent(new ComponentTransform(new Vector3(2.5f,0.0f,0.0f), Vector3.One, new Vector3(1.78f, 0.0f, 0.0f)));
+            starshipEntity.AddComponent(new ComponentTransform(new Vector3(2.5f,0.0f,0.0f), Vector3.One, new Vector3(3.14f, 0.0f, 0.0f)));
             starshipEntity.AddComponent(new ComponentGeometry(STARSHIP_OBJ_RELPATH, renderSystem));
             entityManager.AddEntity(starshipEntity);
 
