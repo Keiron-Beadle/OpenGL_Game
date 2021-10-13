@@ -19,6 +19,7 @@ namespace OpenGL_Game.Scenes
         public static float dt = 0;
         EntityManager entityManager;
         SystemManager systemManager;
+        InputManager inputManager;
         ISystem renderSystem;
 
         //temp input control
@@ -40,6 +41,7 @@ namespace OpenGL_Game.Scenes
             gameInstance = this;
             entityManager = new EntityManager();
             systemManager = new SystemManager();
+            inputManager = new InputManager();
             renderSystem = new OpenGLRenderer();
             // Set the title of the window
             sceneManager.Title = "Game";
@@ -47,8 +49,6 @@ namespace OpenGL_Game.Scenes
             sceneManager.renderer = Render;
             sceneManager.updater = Update;
             // Set Keyboard events to go to a method in this class
-            sceneManager.keyboardDownDelegate += Keyboard_KeyDown;
-            sceneManager.mouseMoveDelegate += OnMouseMove;
             sceneManager.CursorVisible = false;
             sceneManager.CursorGrabbed = true;
             // Enable Depth Testing
@@ -87,7 +87,7 @@ namespace OpenGL_Game.Scenes
 
             //Excercise 1 - Add raider starship
             starshipEntity = new Entity("Wraith_Raider_Starship");
-            starshipEntity.AddComponent(new ComponentTransform(new Vector3(2.5f,0.0f,0.0f), Vector3.One, new Vector3(3.14f, 0.0f, 0.0f)));
+            starshipEntity.AddComponent(new ComponentTransform(new Vector3(2.5f,0.0f,0.0f), Vector3.One, new Vector3(0f, 0.0f, 0.0f)));
             starshipEntity.AddComponent(new ComponentGeometry(STARSHIP_OBJ_RELPATH, renderSystem));
             entityManager.AddEntity(starshipEntity);
 
@@ -99,7 +99,7 @@ namespace OpenGL_Game.Scenes
 
             //Exercise 3 - Add custom model, it's kinda sus
             sussybaka = new Entity("Sus man");
-            sussybaka.AddComponent(new ComponentTransform(new Vector3(0.0f, 0.6f, -2.0f), new Vector3(20.0f,20.0f,20.0f), Vector3.Zero));
+            sussybaka.AddComponent(new ComponentTransform(new Vector3(0.0f, 0.6f, -2.0f), new Vector3(0.5f,0.5f,0.5f), Vector3.Zero));
             sussybaka.AddComponent(new ComponentGeometry(SUSSY_OBJ_RELPATH, renderSystem));
             entityManager.AddEntity(sussybaka);
         }
@@ -153,6 +153,7 @@ namespace OpenGL_Game.Scenes
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();
 
+            inputManager.Update(e);
         }
 
         /// <summary>
@@ -179,7 +180,6 @@ namespace OpenGL_Game.Scenes
         /// </summary>
         public override void Close()
         {
-            sceneManager.keyboardDownDelegate -= Keyboard_KeyDown;
         }
 
         public void Keyboard_KeyDown(KeyboardKeyEventArgs e)

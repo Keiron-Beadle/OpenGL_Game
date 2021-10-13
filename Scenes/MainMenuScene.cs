@@ -18,7 +18,6 @@ namespace OpenGL_Game.Scenes
             sceneManager.updater = Update;
             sceneManager.CursorVisible = true;
             sceneManager.CursorGrabbed = false;
-            sceneManager.mouseDelegate += Mouse_ButtonPressed;
         }
 
         public override void Update(FrameEventArgs e)
@@ -55,7 +54,6 @@ namespace OpenGL_Game.Scenes
 
         public override void Close()
         {
-            sceneManager.mouseDelegate -= Mouse_ButtonPressed;
         }
     }
 }

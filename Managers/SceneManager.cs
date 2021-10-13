@@ -16,46 +16,37 @@ namespace OpenGL_Game.Managers
         public SceneDelegate renderer;
         public SceneDelegate updater;
 
-        public delegate void KeyboardDelegate(KeyboardKeyEventArgs e);
-        public KeyboardDelegate keyboardDownDelegate;
-        public KeyboardDelegate keyboardUpDelegate;
-
-        public delegate void MouseDelegate(MouseButtonEventArgs e);
-        public MouseDelegate mouseDelegate;
-
-        public delegate void MouseMoveDelegate(MouseMoveEventArgs e);
-        public MouseMoveDelegate mouseMoveDelegate;
-
         public SceneManager() : base(width, height, new OpenTK.Graphics.GraphicsMode(new OpenTK.Graphics.ColorFormat(8, 8, 8, 8), 16))
         {
             this.X = windowXPos;
             this.Y = windowYPos;
         }
 
-        protected override void OnKeyDown(KeyboardKeyEventArgs e)
-        {
-            base.OnKeyDown(e);
-            if (e.Key == Key.Escape) Exit();
-            if (keyboardDownDelegate != null) keyboardDownDelegate.Invoke(e);
-        }
+        //protected override void OnKeyDown(KeyboardKeyEventArgs e)
+        //{
+        //    base.OnKeyDown(e);
+        //    if (e.Key == Key.Escape) Exit();
+        //    if (keyboardDownDelegate != null) keyboardDownDelegate.Invoke(e);
+        //}
 
-        protected override void OnKeyUp(KeyboardKeyEventArgs e)
-        {
-            base.OnKeyUp(e);
-            if (keyboardUpDelegate != null) keyboardUpDelegate.Invoke(e);
-        }
+        //protected override void OnKeyUp(KeyboardKeyEventArgs e)
+        //{
+        //    base.OnKeyUp(e);
+        //    if (keyboardUpDelegate != null) keyboardUpDelegate.Invoke(e);
+        //}
 
-        protected override void OnMouseDown(MouseButtonEventArgs e)
-        {
-            base.OnMouseDown(e);
-            if(mouseDelegate != null) mouseDelegate.Invoke(e);
-        }
+        //protected override void OnMouseDown(MouseButtonEventArgs e)
+        //{
+        //    base.OnMouseDown(e);
+        //    if(mouseDelegate != null) mouseDelegate.Invoke(e);
+        //}
 
-        protected override void OnMouseMove(MouseMoveEventArgs e)
-        {
-            if (mouseMoveDelegate != null) mouseMoveDelegate.Invoke(e);
-            base.OnMouseMove(e);
-        }
+        //protected override void OnMouseMove(MouseMoveEventArgs e)
+        //{
+            
+        //    if (mouseMoveDelegate != null) mouseMoveDelegate.Invoke(e);
+        //    base.OnMouseMove(e);
+        //}
 
         protected override void OnLoad(EventArgs e)
         {
