@@ -9,8 +9,11 @@ namespace OpenGL_Game.Scenes
 {
     class MainMenuScene : Scene
     {
+        InputManager inputManager;
+
         public MainMenuScene(SceneManager sceneManager) : base(sceneManager)
         {
+            inputManager = new InputManager();
             // Set the title of the window
             sceneManager.Title = "Main Menu";
             // Set the Render and Update delegates to the Update and Render methods of this class
@@ -22,6 +25,7 @@ namespace OpenGL_Game.Scenes
 
         public override void Update(FrameEventArgs e)
         {
+            inputManager.Update(e);
         }
 
         public override void Render(FrameEventArgs e)
