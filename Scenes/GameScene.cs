@@ -56,7 +56,7 @@ namespace OpenGL_Game.Scenes
 
             // Set Camera
             camera = new Camera(new Vector3(0, 4, 7), new Vector3(0, 0, 0), (float)(sceneManager.Width) / (float)(sceneManager.Height), 0.1f, 100f);
-            //Mouse.SetPosition(sceneManager.Width / 2, sceneManager.Height / 2);
+            Mouse.SetPosition(sceneManager.Width / 2, sceneManager.Height / 2);
             CreateSystems();
             CreateEntities();
         }
@@ -89,6 +89,7 @@ namespace OpenGL_Game.Scenes
             intergalacticShip = new Entity("Intergalactic Ship");
             intergalacticShip.AddComponent(new ComponentTransform(new Vector3(0.4f, 0.0f, 0.0f), new Vector3(0.2f,0.2f,0.2f), Vector3.Zero));
             intergalacticShip.AddComponent(new ComponentGeometry(INTERGALACTIC_SHIP_OBJ_RELPATH, renderSystem));
+            intergalacticShip.AddComponent(new ComponentVelocity(0.0f, 1.1f, 1.1f)); 
             entityManager.AddEntity(intergalacticShip);
 
             //Exercise 3 - Add custom model, it's kinda sus
@@ -101,8 +102,9 @@ namespace OpenGL_Game.Scenes
         private void CreateSystems()
         {
             //ISystem newSystem; //For future systems
-
+            SystemPhysics physicsSystem = new SystemPhysics();
             systemManager.AddSystem(renderSystem);
+            systemManager.AddSystem(physicsSystem);
         }
 
         /// <summary>
@@ -117,7 +119,7 @@ namespace OpenGL_Game.Scenes
 
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();
-            Console.WriteLine(camera.cameraPosition);
+
             inputManager.Update(e);
             ProcessInput();
 

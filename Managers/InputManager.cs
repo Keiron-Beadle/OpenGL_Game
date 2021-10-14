@@ -10,19 +10,22 @@ namespace OpenGL_Game.Managers
 {
     class InputManager
     {
+        //Keyboard variables
         private KeyboardState prevKeyState;
-        private MouseState prevMouseState;
         private bool[] controlFlags; //Array to hold which keys are pressed currently
+        private Dictionary<Key, CONTROLS> controlBindings;
+
+        //Mouse variables
+        private MouseState prevMouseState;
         private bool mouseLeftClick = false; //Bool for if left mouse button clicked right now
         private bool firstRun = true;
-        private Dictionary<Key, CONTROLS> controlBindings;
-        public Vector2 PrevMousePos { get; private set; }
-        public Vector2 DeltaMouse { get; private set; }
-
         float mouseHAngle = 0.0f;
         float mouseVAngle = 0.0f;
-        const float mouseSensitivity = 0.5f;
+        const float SENSITIVITY = 0.5f;
 
+        //Properties
+        public Vector2 PrevMousePos { get; private set; }
+        public Vector2 DeltaMouse { get; private set; }
         public bool[] ControlFlags { get { return controlFlags; } }
         public bool LeftClicked { get { return mouseLeftClick; } }
 
@@ -108,7 +111,12 @@ namespace OpenGL_Game.Managers
 
         public void Update(FrameEventArgs e)
         {
-            KeyboardState currentKeyState = Keyboard.GetState();
+            UpdateKeyboard();
+            UpdateMouse();
+        }
+
+        private void UpdateMouse()
+        {
             MouseState currentMouseState = Mouse.GetState();
             DeltaMouse = new Vector2(currentMouseState.X - prevMouseState.X,
                                      currentMouseState.Y - prevMouseState.Y);
@@ -117,6 +125,17 @@ namespace OpenGL_Game.Managers
                 mouseLeftClick = true;
             else
                 mouseLeftClick = false;
+
+            //Prevents a "Jump" from the mouse on first focus gain
+            if (firstRun) { PrevMousePos = new Vector2(currentMouseState.X, currentMouseState.Y); firstRun = false; return; }
+
+
+            prevMouseState = currentMouseState;
+        }
+
+        private void UpdateKeyboard()
+        {
+            KeyboardState currentKeyState = Keyboard.GetState();
             foreach (var pair in controlBindings)
             {
                 if (currentKeyState.IsKeyDown(pair.Key))
@@ -124,19 +143,13 @@ namespace OpenGL_Game.Managers
                 else
                     controlFlags[(int)pair.Value] = false;
             }
-
-            //Prevents a "Jump" from the mouse on first focus gain
-            if (firstRun) { PrevMousePos = new Vector2(currentMouseState.X, currentMouseState.Y); firstRun = false; return; }
-
-
-            prevMouseState = currentMouseState;
             prevKeyState = currentKeyState;
         }
 
         public void UpdateFPSCamera(ref Camera camera, float dt)
         {
-            mouseHAngle += -mouseSensitivity * dt * DeltaMouse.X; //Append a new delta mouse change
-            mouseVAngle += -mouseSensitivity * dt * DeltaMouse.Y;
+            mouseHAngle += -SENSITIVITY * dt * DeltaMouse.X; //Append a new delta mouse change
+            mouseVAngle += -SENSITIVITY * dt * DeltaMouse.Y;
             mouseVAngle = MathHelper.Clamp(mouseVAngle, -1.4f, 1.4f); //Clamp vertical so we can't look upside down
             Vector3 dir = new Vector3((float)Math.Cos(mouseVAngle) * (float)Math.Sin(mouseHAngle),
                                        (float)Math.Sin(mouseVAngle),
