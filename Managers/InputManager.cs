@@ -12,8 +12,12 @@ namespace OpenGL_Game.Managers
     {
         private KeyboardState prevKeyState;
         private MouseState prevMouseState;
-        private bool[] controlFlags;
+        private bool[] controlFlags; //Array to hold which keys are pressed currently
+        private bool mouseLeftClick = false; //Bool for if left mouse button clicked right now
         private Dictionary<Key, CONTROLS> controlBindings;
+
+        public bool[] ControlFlags { get { return controlFlags; } }
+        public bool LeftClicked { get { return mouseLeftClick; } }
 
         public enum CONTROLS
         {
@@ -21,15 +25,14 @@ namespace OpenGL_Game.Managers
             Backward,
             Left,
             Right,
+            Escape,
         }
 
         public InputManager()
         {
-            controlFlags = new bool[sizeof(CONTROLS)];
+            controlFlags = new bool[Enum.GetNames(typeof(CONTROLS)).Length];
             controlBindings = new Dictionary<Key, CONTROLS>();
             LoadControls();
-            SaveControls();
-
         }
 
         private void SaveControls()
@@ -99,8 +102,17 @@ namespace OpenGL_Game.Managers
             KeyboardState currentKeyState = Keyboard.GetState();
             MouseState currentMouseState = Mouse.GetState();
 
-            
-
+            if (currentMouseState.LeftButton == ButtonState.Released && prevMouseState.LeftButton == ButtonState.Pressed)
+                mouseLeftClick = true;
+            else
+                mouseLeftClick = false;
+            foreach (var pair in controlBindings)
+            {
+                if (currentKeyState.IsKeyDown(pair.Key))
+                    controlFlags[(int)pair.Value] = true;
+                else
+                    controlFlags[(int)pair.Value] = false;
+            }
 
             prevMouseState = currentMouseState;
             prevKeyState = currentKeyState;

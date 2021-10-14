@@ -26,6 +26,10 @@ namespace OpenGL_Game.Scenes
         public override void Update(FrameEventArgs e)
         {
             inputManager.Update(e);
+            if (inputManager.LeftClicked) 
+            { 
+                sceneManager.StartNewGame(); 
+            }
         }
 
         public override void Render(FrameEventArgs e)
@@ -44,16 +48,6 @@ namespace OpenGL_Game.Scenes
             GUI.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int)(fontSize * 2f)), "Main Menu", (int)fontSize, StringAlignment.Center);
 
             GUI.Render();
-        }
-
-        public void Mouse_ButtonPressed(MouseButtonEventArgs e)
-        {
-            switch (e.Button)
-            {
-                case MouseButton.Left:
-                    sceneManager.StartNewGame();
-                    break;
-            }
         }
 
         public override void Close()

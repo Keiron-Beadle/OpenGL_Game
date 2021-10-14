@@ -8,6 +8,7 @@ using OpenGL_Game.Objects;
 using System.Drawing;
 using System;
 using System.Diagnostics;
+using static OpenGL_Game.Managers.InputManager;
 
 namespace OpenGL_Game.Scenes
 {
@@ -31,6 +32,7 @@ namespace OpenGL_Game.Scenes
 
         //Temp variables
         Entity skyBox;
+        const float cameraVelocity = 0.6f;
 
         public Camera camera;
 
@@ -112,35 +114,6 @@ namespace OpenGL_Game.Scenes
         }
 
         /// <summary>
-        /// Method is called in the OnMouseMove callback
-        /// </summary>
-        private void UpdateCameraLookAt()
-        {
-            float xPos = Mouse.GetState().X; //Get current mouse data
-            float yPos = Mouse.GetState().Y;
-            if (firstRun) { prevMouse = new Vector2(xPos, yPos); firstRun = false; return; }
-            float deltaX = xPos - prevMouse.X;
-            float deltaY = yPos - prevMouse.Y;
-            mouseHAngle += -mouseSpd * dt * deltaX; //Append a new delta mouse change
-            mouseVAngle += -mouseSpd * dt * deltaY;
-            mouseVAngle = MathHelper.Clamp(mouseVAngle, -1.4f, 1.4f); //Clamp vertical so we can't look upside down
-            Vector3 dir = new Vector3((float)Math.Cos(mouseVAngle) * (float)Math.Sin(mouseHAngle),
-                                       (float)Math.Sin(mouseVAngle),
-                                       (float)Math.Cos(mouseVAngle) * (float)Math.Cos(mouseHAngle));
-            Vector3 right = new Vector3(
-                                (float)Math.Sin(mouseHAngle - MathHelper.PiOver2),
-                                 0.0f,
-                                 (float)Math.Cos(mouseHAngle - MathHelper.PiOver2));
-            Vector3 up = Vector3.Cross(right, dir);
-            camera.view = Matrix4.LookAt(camera.cameraPosition, camera.cameraPosition + dir, up);
-            camera.cameraDirection = dir; //Update camera dir & up vectors with our new calculated ones
-            camera.cameraUp = up;
-            camera.UpdateView(); //Update the view
-
-            prevMouse = new Vector2(xPos, yPos); //Set the prevmouse vector to be the current mouse vector at the end
-        }
-
-        /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
         /// </summary>
@@ -152,8 +125,10 @@ namespace OpenGL_Game.Scenes
 
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();
-
+            Console.WriteLine(camera.cameraPosition);
             inputManager.Update(e);
+            ProcessInput();
+
         }
 
         /// <summary>
@@ -182,28 +157,49 @@ namespace OpenGL_Game.Scenes
         {
         }
 
-        public void Keyboard_KeyDown(KeyboardKeyEventArgs e)
+        private void ProcessInput()
         {
-            switch (e.Key)
-            {
-                case Key.Up:
-                case Key.W:
-                    camera.MoveForward(0.1f);
-                    break;
-                case Key.S:
-                case Key.Down:
-                    camera.MoveForward(-0.1f);
-                    break;
-                //case Key.Left:
-                //    camera.RotateY(-0.01f);
-                //    break;
-                //case Key.Right:
-                //    camera.RotateY(0.01f);
-                //    break;
-                case Key.M:
-                    sceneManager.StartMenu();
-                    break;
-            }
+            if (inputManager.ControlFlags[(int)CONTROLS.Forward])
+                camera.MoveForward(cameraVelocity * dt);
+            if (inputManager.ControlFlags[(int)CONTROLS.Backward])
+                camera.MoveForward(-cameraVelocity * dt);
+            if (inputManager.ControlFlags[(int)CONTROLS.Left])
+                camera.MoveRight(-cameraVelocity * dt);
+            if (inputManager.ControlFlags[(int)CONTROLS.Right])
+                camera.MoveRight(cameraVelocity * dt);
+
+            if (inputManager.ControlFlags[(int)CONTROLS.Escape])
+                sceneManager.Exit();
+        
+        }
+
+        /// <summary>
+        /// Method is called in the OnMouseMove callback
+        /// </summary>
+        private void UpdateCameraLookAt()
+        {
+            float xPos = Mouse.GetState().X; //Get current mouse data
+            float yPos = Mouse.GetState().Y;
+            if (firstRun) { prevMouse = new Vector2(xPos, yPos); firstRun = false; return; }
+            float deltaX = xPos - prevMouse.X;
+            float deltaY = yPos - prevMouse.Y;
+            mouseHAngle += -mouseSpd * dt * deltaX; //Append a new delta mouse change
+            mouseVAngle += -mouseSpd * dt * deltaY;
+            mouseVAngle = MathHelper.Clamp(mouseVAngle, -1.4f, 1.4f); //Clamp vertical so we can't look upside down
+            Vector3 dir = new Vector3((float)Math.Cos(mouseVAngle) * (float)Math.Sin(mouseHAngle),
+                                       (float)Math.Sin(mouseVAngle),
+                                       (float)Math.Cos(mouseVAngle) * (float)Math.Cos(mouseHAngle));
+            Vector3 right = new Vector3(
+                                (float)Math.Sin(mouseHAngle - MathHelper.PiOver2),
+                                 0.0f,
+                                 (float)Math.Cos(mouseHAngle - MathHelper.PiOver2));
+            Vector3 up = Vector3.Cross(right, dir);
+            camera.view = Matrix4.LookAt(camera.cameraPosition, camera.cameraPosition + dir, up);
+            camera.cameraDirection = dir; //Update camera dir & up vectors with our new calculated ones
+            camera.cameraUp = up;
+            camera.UpdateView(); //Update the view
+
+            prevMouse = new Vector2(xPos, yPos); //Set the prevmouse vector to be the current mouse vector at the end
         }
 
         public void OnMouseMove(MouseMoveEventArgs e)

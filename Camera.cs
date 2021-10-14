@@ -34,6 +34,12 @@ namespace OpenGL_Game
             UpdateView();
         }
 
+        public void MoveRight(float move)
+        {
+            cameraPosition += move * Vector3.Cross(cameraDirection.Normalized(), cameraUp.Normalized());
+            UpdateView();
+        }
+
         public void Translate(Vector3 move)
         {
             cameraPosition += move;
