@@ -66,8 +66,8 @@ namespace OpenGL_Game.Managers
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
-
-            updater(e);
+            if (Focused)
+                updater(e);
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)

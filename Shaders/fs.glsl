@@ -1,9 +1,10 @@
 ﻿#version 330
- 
+
 in vec2 v_TexCoord;
 in vec3 v_Normal;
-in vec3 v_LightDir;
-in vec3 v_ViewDir;
+in vec3 v_LightPos;
+in vec3 v_FragPos;
+
 uniform sampler2D s_texture;
 uniform vec3 v_diffuse;	// OBJ NEW
 
@@ -16,20 +17,10 @@ void main()
 	vec4 lightSpec = vec4(0.1,0.1,0.1,0.0);
 	float fSpecularPower = 10.0;
 
-	vec3 fvLightDirection = normalize(v_LightDir);
-	vec3 fvNormal = normalize(v_Normal);
-	float fNDotL = dot(fvNormal, fvLightDirection);
-
-	vec3 fvReflection = normalize(((2.0*fvNormal)*fNDotL)-fvLightDirection);
-	vec3 fvViewDirection = normalize(v_ViewDir);
-	float fRDotV = max(0.0, dot(fvReflection, fvViewDirection.xyz));
-
+	vec3 norm = normalize(v_Normal);
+	vec3 lightDir = normalize(v_LightPos - v_FragPos);
+	float diff = max(dot(norm,lightDir),0.0);
 	vec4 fvBaseColour = texture2D(s_texture, v_TexCoord);
-	vec4 totalAmb = lightAmbient * fvBaseColour;
-	vec4 totalDiffuse = lightColor * fNDotL * fvBaseColour;
-	vec4 totalSpec = lightSpec * (pow(fRDotV, fSpecularPower));
-	totalDiffuse.w = 1;
-	//Color = totalDiffuse;
-	Color = (totalDiffuse);
-    //Color = lightAmbient + (vec4(v_diffuse, 1) * texture2D(s_texture, v_TexCoord) * vec4(diffuse, 0));  // OBJ CHANGED
+	vec3 diffuse = diff * fvBaseColour.xyz;
+	Color = vec4(diffuse,1.0);
 }

@@ -29,7 +29,7 @@ namespace OpenGL_Game.OBJLoader
     /// <summary>
     /// This is the object that we use to store our geometry that we will use to render in the game
     /// </summary>
-    public class OpenGLGeometry : IGeometry
+    class OpenGLGeometry : IGeometry
     {
         List<Group> groups = new List<Group>();
 
@@ -39,9 +39,9 @@ namespace OpenGL_Game.OBJLoader
         {
         }
 
-        public void LoadObject(string filename)
+        public void LoadObject(string filename, ISystem renderSystem)
         {
-            ISystem tempRenderer = new OpenGLRenderer();
+            OpenGLRenderer renderer = renderSystem as OpenGLRenderer;
             try
             {
                 // This OBJ parser library is developed by chrisjansson and available at https://github.com/chrisjansson/ObjLoader
@@ -58,18 +58,18 @@ namespace OpenGL_Game.OBJLoader
                         if (index < 0)
                         {
                             // A: NO, so just add the geometery path
-                            newGroup.texture = ResourceManager.LoadTexture(path + group.Material.DiffuseTextureMap, tempRenderer);
+                            newGroup.texture = ResourceManager.LoadTexture(path + group.Material.DiffuseTextureMap, renderer);
                         }
                         else
                         {
                             // A: YES, so remove the path and then add the geometery path
                             string diffuseTextureMap = group.Material.DiffuseTextureMap.Substring(index+1);
-                            newGroup.texture = ResourceManager.LoadTexture(path + diffuseTextureMap, tempRenderer);
+                            newGroup.texture = ResourceManager.LoadTexture(path + diffuseTextureMap, renderer);
                         }
                     }
                     else
                     {
-                        newGroup.texture = ResourceManager.LoadTexture("Geometry\\Default\\default.png", tempRenderer);   // OBJ NEW 
+                        newGroup.texture = ResourceManager.LoadTexture("Geometry\\Default\\default.png", renderer);   // OBJ NEW 
                     }
                     bool error = false;
                     string errorMessage = "";

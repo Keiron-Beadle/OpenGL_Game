@@ -75,6 +75,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
+    <Compile Include="Components\ComponentRotation.cs" />
     <Compile Include="Components\ComponentTransform.cs" />
     <Compile Include="Components\ComponentVelocity.cs" />
     <Compile Include="Managers\InputManager.cs" />
@@ -180,6 +181,12 @@
     <None Include="Geometry\Skybox\skybox.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Geometry\TestCube\untitled.mtl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Geometry\TestCube\untitled.obj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Geometry\Wraith_Raider_Starship\Wraith_Raider_Starship.mtl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -191,10 +198,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\fs.glsl">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Shaders\vs.glsl">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>

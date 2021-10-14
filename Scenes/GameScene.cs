@@ -63,40 +63,51 @@ namespace OpenGL_Game.Scenes
 
         private void CreateEntities()
         {
-            Entity newEntity, starshipEntity, intergalacticShip, sussybaka;
+            Entity newEntity, starshipEntity, intergalacticShip, sussybaka, testcube;
             const string STARSHIP_OBJ_RELPATH = "Geometry/Wraith_Raider_Starship/Wraith_Raider_Starship.obj";
             const string INTERGALACTIC_SHIP_OBJ_RELPATH = "Geometry/Intergalactic_Ship/Intergalactic_Spaceship.obj";
             const string SKYBOX_TEX_RELPATH = "Geometry/Skybox/skybox.obj";
             const string SUSSY_OBJ_RELPATH = "Geometry/Amogus/amogus.obj";
+            const string TESTCUBE_OBJ_RELPATH = "Geometry/TestCube/untitled.obj";
 
             skyBox = new Entity("Skybox"); //Skybox needs to be rendered first, as Depth first is disabled for the draw
             skyBox.AddComponent(new ComponentTransform(0.0f, 0.0f, 0.0f));
             skyBox.AddComponent(new ComponentGeometry(SKYBOX_TEX_RELPATH, renderSystem));
             entityManager.AddEntity(skyBox);
 
-            newEntity = new Entity("Moon");
-            newEntity.AddComponent(new ComponentTransform(-2.5f, 0.0f, 0.0f));
-            newEntity.AddComponent(new ComponentGeometry("Geometry/Moon/moon.obj", renderSystem));
-            entityManager.AddEntity(newEntity);
+            //newEntity = new Entity("Moon");
+            //newEntity.AddComponent(new ComponentTransform(-2.5f, 0.0f, 0.0f));
+            //newEntity.AddComponent(new ComponentGeometry("Geometry/Moon/moon.obj", renderSystem));
+            ////newEntity.AddComponent(new ComponentRotation(0.0f, 0.5f, 0.0f));
+            //entityManager.AddEntity(newEntity);
 
-            //Excercise 1 - Add raider starship
-            starshipEntity = new Entity("Wraith_Raider_Starship");
-            starshipEntity.AddComponent(new ComponentTransform(new Vector3(2.5f,0.0f,0.0f), Vector3.One, new Vector3(0f, 0.0f, 0.0f)));
-            starshipEntity.AddComponent(new ComponentGeometry(STARSHIP_OBJ_RELPATH, renderSystem));
-            entityManager.AddEntity(starshipEntity);
+            ////Excercise 1 - Add raider starship
+            //starshipEntity = new Entity("Wraith_Raider_Starship");
+            //starshipEntity.AddComponent(new ComponentTransform(new Vector3(2.5f, 0.0f, 0.0f), Vector3.One, Vector3.Zero));
+            //starshipEntity.AddComponent(new ComponentGeometry(STARSHIP_OBJ_RELPATH, renderSystem));
+            //entityManager.AddEntity(starshipEntity);
 
-            //Excercise 2 - Add intergalactic Starship
-            intergalacticShip = new Entity("Intergalactic Ship");
-            intergalacticShip.AddComponent(new ComponentTransform(new Vector3(0.4f, 0.0f, 0.0f), new Vector3(0.2f,0.2f,0.2f), Vector3.Zero));
-            intergalacticShip.AddComponent(new ComponentGeometry(INTERGALACTIC_SHIP_OBJ_RELPATH, renderSystem));
-            intergalacticShip.AddComponent(new ComponentVelocity(0.0f, 1.1f, 1.1f)); 
-            entityManager.AddEntity(intergalacticShip);
+            ////Excercise 2 - Add intergalactic Starship
+            //intergalacticShip = new Entity("Intergalactic Ship");
+            //intergalacticShip.AddComponent(new ComponentTransform(new Vector3(0.4f, 0.0f, 0.0f), new Vector3(0.2f, 0.2f, 0.2f), Vector3.Zero));
+            //intergalacticShip.AddComponent(new ComponentGeometry(INTERGALACTIC_SHIP_OBJ_RELPATH, renderSystem));
+            ////intergalacticShip.AddComponent(new ComponentVelocity(0.0f, 1.1f, 1.1f)); 
+            ////intergalacticShip.AddComponent(new ComponentRotation(0.3f, 0.3f, 0.3f));
+            //entityManager.AddEntity(intergalacticShip);
 
             //Exercise 3 - Add custom model, it's kinda sus
             sussybaka = new Entity("Sus man");
-            sussybaka.AddComponent(new ComponentTransform(new Vector3(0.0f, 0.6f, -2.0f), new Vector3(0.5f,0.5f,0.5f), Vector3.Zero));
+            sussybaka.AddComponent(new ComponentTransform(new Vector3(0.0f, 0.6f, -2.0f), Vector3.One, Vector3.Zero));
             sussybaka.AddComponent(new ComponentGeometry(SUSSY_OBJ_RELPATH, renderSystem));
+            sussybaka.AddComponent(new ComponentRotation(3.0f, 1.9f, 0.5f));
             entityManager.AddEntity(sussybaka);
+
+            ////Exercise 3 - Add custom model, it's kinda sus
+            //testcube = new Entity("Sus man");
+            //testcube.AddComponent(new ComponentTransform(new Vector3(0.0f, 0.6f, -2.0f), Vector3.One, Vector3.Zero));
+            //testcube.AddComponent(new ComponentGeometry(TESTCUBE_OBJ_RELPATH, renderSystem));
+            //testcube.AddComponent(new ComponentRotation(0.0f, 0.5f, 0.0f));
+            //entityManager.AddEntity(testcube);
         }
 
         private void CreateSystems()

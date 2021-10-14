@@ -20,7 +20,7 @@ namespace OpenGL_Game.Systems
         private int uniform_stex;
         private int uniform_mmodelviewproj;
         private int uniform_mmodelview;
-        private int uniform_mmodel;
+        private int uniform_mview;
         private int uniform_diffuse;  // OBJ NEW
         private int uniform_EyePosition;
 
@@ -36,9 +36,9 @@ namespace OpenGL_Game.Systems
             uniform_stex = GL.GetUniformLocation(pgmID, "s_texture");
             uniform_mmodelviewproj = GL.GetUniformLocation(pgmID, "ModelViewProjMat");
             uniform_mmodelview = GL.GetUniformLocation(pgmID, "ModelViewMat");
-            uniform_mmodel = GL.GetUniformLocation(pgmID, "ModelMat");
             uniform_diffuse = GL.GetUniformLocation(pgmID, "v_diffuse");     // OBJ NEW
             uniform_EyePosition = GL.GetUniformLocation(pgmID, "EyePosition");
+            uniform_mview = GL.GetUniformLocation(pgmID, "ViewMat");
         }
 
         void LoadShader(string filename, ShaderType type, int program, out int address)
@@ -72,8 +72,8 @@ namespace OpenGL_Game.Systems
                 Vector3 position = ((ComponentTransform)transformComponent).Position;
                 Vector3 scale = ((ComponentTransform)transformComponent).Scale;
                 Vector3 rotation = ((ComponentTransform)transformComponent).Rotation;
-                Matrix4 xRot = Matrix4.CreateRotationZ(rotation.X);
-                Matrix4 yRot = Matrix4.CreateRotationZ(rotation.Y);
+                Matrix4 xRot = Matrix4.CreateRotationX(rotation.X);
+                Matrix4 yRot = Matrix4.CreateRotationY(rotation.Y);
                 Matrix4 zRot = Matrix4.CreateRotationZ(rotation.Z);
                 Matrix4 overallRot = xRot * yRot * zRot;
                 Matrix4 model = Matrix4.CreateScale(scale) * overallRot * Matrix4.CreateTranslation(position);
@@ -107,11 +107,11 @@ namespace OpenGL_Game.Systems
             GL.Uniform1(uniform_stex, 0);
             GL.ActiveTexture(TextureUnit.Texture0);
 
-            GL.UniformMatrix4(uniform_mmodel, false, ref model);
             Matrix4 modelView = model * GameScene.gameInstance.camera.view;
             GL.UniformMatrix4(uniform_mmodelview, false, ref modelView);
             Matrix4 modelViewProjection = modelView * GameScene.gameInstance.camera.projection;
             GL.UniformMatrix4(uniform_mmodelviewproj, false, ref modelViewProjection);
+            GL.UniformMatrix4(uniform_mview, false, ref GameScene.gameInstance.camera.view);
 
             geometry.Render(uniform_diffuse);   // OBJ CHANGED
 

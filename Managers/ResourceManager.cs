@@ -35,7 +35,7 @@ namespace OpenGL_Game.Managers
             {
                 if (renderSystem is OpenGLRenderer)
                     geometry = new OpenGLGeometry();
-                geometry.LoadObject(filename);
+                geometry.LoadObject(filename, renderSystem);
                 geometryDictionary.Add(filename, geometry);
             }
 
@@ -49,15 +49,14 @@ namespace OpenGL_Game.Managers
             
             if (renderSystem is OpenGLRenderer)
             {
-                return LoadOpenGLTexture(filename);
+                return LoadOpenGLTexture(filename, renderSystem as OpenGLRenderer);
             }
             return null;
         }
 
-        private static ITexture LoadOpenGLTexture(string filename)
+        private static ITexture LoadOpenGLTexture(string filename, OpenGLRenderer renderSystem)
         {
-            var tempRenderer = new OpenGLRenderer();
-            return tempRenderer.LoadTexture(filename, ref textureDictionary);      
+            return renderSystem.LoadTexture(filename, ref textureDictionary);      
         }
     }
 }

@@ -11,7 +11,8 @@ namespace OpenGL_Game.Systems
 {
     class SystemPhysics : ISystem
     {
-        protected const ComponentTypes MASK = (ComponentTypes.COMPONENT_TRANSFORM | ComponentTypes.COMPONENT_VELOCITY);
+        protected const ComponentTypes MotionMASK = (ComponentTypes.COMPONENT_TRANSFORM | ComponentTypes.COMPONENT_VELOCITY);
+        protected const ComponentTypes RotationMASK = (ComponentTypes.COMPONENT_TRANSFORM | ComponentTypes.COMPONENT_ROTATION);
 
         public string Name { get; protected set; }
 
@@ -23,11 +24,33 @@ namespace OpenGL_Game.Systems
         public void OnAction(Entity entity)
         {
             DoMotion(ref entity);
+            DoRotation(ref entity);
+        }
+
+        private void DoRotation(ref Entity entity)
+        {
+            if ((entity.Mask & RotationMASK) != RotationMASK) return;
+
+            List<IComponent> components = entity.Components;
+
+            IComponent transformComponent = components.Find(delegate (IComponent component)
+            {
+                return component.ComponentType == ComponentTypes.COMPONENT_TRANSFORM;
+            });
+
+            IComponent rotationComponent = components.Find(delegate (IComponent component)
+            {
+                return component.ComponentType == ComponentTypes.COMPONENT_ROTATION;
+            });
+
+            Vector3 rotationRate = (rotationComponent as ComponentRotation).Rotation;
+
+            ((ComponentTransform)transformComponent).Rotation += rotationRate * GameScene.dt;
         }
 
         private void DoMotion(ref Entity entity)
         {
-            if ((entity.Mask & MASK) != MASK) return;
+            if ((entity.Mask & MotionMASK) != MotionMASK) return;
 
             List<IComponent> components = entity.Components;
 
