@@ -14,7 +14,14 @@ namespace OpenGL_Game.Managers
         private MouseState prevMouseState;
         private bool[] controlFlags; //Array to hold which keys are pressed currently
         private bool mouseLeftClick = false; //Bool for if left mouse button clicked right now
+        private bool firstRun = true;
         private Dictionary<Key, CONTROLS> controlBindings;
+        public Vector2 PrevMousePos { get; private set; }
+        public Vector2 DeltaMouse { get; private set; }
+
+        float mouseHAngle = 0.0f;
+        float mouseVAngle = 0.0f;
+        const float mouseSensitivity = 0.5f;
 
         public bool[] ControlFlags { get { return controlFlags; } }
         public bool LeftClicked { get { return mouseLeftClick; } }
@@ -32,6 +39,8 @@ namespace OpenGL_Game.Managers
         {
             controlFlags = new bool[Enum.GetNames(typeof(CONTROLS)).Length];
             controlBindings = new Dictionary<Key, CONTROLS>();
+            PrevMousePos = new Vector2(0, 0);
+            DeltaMouse = new Vector2(0, 0);
             LoadControls();
         }
 
@@ -101,6 +110,8 @@ namespace OpenGL_Game.Managers
         {
             KeyboardState currentKeyState = Keyboard.GetState();
             MouseState currentMouseState = Mouse.GetState();
+            DeltaMouse = new Vector2(currentMouseState.X - prevMouseState.X,
+                                     currentMouseState.Y - prevMouseState.Y);
 
             if (currentMouseState.LeftButton == ButtonState.Released && prevMouseState.LeftButton == ButtonState.Pressed)
                 mouseLeftClick = true;
@@ -114,8 +125,31 @@ namespace OpenGL_Game.Managers
                     controlFlags[(int)pair.Value] = false;
             }
 
+            //Prevents a "Jump" from the mouse on first focus gain
+            if (firstRun) { PrevMousePos = new Vector2(currentMouseState.X, currentMouseState.Y); firstRun = false; return; }
+
+
             prevMouseState = currentMouseState;
             prevKeyState = currentKeyState;
+        }
+
+        public void UpdateFPSCamera(ref Camera camera, float dt)
+        {
+            mouseHAngle += -mouseSensitivity * dt * DeltaMouse.X; //Append a new delta mouse change
+            mouseVAngle += -mouseSensitivity * dt * DeltaMouse.Y;
+            mouseVAngle = MathHelper.Clamp(mouseVAngle, -1.4f, 1.4f); //Clamp vertical so we can't look upside down
+            Vector3 dir = new Vector3((float)Math.Cos(mouseVAngle) * (float)Math.Sin(mouseHAngle),
+                                       (float)Math.Sin(mouseVAngle),
+                                       (float)Math.Cos(mouseVAngle) * (float)Math.Cos(mouseHAngle));
+            Vector3 right = new Vector3(
+                                (float)Math.Sin(mouseHAngle - MathHelper.PiOver2),
+                                 0.0f,
+                                 (float)Math.Cos(mouseHAngle - MathHelper.PiOver2));
+            Vector3 up = Vector3.Cross(right, dir);
+            camera.view = Matrix4.LookAt(camera.cameraPosition, camera.cameraPosition + dir, up);
+            camera.cameraDirection = dir; //Update camera dir & up vectors with our new calculated ones
+            camera.cameraUp = up;
+            camera.UpdateView(); //Update the view
         }
     }
 }
