@@ -92,11 +92,9 @@ namespace OpenGL_Game.Systems
         private void DrawSkybox(OpenGLGeometry geometry)
         {
             GL.DepthMask(false);
-            GL.CullFace(CullFaceMode.Front);
             Matrix4 model = Matrix4.CreateTranslation(GameScene.gameInstance.camera.cameraPosition);
             //Matrix4 model = Matrix4.CreateTranslation(Vector3.Zero);
             Draw(model, geometry);
-            GL.CullFace(CullFaceMode.Back);
             GL.DepthMask(true);
         }
 

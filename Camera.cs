@@ -31,25 +31,25 @@ namespace OpenGL_Game
         public void MoveForward(float move)
         {
             cameraPosition += move*cameraDirection;
-            UpdateView();
+            //UpdateView();
         }
 
         public void MoveRight(float move)
         {
             cameraPosition += move * Vector3.Cross(cameraDirection.Normalized(), cameraUp.Normalized());
-            UpdateView();
+            //UpdateView();
         }
 
         public void Translate(Vector3 move)
         {
             cameraPosition += move;
-            UpdateView();
+            //UpdateView();
         }
 
         public void RotateY(float angle)
         {
             cameraDirection = Matrix3.CreateRotationY(angle) * cameraDirection;
-            UpdateView();
+            //UpdateView();
         }
 
         public void UpdateView()

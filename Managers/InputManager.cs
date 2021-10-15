@@ -10,12 +10,15 @@ namespace OpenGL_Game.Managers
 {
     class InputManager
     {
+        SceneManager sceneManager;
+
         //Keyboard variables
         private KeyboardState prevKeyState;
         private bool[] controlFlags; //Array to hold which keys are pressed currently
         private Dictionary<Key, CONTROLS> controlBindings;
 
         //Mouse variables
+        private Vector2 centerOfWindow;
         private MouseState prevMouseState;
         private bool mouseLeftClick = false; //Bool for if left mouse button clicked right now
         private bool firstRun = true;
@@ -24,7 +27,6 @@ namespace OpenGL_Game.Managers
         const float SENSITIVITY = 0.5f;
 
         //Properties
-        public Vector2 PrevMousePos { get; private set; }
         public Vector2 DeltaMouse { get; private set; }
         public bool[] ControlFlags { get { return controlFlags; } }
         public bool LeftClicked { get { return mouseLeftClick; } }
@@ -38,11 +40,13 @@ namespace OpenGL_Game.Managers
             Escape,
         }
 
-        public InputManager()
+        public InputManager(SceneManager pSceneManager)
         {
+            sceneManager = pSceneManager;
+            centerOfWindow = new Vector2((sceneManager.Bounds.Left + sceneManager.Bounds.Right) / 2,
+                            (sceneManager.Bounds.Top + sceneManager.Bounds.Bottom) / 2);
             controlFlags = new bool[Enum.GetNames(typeof(CONTROLS)).Length];
             controlBindings = new Dictionary<Key, CONTROLS>();
-            PrevMousePos = new Vector2(0, 0);
             DeltaMouse = new Vector2(0, 0);
             LoadControls();
         }
@@ -117,18 +121,22 @@ namespace OpenGL_Game.Managers
 
         private void UpdateMouse()
         {
+            float xT = Mouse.GetCursorState().X;
+            float xY = Mouse.GetCursorState().Y;
             MouseState currentMouseState = Mouse.GetState();
-            DeltaMouse = new Vector2(currentMouseState.X - prevMouseState.X,
-                                     currentMouseState.Y - prevMouseState.Y);
-
+            DeltaMouse = new Vector2(xT - centerOfWindow.X,
+                                     xY - centerOfWindow.Y);
             if (currentMouseState.LeftButton == ButtonState.Released && prevMouseState.LeftButton == ButtonState.Pressed)
                 mouseLeftClick = true;
             else
                 mouseLeftClick = false;
 
-            //Prevents a "Jump" from the mouse on first focus gain
-            if (firstRun) { PrevMousePos = new Vector2(currentMouseState.X, currentMouseState.Y); firstRun = false; return; }
-
+            if (firstRun)
+            {
+                DeltaMouse = Vector2.Zero;
+                firstRun = false;
+                return;
+            }
 
             prevMouseState = currentMouseState;
         }
@@ -148,8 +156,8 @@ namespace OpenGL_Game.Managers
 
         public void UpdateFPSCamera(ref Camera camera, float dt)
         {
-            mouseHAngle += -SENSITIVITY * dt * DeltaMouse.X; //Append a new delta mouse change
-            mouseVAngle += -SENSITIVITY * dt * DeltaMouse.Y;
+            mouseHAngle += (-SENSITIVITY * DeltaMouse.X) * dt; //Append a new delta mouse change
+            mouseVAngle += (-SENSITIVITY * DeltaMouse.Y) * dt;
             mouseVAngle = MathHelper.Clamp(mouseVAngle, -1.4f, 1.4f); //Clamp vertical so we can't look upside down
             Vector3 dir = new Vector3((float)Math.Cos(mouseVAngle) * (float)Math.Sin(mouseHAngle),
                                        (float)Math.Sin(mouseVAngle),
@@ -159,10 +167,8 @@ namespace OpenGL_Game.Managers
                                  0.0f,
                                  (float)Math.Cos(mouseHAngle - MathHelper.PiOver2));
             Vector3 up = Vector3.Cross(right, dir);
-            camera.view = Matrix4.LookAt(camera.cameraPosition, camera.cameraPosition + dir, up);
             camera.cameraDirection = dir; //Update camera dir & up vectors with our new calculated ones
             camera.cameraUp = up;
-            camera.UpdateView(); //Update the view
         }
     }
 }

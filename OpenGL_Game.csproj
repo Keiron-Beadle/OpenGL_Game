@@ -257,7 +257,7 @@
     <Content Include="Geometry\Moon\moon_diffuse.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Skybox\map.png">
+    <Content Include="Geometry\Skybox\SkySkybox.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Geometry\Wraith_Raider_Starship\bmq1.jpg">
