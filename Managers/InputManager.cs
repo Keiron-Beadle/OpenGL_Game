@@ -48,7 +48,7 @@ namespace OpenGL_Game.Managers
             controlFlags = new bool[Enum.GetNames(typeof(CONTROLS)).Length];
             controlBindings = new Dictionary<Key, CONTROLS>();
             DeltaMouse = new Vector2(0, 0);
-            LoadControls();
+            ScriptManager.LoadControls(ref controlBindings);
         }
 
         private void SaveControls()
@@ -97,20 +97,6 @@ namespace OpenGL_Game.Managers
             controlBindings.Add(right,rightC);
 
             SaveControls();
-        }
-
-        private void LoadControls()
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.Load("controls.xml");
-            XmlNode root = null;
-            root = doc.SelectSingleNode("rootElement");
-            foreach (XmlNode n in root.ChildNodes)
-            {
-                CONTROLS c = (CONTROLS)int.Parse(n.Attributes["Control"].Value);
-                Key k = (Key)int.Parse(n.Attributes["Key"].Value);
-                controlBindings.Add(k, c);
-            }
         }
 
         public void Update(FrameEventArgs e)

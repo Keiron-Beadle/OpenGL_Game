@@ -9,6 +9,7 @@ using System.Drawing;
 using System;
 using System.Diagnostics;
 using static OpenGL_Game.Managers.InputManager;
+using System.Collections.Generic;
 
 namespace OpenGL_Game.Scenes
 {
@@ -21,11 +22,12 @@ namespace OpenGL_Game.Scenes
         EntityManager entityManager;
         SystemManager systemManager;
         InputManager inputManager;
+        ScriptManager scriptManager;
         ISystem renderSystem;
 
         //Temp variables
         Entity skyBox;
-        const float cameraVelocity = 2.7f;
+        const float cameraVelocity = 10.7f;
 
         public Camera camera;
 
@@ -37,6 +39,7 @@ namespace OpenGL_Game.Scenes
             entityManager = new EntityManager();
             systemManager = new SystemManager();
             inputManager = new InputManager(sceneManager);
+            scriptManager = new ScriptManager();
             renderSystem = new OpenGLRenderer();
             // Set the title of the window
             sceneManager.Title = "Game";
@@ -55,7 +58,7 @@ namespace OpenGL_Game.Scenes
             GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
             // Set Camera
-            camera = new Camera(new Vector3(0, 4, 7), new Vector3(0, 4, 7), (float)(sceneManager.Width) / (float)(sceneManager.Height), 0.1f, 100f);
+            camera = new Camera(new Vector3(0, 10, 7), new Vector3(0, 4, 7), (float)(sceneManager.Width) / (float)(sceneManager.Height), 0.1f, 100f);
             CreateSystems();
             CreateEntities();
         }
@@ -74,39 +77,7 @@ namespace OpenGL_Game.Scenes
             skyBox.AddComponent(new ComponentGeometry(SKYBOX_TEX_RELPATH, renderSystem));
             entityManager.AddEntity(skyBox);
 
-            //newEntity = new Entity("Moon");
-            //newEntity.AddComponent(new ComponentTransform(-2.5f, 0.0f, 0.0f));
-            //newEntity.AddComponent(new ComponentGeometry("Geometry/Moon/moon.obj", renderSystem));
-            //newEntity.AddComponent(new ComponentRotation(0.0f, 0.5f, 0.0f));
-            //entityManager.AddEntity(newEntity);
-
-            ////Excercise 1 - Add raider starship
-            //starshipEntity = new Entity("Wraith_Raider_Starship");
-            //starshipEntity.AddComponent(new ComponentTransform(new Vector3(2.5f, 0.0f, 0.0f), Vector3.One, Vector3.Zero));
-            //starshipEntity.AddComponent(new ComponentGeometry(STARSHIP_OBJ_RELPATH, renderSystem));
-            //entityManager.AddEntity(starshipEntity);
-
-            ////Excercise 2 - Add intergalactic Starship
-            //intergalacticShip = new Entity("Intergalactic Ship");
-            //intergalacticShip.AddComponent(new ComponentTransform(new Vector3(0.4f, 0.0f, 0.0f), new Vector3(0.2f, 0.2f, 0.2f), Vector3.Zero));
-            //intergalacticShip.AddComponent(new ComponentGeometry(INTERGALACTIC_SHIP_OBJ_RELPATH, renderSystem));
-            ////intergalacticShip.AddComponent(new ComponentVelocity(0.0f, 7.1f, 1.1f)); 
-            //intergalacticShip.AddComponent(new ComponentRotation(0.3f, 0.3f, 0.3f));
-            //entityManager.AddEntity(intergalacticShip);
-
-            ////Exercise 3 - Add custom model, it's kinda sus
-            //sussybaka = new Entity("Sus man");
-            //sussybaka.AddComponent(new ComponentTransform(new Vector3(0.0f, 0.6f, -2.0f), Vector3.One, Vector3.Zero));
-            //sussybaka.AddComponent(new ComponentGeometry(SUSSY_OBJ_RELPATH, renderSystem));
-            //sussybaka.AddComponent(new ComponentRotation(3.0f, 1.9f, 0.5f));
-            //entityManager.AddEntity(sussybaka);
-
-            ////Test Cube Model
-            //testcube = new Entity("TestCube");
-            //testcube.AddComponent(new ComponentTransform(new Vector3(0.0f, 0.6f, -2.0f), Vector3.One, Vector3.Zero));
-            //testcube.AddComponent(new ComponentGeometry(TESTCUBE_OBJ_RELPATH, renderSystem));
-            //testcube.AddComponent(new ComponentRotation(0.0f, 0.5f, 0.0f));
-            //entityManager.AddEntity(testcube);
+            scriptManager.LoadMaze("default.txt", entityManager, renderSystem);
         }
 
         private void CreateSystems()

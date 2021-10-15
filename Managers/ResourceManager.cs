@@ -30,8 +30,8 @@ namespace OpenGL_Game.Managers
         public static IGeometry LoadGeometry(string filename, ISystem renderSystem)
         {
             IGeometry geometry;
-            geometryDictionary.TryGetValue(filename, out geometry);
-            if (geometry == null)
+            bool present = geometryDictionary.TryGetValue(filename, out geometry);
+            if (!present)
             {
                 if (renderSystem is OpenGLRenderer)
                     geometry = new OpenGLGeometry();
