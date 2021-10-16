@@ -8,7 +8,6 @@ uniform mat4 ModelViewProjMat;
 uniform mat4 ModelViewMat;
 uniform mat4 ViewMat;
 uniform mat4 InvModelView;
-uniform vec3 EyePosition;
 
 out vec2 v_TexCoord;
 out vec3 v_Normal;

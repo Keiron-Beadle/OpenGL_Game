@@ -24,7 +24,6 @@ namespace OpenGL_Game.OBJLoader
         public int vbo_verts;
         public int vbo_texs;
         public int vbo_normals;
-        public Vector3 diffuse;  // OBJ NEW
     }
     /// <summary>
     /// This is the object that we use to store our geometry that we will use to render in the game
@@ -34,13 +33,15 @@ namespace OpenGL_Game.OBJLoader
         List<Group> groups = new List<Group>();
 
         string path;
+        public string OverrideTexturePath { get; private set; }
 
         public OpenGLGeometry()
         {
         }
 
-        public void LoadObject(string filename, ISystem renderSystem)
+        public void LoadObject(string filename, ISystem renderSystem, string optionalTextureOverride = null)
         {
+            OverrideTexturePath = optionalTextureOverride;
             OpenGLRenderer renderer = renderSystem as OpenGLRenderer;
             try
             {
@@ -51,7 +52,11 @@ namespace OpenGL_Game.OBJLoader
                 foreach (var group in obj.Groups)
                 {
                     Group newGroup = new Group();
-                    if (group.Material.DiffuseTextureMap != null)
+                    if (optionalTextureOverride != null) //If I input a texture path not assigned by the .mtl I will override that
+                    {
+                        newGroup.texture = ResourceManager.LoadTexture(optionalTextureOverride, renderer);
+                    }
+                    else if (group.Material.DiffuseTextureMap != null)
                     {
                         // Q: Does the DiffuseTextureMap have a full folder path?
                         int index = group.Material.DiffuseTextureMap.LastIndexOf('\\');
@@ -174,7 +179,7 @@ namespace OpenGL_Game.OBJLoader
                     }
 
                     // Diffuse colour   // OBJ NEW
-                    newGroup.diffuse = new Vector3(group.Material.DiffuseColor.X, group.Material.DiffuseColor.Y, group.Material.DiffuseColor.Z); ;
+                    //newGroup.diffuse = new Vector3(group.Material.DiffuseColor.X, group.Material.DiffuseColor.Y, group.Material.DiffuseColor.Z); ;
 
                     groups.Add(newGroup);
                     GL.BindVertexArray(0);
@@ -200,13 +205,12 @@ namespace OpenGL_Game.OBJLoader
         }
 
         // Render this object
-        public void Render(int uniform_diffuse)  // OBJ CHANGED
+        public void Render()  // OBJ CHANGED
         {
             foreach (var group in groups)
             {
                 if (group.texture != null)
                 {
-                    GL.Uniform3(uniform_diffuse, group.diffuse);    // OBJ NEW
                     GL.BindVertexArray(group.vao_Handle);
                     GL.BindTexture(TextureTarget.Texture2D, group.texture.ID);
                     GL.DrawArrays(group.primitiveType, 0, group.numberOfFaces * group.primitiveScale);

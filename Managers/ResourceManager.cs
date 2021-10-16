@@ -27,16 +27,24 @@ namespace OpenGL_Game.Managers
             textureDictionary.Clear();
         }
 
-        public static IGeometry LoadGeometry(string filename, ISystem renderSystem)
+        public static IGeometry LoadGeometry(string filename, ISystem renderSystem, string optionalTextureOverride = null)
         {
             IGeometry geometry;
-            bool present = geometryDictionary.TryGetValue(filename, out geometry);
-            if (!present)
+            string overrideString = optionalTextureOverride == null ? "null" : optionalTextureOverride;
+            bool present = geometryDictionary.TryGetValue(filename + overrideString, out geometry);
+
+            if (present) //We need to check if the geometry has the same texture as well, otherwise we need to load a new geometry with this new texture
+            {
+                if (optionalTextureOverride != ((OpenGLGeometry)geometry).OverrideTexturePath)
+                    present = false;
+            }
+
+            if (!present) //If geometry not present in dictionary, we load it
             {
                 if (renderSystem is OpenGLRenderer)
                     geometry = new OpenGLGeometry();
-                geometry.LoadObject(filename, renderSystem);
-                geometryDictionary.Add(filename, geometry);
+                geometry.LoadObject(filename, renderSystem, optionalTextureOverride);
+                geometryDictionary.Add(filename + overrideString, geometry);
             }
 
             return geometry;

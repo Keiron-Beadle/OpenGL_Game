@@ -47,7 +47,7 @@ namespace OpenGL_Game.Scenes
             sceneManager.renderer = Render;
             sceneManager.updater = Update;
             // Set Keyboard events to go to a method in this class
-            //sceneManager.CursorVisible = false;
+            sceneManager.CursorVisible = false;
             sceneManager.CursorGrabbed = true;
             // Enable Depth Testing
             GL.Enable(EnableCap.DepthTest);

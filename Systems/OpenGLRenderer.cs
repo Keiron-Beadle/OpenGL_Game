@@ -21,8 +21,6 @@ namespace OpenGL_Game.Systems
         private int uniform_mmodelviewproj;
         private int uniform_mmodelview;
         private int uniform_mview;
-        private int uniform_diffuse;  // OBJ NEW
-        private int uniform_EyePosition;
 
         public OpenGLRenderer()
         {
@@ -36,8 +34,6 @@ namespace OpenGL_Game.Systems
             uniform_stex = GL.GetUniformLocation(pgmID, "s_texture");
             uniform_mmodelviewproj = GL.GetUniformLocation(pgmID, "ModelViewProjMat");
             uniform_mmodelview = GL.GetUniformLocation(pgmID, "ModelViewMat");
-            uniform_diffuse = GL.GetUniformLocation(pgmID, "v_diffuse");     // OBJ NEW
-            uniform_EyePosition = GL.GetUniformLocation(pgmID, "EyePosition");
             uniform_mview = GL.GetUniformLocation(pgmID, "ViewMat");
         }
 
@@ -78,8 +74,6 @@ namespace OpenGL_Game.Systems
                 Matrix4 overallRot = xRot * yRot * zRot;
                 Matrix4 model = Matrix4.CreateScale(scale) * overallRot * Matrix4.CreateTranslation(position);
 
-                GL.Uniform3(uniform_EyePosition, GameScene.gameInstance.camera.cameraPosition);
-
                 if (entity.Name == "Skybox")
                 {
                     DrawSkybox(geometry);
@@ -111,7 +105,7 @@ namespace OpenGL_Game.Systems
             GL.UniformMatrix4(uniform_mmodelviewproj, false, ref modelViewProjection);
             GL.UniformMatrix4(uniform_mview, false, ref GameScene.gameInstance.camera.view);
 
-            geometry.Render(uniform_diffuse);   // OBJ CHANGED
+            geometry.Render();   // OBJ CHANGED
 
             GL.UseProgram(0);
         }

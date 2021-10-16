@@ -6,7 +6,6 @@ in vec3 v_LightPos[4];
 in vec3 v_FragPos;
 
 uniform sampler2D s_texture;
-uniform vec3 v_diffuse;	// OBJ NEW
 
 out vec4 Color;
  

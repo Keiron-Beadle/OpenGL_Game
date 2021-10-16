@@ -15,6 +15,8 @@ namespace OpenGL_Game.Managers
 {
     class ScriptManager
     {
+        Random rnd = new Random();
+
         /// <summary>
         /// Used in the main game scene, this is called to populate a List of walls
         /// via reading in a map in the form of a .txt file
@@ -40,7 +42,7 @@ namespace OpenGL_Game.Managers
                     foreach (char c in line)
                     {
                         if (c == ' ') { col++; continue; }
-                        Entity floorboard = new Entity("Floor" + col + row); //needs unique name 
+                        Entity floorboard = new Entity("Floor" + col + '.' + row); //needs unique name 
                         floorboard.AddComponent(new ComponentGeometry(WALL_OBJ_RELPATH, renderSystem));
                         Vector3 position = new Vector3(col * wallScale, 0.0f, row * wallScale);
                         Vector3 scale = new Vector3(33.333f, 0.06f, 1.0f);
@@ -70,24 +72,29 @@ namespace OpenGL_Game.Managers
                     foreach (char c in line)
                     {
                         if (c == ',') { col++; continue; }
-                        Entity newWall = new Entity("Wall" + col + row); //needs unique name 
-                        if (c == 'o')
+                        Entity newWall = new Entity("wall" + row  + '.' + col ); //needs unique name 
+                        if (c == 'o' || c == 'l')
                             newWall.AddComponent(new ComponentGeometry(CONNECTOR_OBJ_RELPATH, renderSystem));
+                        else if (c == 'x')
+                            newWall.AddComponent(new ComponentGeometry(WALL_OBJ_RELPATH, renderSystem, "Textures\\marble.jpg"));
                         else
                             newWall.AddComponent(new ComponentGeometry(WALL_OBJ_RELPATH, renderSystem));
                         Vector3 position = new Vector3(col * wallScale, 0.0f, row * wallScale);
                         Vector3 rotation;
                         Vector3 scale;
-                        if (c == '-')
+                        if (c == '-' || c == 'l') 
                             rotation = new Vector3(0.0f, -MathHelper.PiOver2, 0.0f);
                         else
                             rotation = Vector3.Zero;
+
                         if (c == 'x')
-                            scale = new Vector3(35.0f, 1.0f, 1.0f);
+                            scale = new Vector3(35.0f, 0.5f, 1.0f);
                         else if (c == ' ')
                             scale = new Vector3(33.333f, 0.06f, 1.0f);
+                        else if (c == 'o' || c == 'l')
+                            scale = new Vector3(1.0f, 1.2f, 1.0f);
                         else
-                            scale = Vector3.One;
+                            scale = new Vector3(1.0f, 0.5f, 1.0f);
 
                         newWall.AddComponent(new ComponentTransform(position, scale, rotation));
                         entityManager.AddEntity(newWall);
