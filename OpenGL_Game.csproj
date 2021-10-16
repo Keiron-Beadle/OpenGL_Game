@@ -158,10 +158,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Geometry\ConnectorWall\connector.mtl">
+    <None Include="Geometry\Connector\connector.mtl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Geometry\ConnectorWall\connector.obj">
+    <None Include="Geometry\Connector\connector.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Geometry\Intergalactic_Ship\Intergalactic_Spaceship.mtl">
@@ -240,22 +240,10 @@
     <Content Include="controls.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="defaultFloor.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="default.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Geometry\Wall\moss.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\cobblestone_diffuse.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Textures\cobblestone_normal.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Geometry\ConnectorWall\connectorMoss.jpg">
+    <Content Include="Geometry\Connector\connectorMoss.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Geometry\Default\default.png">
@@ -302,6 +290,9 @@
     </Content>
     <Content Include="Geometry\Wraith_Raider_Starship\yx1_02_01_01.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="map.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup />

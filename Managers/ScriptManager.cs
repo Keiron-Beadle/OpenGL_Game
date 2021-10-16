@@ -15,115 +15,116 @@ namespace OpenGL_Game.Managers
 {
     class ScriptManager
     {
-        private Vector3 worldTranslate;
-        private float modelScale; 
-
-        public ScriptManager()
+        /// <summary>
+        /// Used in the main game scene, this is called to populate a List of walls
+        /// via reading in a map in the form of a .xml file
+        /// </summary>
+        public void LoadMaze(string xmlFilePath, EntityManager entityManager, ISystem renderSystem)
         {
-            worldTranslate = new Vector3(0,0,0);
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xmlFilePath);
+            float modelScale;
+            Vector3 worldTranslate;
+            modelScale = float.Parse(doc.SelectSingleNode("MapConfig/ModelScale").InnerText);
+            XmlNode worldNode = doc.SelectSingleNode("MapConfig/WorldTranslate");
+            worldTranslate = new Vector3( float.Parse(worldNode.Attributes["XTranslate"].Value), 0.0f,
+                                            float.Parse(worldNode.Attributes["ZTranslate"].Value));
+
+            XmlNodeList objectNodeList = doc.SelectSingleNode("MapConfig/Objects").ChildNodes;
+            foreach (XmlNode n in objectNodeList)
+            {
+                Entity temp = new Entity(n.Attributes["Name"].Value);
+                AddTransformComponent(ref temp, n.Attributes, worldTranslate);
+                AddGeometryComponent(ref temp, n.Attributes["Type"].Value, renderSystem);
+                entityManager.AddEntity(temp);
+            }
         }
 
         /// <summary>
-        /// Used in the main game scene, this is called to populate a List of walls
-        /// via reading in a map in the form of a .txt file
+        /// Adds a geometry component to an entity by the type of the object
         /// </summary>
-        /// <param name="pFilePath"></param>
-        /// <param name="walls"></param>
-        public void LoadMaze(string pFilePath, float pModelScale, EntityManager entityManager, ISystem renderSystem)
+        /// <param name="temp"></param>
+        /// <param name="type"></param>
+        /// <param name="renderSystem"></param>
+        private void AddGeometryComponent(ref Entity temp, string type, ISystem renderSystem)
         {
-            modelScale = pModelScale;
-            SetWorldTranslate(pFilePath);
-            LoadWalls(pFilePath, entityManager, renderSystem);
-            LoadFloor("defaultFloor.txt", entityManager, renderSystem);
+            switch (type)
+            {
+                case "Corner":
+                case "XWall":
+                case "ZWall":
+                case "Floor":
+                    temp.AddComponent(new ComponentGeometry("Geometry/Wall/wall.obj", renderSystem));
+                    break;
+                case "XConnector":
+                case "ZConnector":
+                    temp.AddComponent(new ComponentGeometry("Geometry/Connector/connector.obj", renderSystem));
+                    break;
+                default:
+                    throw new Exception("Undefined type when forming geometry component for .xml map object");
+            }
+
+            //Temporarily removed while I create the other models / textures. 
+
+            //switch (type)
+            //{
+            //    case "Corner":
+            //        temp.AddComponent(new ComponentGeometry("Geometry/Corner/corner.obj", renderSystem));
+            //        break;
+            //    case "XWall":
+            //    case "ZWall":
+            //        temp.AddComponent(new ComponentGeometry("Geometry/Wall/wall.obj", renderSystem));
+            //        break;
+            //    case "XConnector":
+            //    case "ZConnector":
+            //        temp.AddComponent(new ComponentGeometry("Geometry/Connector/connector.obj", renderSystem));
+            //        break;
+            //    case "Floor":
+            //        temp.AddComponent(new ComponentGeometry("Geometry/Floor/floor.obj", renderSystem));
+            //        break;
+            //    default:
+            //        throw new Exception("Undefined type when forming geometry component for .xml map object");
+            //}
         }
 
-        private void SetWorldTranslate(string pFilePath)
+        /// <summary>
+        /// Adds a transform component to an entity by reading attributes from an XmlNode
+        /// </summary>
+        /// <param name="temp"></param>
+        /// <param name="attributes"></param>
+        /// <param name="worldTranslate"></param>
+        private void AddTransformComponent(ref Entity temp, XmlAttributeCollection attributes, Vector3 worldTranslate)
         {
-            int rowCount = 0, colCount = 0;
-            using (StreamReader s = new StreamReader(pFilePath))
+            Vector3 position = new Vector3( float.Parse(attributes["XPos"].Value), 0.0f,
+                                            float.Parse(attributes["ZPos"].Value));
+            Vector3 scale = Vector3.One;
+            Vector3 rotation = Vector3.Zero;
+            switch (attributes["Type"].Value)
             {
-                string line;
-                while ((line = s.ReadLine()) != null)
-                {
-                    if (line.Length > colCount)
-                        colCount = line.Length;
-                    rowCount++;
-                }
+                case "Floor":
+                    scale = new Vector3(33.333f, 0.06f, 1.0f);
+                    break;
+                case "Corner":
+                    scale = new Vector3(35.0f, 0.7f, 1.0f);
+                    break;
+                case "XWall":
+                    scale = new Vector3(1.0f, 0.5f, 1.0f);
+                    rotation = new Vector3(0.0f, -MathHelper.PiOver2, 0.0f);
+                    break;
+                case "ZWall":
+                    scale = new Vector3(1.0f, 0.5f, 1.0f);
+                    break;
+                case "XConnector":
+                    scale = new Vector3(1.0f, 1.2f, 1.0f);
+                    break;
+                case "ZConnector":
+                    scale = new Vector3(1.0f, 1.2f, 1.0f);
+                    rotation = new Vector3(0.0f, -MathHelper.PiOver2, 0.0f);
+                    break;
+                default:
+                    throw new Exception("Undefined type of object in map .xml");
             }
-            worldTranslate = new Vector3( -colCount * modelScale / 2 ,0.0f, -rowCount * modelScale / 2 );
-        }
-
-        private void LoadFloor(string pFilePath, EntityManager entityManager, ISystem renderSystem)
-        {
-            const string WALL_OBJ_RELPATH = "Geometry/Wall/wall.obj";
-            int col = 0, row = 0;
-            using (StreamReader sRead = new StreamReader(pFilePath))
-            {
-                string line;
-                while ((line = sRead.ReadLine()) != null)
-                {
-                    foreach (char c in line)
-                    {
-                        if (c == ' ') { col++; continue; }
-                        Entity floorboard = new Entity("Floor" + col + '.' + row); //needs unique name 
-                        floorboard.AddComponent(new ComponentGeometry(WALL_OBJ_RELPATH, renderSystem));
-                        Vector3 position = new Vector3(col * modelScale, 0.0f, row * modelScale);
-                        Vector3 scale = new Vector3(33.333f, 0.06f, 1.0f);
-
-                        floorboard.AddComponent(new ComponentTransform(position + worldTranslate, scale, Vector3.Zero));
-                        entityManager.AddEntity(floorboard);
-                        col++;
-                    }
-                    col = 0;
-                    row++;
-                }
-            }
-        }
-
-        private void LoadWalls(string pFilePath, EntityManager entityManager, ISystem renderSystem)
-        {
-            const string WALL_OBJ_RELPATH = "Geometry/Wall/wall.obj";
-            const string CONNECTOR_OBJ_RELPATH = "Geometry/ConnectorWall/connector.obj";
-            int col = 0, row = 0;
-
-            using (StreamReader sRead = new StreamReader(pFilePath))
-            {
-                string line;
-                while ((line = sRead.ReadLine()) != null)
-                {
-                    foreach (char c in line)
-                    {
-                        if (c == ',') { col++; continue; }
-                        Entity newWall = new Entity("wall" + row  + '.' + col ); //needs unique name 
-                        if (c == 'o' || c == 'l')
-                            newWall.AddComponent(new ComponentGeometry(CONNECTOR_OBJ_RELPATH, renderSystem));
-                        else
-                            newWall.AddComponent(new ComponentGeometry(WALL_OBJ_RELPATH, renderSystem));
-                        Vector3 position = new Vector3(col * modelScale, 0.0f, row * modelScale);
-                        Vector3 rotation;
-                        Vector3 scale;
-                        if (c == '-' || c == 'l') 
-                            rotation = new Vector3(0.0f, -MathHelper.PiOver2, 0.0f);
-                        else
-                            rotation = Vector3.Zero;
-
-                        if (c == 'x')
-                            scale = new Vector3(35.0f, 0.7f, 1.0f);
-                        else if (c == ' ')
-                            scale = new Vector3(33.333f, 0.06f, 1.0f);
-                        else if (c == 'o' || c == 'l')
-                            scale = new Vector3(1.0f, 1.2f, 1.0f);
-                        else
-                            scale = new Vector3(1.0f, 0.5f, 1.0f);
-
-                        newWall.AddComponent(new ComponentTransform(position + worldTranslate, scale, rotation));
-                        entityManager.AddEntity(newWall);
-                        col++;
-                    }
-                    col = 0;
-                    row++;
-                }
-            }
+            temp.AddComponent(new ComponentTransform(position + worldTranslate, scale, rotation));
         }
 
         /// <summary>

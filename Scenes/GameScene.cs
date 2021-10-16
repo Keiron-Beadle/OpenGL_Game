@@ -75,7 +75,7 @@ namespace OpenGL_Game.Scenes
             skyBox.AddComponent(new ComponentGeometry(SKYBOX_TEX_RELPATH, renderSystem));
             entityManager.AddEntity(skyBox);
 
-            scriptManager.LoadMaze("default.txt", 4.0f, entityManager, renderSystem);
+            scriptManager.LoadMaze("map.xml", entityManager, renderSystem);
         }
 
         private void CreateSystems()
