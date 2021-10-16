@@ -59,8 +59,7 @@ namespace OpenGL_Game.Managers
         }
 
         /// <summary>
-        /// Adds a velocity component to the entity,
-        /// does not add velocity if the magnitude of vector is == 0
+        /// Adds a velocity component to the entity
         /// </summary>
         /// <param name="temp"></param>
         /// <param name="attributes"></param>
@@ -69,13 +68,11 @@ namespace OpenGL_Game.Managers
             Vector3 velocity = new Vector3(float.Parse(attributes["XVel"].Value),
                                             float.Parse(attributes["YVel"].Value),
                                             float.Parse(attributes["ZVel"].Value));
-            if (velocity.Length == 0) return; //If no velocity, don't bother adding the component
             temp.AddComponent(new ComponentVelocity(velocity));
         }
         
         /// <summary>
-        /// Adds a rotation component to the entity,
-        /// does not add rotation if magnitude of vector == 0
+        /// Adds a rotation component to the entity
         /// </summary>
         /// <param name="temp"></param>
         /// <param name="attributes"></param>
@@ -84,7 +81,6 @@ namespace OpenGL_Game.Managers
             Vector3 rotation = new Vector3(float.Parse(attributes["XRot"].Value),
                                             float.Parse(attributes["YRot"].Value),
                                             float.Parse(attributes["ZRot"].Value));
-            if (rotation.Length == 0) return; //If no rotation, don't bother adding the component
             temp.AddComponent(new ComponentRotation(rotation));
         }
 
