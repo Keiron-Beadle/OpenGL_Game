@@ -31,13 +31,61 @@ namespace OpenGL_Game.Managers
                                             float.Parse(worldNode.Attributes["ZTranslate"].Value));
 
             XmlNodeList objectNodeList = doc.SelectSingleNode("MapConfig/Objects").ChildNodes;
+            Random rnd = new Random();
             foreach (XmlNode n in objectNodeList)
             {
                 Entity temp = new Entity(n.Attributes["Name"].Value);
-                AddTransformComponent(ref temp, n.Attributes, worldTranslate);
-                AddGeometryComponent(ref temp, n.Attributes["Type"].Value, renderSystem);
+                XmlNodeList components = n.ChildNodes;
+                foreach (XmlNode component in components)
+                {
+                    switch (component.Name)
+                    {
+                        case "Transform":
+                            AddTransformComponent(ref temp, component.Attributes, worldTranslate);
+                            break;
+                        case "Geometry":
+                            AddGeometryComponent(ref temp, component.Attributes["Type"].Value, renderSystem);
+                            break;
+                        case "Rotation":
+                            AddRotationComponent(ref temp, component.Attributes);
+                            break;
+                        case "Velocity":
+                            AddVelocityComponent(ref temp, component.Attributes);
+                            break;
+                    }
+                }
                 entityManager.AddEntity(temp);
             }
+        }
+
+        /// <summary>
+        /// Adds a velocity component to the entity,
+        /// does not add velocity if the magnitude of vector is == 0
+        /// </summary>
+        /// <param name="temp"></param>
+        /// <param name="attributes"></param>
+        private void AddVelocityComponent(ref Entity temp, XmlAttributeCollection attributes)
+        {
+            Vector3 velocity = new Vector3(float.Parse(attributes["XVel"].Value),
+                                            float.Parse(attributes["YVel"].Value),
+                                            float.Parse(attributes["ZVel"].Value));
+            if (velocity.Length == 0) return; //If no velocity, don't bother adding the component
+            temp.AddComponent(new ComponentVelocity(velocity));
+        }
+        
+        /// <summary>
+        /// Adds a rotation component to the entity,
+        /// does not add rotation if magnitude of vector == 0
+        /// </summary>
+        /// <param name="temp"></param>
+        /// <param name="attributes"></param>
+        private void AddRotationComponent(ref Entity temp, XmlAttributeCollection attributes)
+        {
+            Vector3 rotation = new Vector3(float.Parse(attributes["XRot"].Value),
+                                            float.Parse(attributes["YRot"].Value),
+                                            float.Parse(attributes["ZRot"].Value));
+            if (rotation.Length == 0) return; //If no rotation, don't bother adding the component
+            temp.AddComponent(new ComponentRotation(rotation));
         }
 
         /// <summary>
@@ -95,7 +143,8 @@ namespace OpenGL_Game.Managers
         /// <param name="worldTranslate"></param>
         private void AddTransformComponent(ref Entity temp, XmlAttributeCollection attributes, Vector3 worldTranslate)
         {
-            Vector3 position = new Vector3( float.Parse(attributes["XPos"].Value), 0.0f,
+            Vector3 position = new Vector3( float.Parse(attributes["XPos"].Value),
+                                            float.Parse(attributes["YPos"].Value),
                                             float.Parse(attributes["ZPos"].Value));
             Vector3 scale = Vector3.One;
             Vector3 rotation = Vector3.Zero;

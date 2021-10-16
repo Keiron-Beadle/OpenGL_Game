@@ -39,6 +39,7 @@ namespace OpenGL_Game.Systems
         {
             foreach (Entity entity in entities)
             {
+                if ((entity.Mask & RotationMASK) != RotationMASK) continue;
                 List<IComponent> components = entity.Components;
 
                 IComponent transformComponent = components.Find(delegate (IComponent component)
@@ -61,6 +62,9 @@ namespace OpenGL_Game.Systems
         {
             foreach (Entity entity in entities)
             {
+                //Not a perfect solution, still need to run through entity list when dealing with
+                //multiple mask systems, although it's a much SMALLER list. 
+                if ((entity.Mask & MotionMASK) != MotionMASK) continue; 
                 List<IComponent> components = entity.Components;
 
                 IComponent transformComponent = components.Find(delegate (IComponent component)
