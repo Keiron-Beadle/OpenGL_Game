@@ -75,14 +75,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
-    <Compile Include="Components\ComponentRotation.cs" />
-    <Compile Include="Components\ComponentShader.cs" />
-    <Compile Include="Components\ComponentShaderBasic.cs" />
+    <Compile Include="Components\Physics\ComponentRotation.cs" />
+    <Compile Include="Components\Shader\ComponentShader.cs" />
+    <Compile Include="Components\Shader\ComponentShaderBasic.cs" />
+    <Compile Include="Components\Shader\ComponentShaderPointLight.cs" />
     <Compile Include="Components\ComponentTransform.cs" />
-    <Compile Include="Components\ComponentVelocity.cs" />
-    <Compile Include="Components\Geometry.cs" />
+    <Compile Include="Components\Physics\ComponentVelocity.cs" />
     <Compile Include="Managers\InputManager.cs" />
     <Compile Include="Managers\ScriptManager.cs" />
+    <Compile Include="Objects\LightStructs.cs" />
     <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Common\StringExtensions.cs" />
     <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Data\DataStore\DataStore.cs" />
     <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Data\DataStore\IDataStore.cs" />
@@ -127,8 +128,8 @@
     <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\TypeParserBase.cs" />
     <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\UseMaterialParser.cs" />
     <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\VertexParser.cs" />
-    <Compile Include="Components\ComponentGeometry.cs" />
-    <Compile Include="Components\ComponentTexture.cs" />
+    <Compile Include="Components\Render\ComponentGeometry.cs" />
+    <Compile Include="Components\Render\ComponentTexture.cs" />
     <Compile Include="Managers\SceneManager.cs" />
     <Compile Include="Objects\Entity.cs" />
     <Compile Include="Managers\EntityManager.cs" />
@@ -220,6 +221,12 @@
     </None>
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
+    <None Include="Shaders\fsPointLight.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Shaders\vsPointLight.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\fs.glsl">

@@ -15,12 +15,10 @@ namespace OpenGL_Game.Systems
 {
     class OpenGLRenderer : SystemRender
     {
-
         public OpenGLRenderer()
         {
             Name = "OpenGL Renderer";
         }
-
 
         public override void OnAction(ComponentTypes currentMask)
         {

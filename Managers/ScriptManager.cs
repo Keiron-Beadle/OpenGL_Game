@@ -27,9 +27,30 @@ namespace OpenGL_Game.Managers
             Vector3 worldTranslate;
             modelScale = float.Parse(doc.SelectSingleNode("MapConfig/ModelScale").InnerText);
             XmlNode worldNode = doc.SelectSingleNode("MapConfig/WorldTranslate");
-            worldTranslate = new Vector3( float.Parse(worldNode.Attributes["XTranslate"].Value), 0.0f,
+            worldTranslate = new Vector3(float.Parse(worldNode.Attributes["XTranslate"].Value), 0.0f,
                                             float.Parse(worldNode.Attributes["ZTranslate"].Value));
 
+            LoadLights(doc, worldTranslate);
+            LoadObjects(entityManager, renderSystem, doc, worldTranslate);
+        }
+
+        private void LoadLights(XmlDocument doc, Vector3 worldTranslate)
+        {
+            XmlNodeList listLights = doc.SelectSingleNode("MapConfig/Lights").ChildNodes;
+            foreach (XmlNode n in listLights)
+            {
+                float xpos = float.Parse(n.Attributes["PosX"].Value);
+                float ypos = float.Parse(n.Attributes["PosY"].Value);
+                float zpos = float.Parse(n.Attributes["PosZ"].Value);
+
+                Vector3 pos = new Vector3(xpos, ypos, zpos);
+                
+                ComponentShaderPointLight.AddLight(pos);
+            }
+        }
+
+        private void LoadObjects(EntityManager entityManager, SystemRender renderSystem, XmlDocument doc, Vector3 worldTranslate)
+        {
             XmlNodeList objectNodeList = doc.SelectSingleNode("MapConfig/Objects").ChildNodes;
             Random rnd = new Random();
             foreach (XmlNode n in objectNodeList)
@@ -44,7 +65,8 @@ namespace OpenGL_Game.Managers
                             AddTransformComponent(ref temp, component.Attributes, worldTranslate);
                             break;
                         case "Geometry":
-                            AddGeometryComponent(ref temp, component.Attributes["Type"].Value, renderSystem);
+                            AddGeometryComponent(ref temp, n.Attributes["Type"].Value, renderSystem);
+                            AddShaderComponent(ref temp, n.Attributes["Type"].Value, renderSystem);
                             break;
                         case "Rotation":
                             AddRotationComponent(ref temp, component.Attributes);
@@ -53,8 +75,25 @@ namespace OpenGL_Game.Managers
                             AddVelocityComponent(ref temp, component.Attributes);
                             break;
                     }
+
                 }
+
                 entityManager.AddEntity(temp);
+            }
+        }
+
+        private void AddShaderComponent(ref Entity temp, string type, SystemRender renderSystem)
+        {
+            switch (type)
+            {
+                case "Wall":
+                    //temp.AddComponent(new ComponentShaderBasic("Shaders/vs.glsl", "Shaders/fs.glsl"));
+                    //break;
+                case "Corner":
+                case "Connector":
+                case "Floor":
+                    temp.AddComponent(new ComponentShaderPointLight("Shaders/vsPointLight.glsl", "Shaders/fsPointLight.glsl"));
+                    break;
             }
         }
 
@@ -102,15 +141,6 @@ namespace OpenGL_Game.Managers
                 Console.WriteLine("Error loading geometry component from xml file: " + e.Message);
             }
 
-            switch (type)
-            {
-                case "Wall":
-                case "Corner":
-                case "Connector":
-                case "Floor":
-                    temp.AddComponent(new ComponentShaderBasic("Shaders/vs.glsl", "Shaders/fs.glsl"));
-                    break;
-            }
         }
 
         /// <summary>
