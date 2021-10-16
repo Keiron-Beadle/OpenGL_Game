@@ -28,7 +28,7 @@ namespace OpenGL_Game.Scenes
         SystemPhysics physicsSystem; //System to apply motion & do collision detection & response
 
         public Camera camera;
-        const float cameraVelocity = 10.7f;
+        const float cameraVelocity = 2.7f;
 
         public static GameScene gameInstance;
 
@@ -58,7 +58,7 @@ namespace OpenGL_Game.Scenes
             GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
             // Set Camera
-            camera = new Camera(new Vector3(0, 2.23f, 0), new Vector3(0, 2.23f, 5), (float)(sceneManager.Width) / (float)(sceneManager.Height), 0.1f, 100f);
+            camera = new Camera(new Vector3(0, 1.0f, 0), new Vector3(0, 2.23f, 5), (float)(sceneManager.Width) / (float)(sceneManager.Height), 0.1f, 100f);
             CreateEntities();
             CreateSystems();
         }
@@ -74,6 +74,7 @@ namespace OpenGL_Game.Scenes
             Entity skyBox = new Entity("Skybox"); //Skybox needs to be rendered first, as Depth first is disabled for the draw
             skyBox.AddComponent(new ComponentTransform(0.0f, 0.0f, 0.0f));
             skyBox.AddComponent(new ComponentGeometry(SKYBOX_TEX_RELPATH, renderSystem));
+            skyBox.AddComponent(new ComponentShaderBasic("Shaders/vs.glsl", "Shaders/fs.glsl"));
             entityManager.AddEntity(skyBox);
 
             scriptManager.LoadMaze("map.xml", entityManager, renderSystem);

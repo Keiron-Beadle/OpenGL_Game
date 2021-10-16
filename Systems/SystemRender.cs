@@ -16,11 +16,11 @@ namespace OpenGL_Game.Systems
         public SystemRender()
         {
             Name = "System Render";
-            masks.Add(ComponentTypes.COMPONENT_TRANSFORM | ComponentTypes.COMPONENT_GEOMETRY);
+            masks.Add(ComponentTypes.COMPONENT_TRANSFORM | ComponentTypes.COMPONENT_GEOMETRY | ComponentTypes.COMPONENT_SHADER);
         }
 
         public abstract ITexture LoadTexture(string filepath, ref Dictionary<string, ITexture> textureDictionary);
-        public abstract void Draw(Matrix4 mat4, OpenGLGeometry geom);
+        public abstract void Draw(Matrix4 mat4, OpenGLGeometry geom, ComponentShader shader);
   
     }
 }

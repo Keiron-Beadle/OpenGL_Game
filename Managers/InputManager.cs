@@ -24,7 +24,7 @@ namespace OpenGL_Game.Managers
         private bool firstRun = true;
         float mouseHAngle = 0.0f;
         float mouseVAngle = 0.0f;
-        const float SENSITIVITY = 0.5f;
+        const float SENSITIVITY = 0.3f;
 
         //Properties
         public Vector2 DeltaMouse { get; private set; }

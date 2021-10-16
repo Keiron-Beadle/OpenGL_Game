@@ -33,15 +33,13 @@ namespace OpenGL_Game.OBJLoader
         List<Group> groups = new List<Group>();
 
         string path;
-        public string OverrideTexturePath { get; private set; }
 
         public OpenGLGeometry()
         {
         }
 
-        public void LoadObject(string filename, SystemRender renderSystem, string optionalTextureOverride = null)
+        public void LoadObject(string filename, SystemRender renderSystem)
         {
-            OverrideTexturePath = optionalTextureOverride;
             OpenGLRenderer renderer = renderSystem as OpenGLRenderer;
             try
             {
@@ -52,11 +50,7 @@ namespace OpenGL_Game.OBJLoader
                 foreach (var group in obj.Groups)
                 {
                     Group newGroup = new Group();
-                    if (optionalTextureOverride != null) //If I input a texture path not assigned by the .mtl I will override that
-                    {
-                        newGroup.texture = ResourceManager.LoadTexture(optionalTextureOverride, renderer);
-                    }
-                    else if (group.Material.DiffuseTextureMap != null)
+                    if (group.Material.DiffuseTextureMap != null)
                     {
                         // Q: Does the DiffuseTextureMap have a full folder path?
                         int index = group.Material.DiffuseTextureMap.LastIndexOf('\\');

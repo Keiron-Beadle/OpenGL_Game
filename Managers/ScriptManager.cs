@@ -86,6 +86,7 @@ namespace OpenGL_Game.Managers
 
         /// <summary>
         /// Adds a geometry component to an entity by the type of the object
+        /// also adds the relative shader to the entity.
         /// </summary>
         /// <param name="temp"></param>
         /// <param name="type"></param>
@@ -101,27 +102,15 @@ namespace OpenGL_Game.Managers
                 Console.WriteLine("Error loading geometry component from xml file: " + e.Message);
             }
 
-            //Temporarily removed while I create the other models / textures. 
-
-            //switch (type)
-            //{
-            //    case "Corner":
-            //        temp.AddComponent(new ComponentGeometry("Geometry/Corner/corner.obj", renderSystem));
-            //        break;
-            //    case "XWall":
-            //    case "ZWall":
-            //        temp.AddComponent(new ComponentGeometry("Geometry/Wall/wall.obj", renderSystem));
-            //        break;
-            //    case "XConnector":
-            //    case "ZConnector":
-            //        temp.AddComponent(new ComponentGeometry("Geometry/Connector/connector.obj", renderSystem));
-            //        break;
-            //    case "Floor":
-            //        temp.AddComponent(new ComponentGeometry("Geometry/Floor/floor.obj", renderSystem));
-            //        break;
-            //    default:
-            //        throw new Exception("Undefined type when forming geometry component for .xml map object");
-            //}
+            switch (type)
+            {
+                case "Wall":
+                case "Corner":
+                case "Connector":
+                case "Floor":
+                    temp.AddComponent(new ComponentShaderBasic("Shaders/vs.glsl", "Shaders/fs.glsl"));
+                    break;
+            }
         }
 
         /// <summary>

@@ -5,6 +5,7 @@ using System.Drawing.Imaging;
 using OpenTK.Graphics.OpenGL;
 using OpenGL_Game.OBJLoader;
 using OpenGL_Game.Systems;
+using System.IO;
 
 namespace OpenGL_Game.Managers
 {
@@ -12,6 +13,7 @@ namespace OpenGL_Game.Managers
     {
         static Dictionary<string, IGeometry> geometryDictionary = new Dictionary<string, IGeometry>();
         static Dictionary<string, ITexture> textureDictionary = new Dictionary<string, ITexture>();
+        static Dictionary<string, int> shaderDictionary = new Dictionary<string, int>();
 
         public static void RemoveAllAssets()
         {
@@ -25,6 +27,11 @@ namespace OpenGL_Game.Managers
                 texture.Value.DeleteTexture();
             }
             textureDictionary.Clear();
+            foreach(var shader in shaderDictionary)
+            {
+                GL.DeleteShader(shader.Value);
+            }
+            shaderDictionary.Clear();
         }
 
         public static IGeometry LoadGeometry(string filename, SystemRender renderSystem)
@@ -48,6 +55,23 @@ namespace OpenGL_Game.Managers
                 throw new ArgumentException(filename);
 
             return renderSystem.LoadTexture(filename, ref textureDictionary);
+        }
+
+        public static int LoadOpenGLShader(string shaderSource, ShaderType type)
+        {
+            int id;
+            shaderDictionary.TryGetValue(shaderSource, out id);
+            if (id == 0)
+            {
+                id = GL.CreateShader(type);
+                using (StreamReader sr = new StreamReader(shaderSource))
+                {
+                    GL.ShaderSource(id, sr.ReadToEnd());
+                }
+                GL.CompileShader(id);
+                Console.WriteLine(GL.GetShaderInfoLog(id));
+            }
+            return id;
         }
     }
 }

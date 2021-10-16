@@ -15,40 +15,12 @@ namespace OpenGL_Game.Systems
 {
     class OpenGLRenderer : SystemRender
     {
-        private int pgmID;
-        private int vsID;
-        private int fsID;
-        private int uniform_stex;
-        private int uniform_mmodelviewproj;
-        private int uniform_mmodelview;
-        private int uniform_mview;
 
         public OpenGLRenderer()
         {
             Name = "OpenGL Renderer";
-            pgmID = GL.CreateProgram(); //Generic shader for walls / objects
-            LoadShader("Shaders/vs.glsl", ShaderType.VertexShader, pgmID, out vsID);
-            LoadShader("Shaders/fs.glsl", ShaderType.FragmentShader, pgmID, out fsID);
-            GL.LinkProgram(pgmID);
-            Console.WriteLine(GL.GetProgramInfoLog(pgmID));
-
-            uniform_stex = GL.GetUniformLocation(pgmID, "s_texture");
-            uniform_mmodelviewproj = GL.GetUniformLocation(pgmID, "ModelViewProjMat");
-            uniform_mmodelview = GL.GetUniformLocation(pgmID, "ModelViewMat");
-            uniform_mview = GL.GetUniformLocation(pgmID, "ViewMat");
         }
 
-        void LoadShader(string filename, ShaderType type, int program, out int address)
-        {
-            address = GL.CreateShader(type);
-            using (StreamReader sr = new StreamReader(filename))
-            {
-                GL.ShaderSource(address, sr.ReadToEnd());
-            }
-            GL.CompileShader(address);
-            GL.AttachShader(program, address);
-            Console.WriteLine(GL.GetShaderInfoLog(address));
-        }
 
         public override void OnAction(ComponentTypes currentMask)
         {
@@ -66,6 +38,11 @@ namespace OpenGL_Game.Systems
                 {
                     return component.ComponentType == ComponentTypes.COMPONENT_TRANSFORM;
                 });
+
+                IComponent shaderComponent = components.Find(delegate (IComponent component)
+                {
+                    return component.ComponentType == ComponentTypes.COMPONENT_SHADER;
+                });
                 Vector3 position = ((ComponentTransform)transformComponent).Position;
                 Vector3 scale = ((ComponentTransform)transformComponent).Scale;
                 Vector3 rotation = ((ComponentTransform)transformComponent).Rotation;
@@ -77,39 +54,27 @@ namespace OpenGL_Game.Systems
 
                 if (entity.Name == "Skybox")
                 {
-                    DrawSkybox(geometry);
+                    DrawSkybox(geometry, (ComponentShader)shaderComponent);
                 }
                 else
-                    Draw(model, geometry);
+                    Draw(model, geometry, (ComponentShader)shaderComponent);
 
             }
         }
 
-        private void DrawSkybox(OpenGLGeometry geometry)
+        private void DrawSkybox(OpenGLGeometry geometry, ComponentShader shader)
         {
             GL.DepthMask(false);
             Matrix4 model = Matrix4.CreateTranslation(GameScene.gameInstance.camera.cameraPosition);
-            //Matrix4 model = Matrix4.CreateTranslation(Vector3.Zero);
-            Draw(model, geometry);
+            Draw(model, geometry, shader);
             GL.DepthMask(true);
         }
 
-        public override void Draw(Matrix4 model, OpenGLGeometry geometry)
+        public override void Draw(Matrix4 model, OpenGLGeometry geometry, ComponentShader shader)
         {
-            GL.UseProgram(pgmID);
-
-            GL.Uniform1(uniform_stex, 0);
-            GL.ActiveTexture(TextureUnit.Texture0);
-
-            Matrix4 modelView = model * GameScene.gameInstance.camera.view;
-            GL.UniformMatrix4(uniform_mmodelview, false, ref modelView);
-            Matrix4 modelViewProjection = modelView * GameScene.gameInstance.camera.projection;
-            GL.UniformMatrix4(uniform_mmodelviewproj, false, ref modelViewProjection);
-            GL.UniformMatrix4(uniform_mview, false, ref GameScene.gameInstance.camera.view);
-
-            geometry.Render();   // OBJ CHANGED
-
-            GL.UseProgram(0);
+            shader.BindShader();
+            shader.ApplyShader(model, geometry);
+            shader.UnbindShader();
         }
 
         public override ITexture LoadTexture(string filepath, ref Dictionary<string,ITexture> textureDictionary)

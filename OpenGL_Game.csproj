@@ -76,8 +76,11 @@
   <ItemGroup>
     <Compile Include="Camera.cs" />
     <Compile Include="Components\ComponentRotation.cs" />
+    <Compile Include="Components\ComponentShader.cs" />
+    <Compile Include="Components\ComponentShaderBasic.cs" />
     <Compile Include="Components\ComponentTransform.cs" />
     <Compile Include="Components\ComponentVelocity.cs" />
+    <Compile Include="Components\Geometry.cs" />
     <Compile Include="Managers\InputManager.cs" />
     <Compile Include="Managers\ScriptManager.cs" />
     <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Common\StringExtensions.cs" />
