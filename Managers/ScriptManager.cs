@@ -66,7 +66,7 @@ namespace OpenGL_Game.Managers
                     {
                         if (c == ' ') { col++; continue; }
                         Entity floorboard = new Entity("Floor" + col + '.' + row); //needs unique name 
-                        floorboard.AddComponent(new ComponentGeometry(WALL_OBJ_RELPATH, renderSystem, "Textures\\cobblestone_diffuse.jpg"));
+                        floorboard.AddComponent(new ComponentGeometry(WALL_OBJ_RELPATH, renderSystem));
                         Vector3 position = new Vector3(col * modelScale, 0.0f, row * modelScale);
                         Vector3 scale = new Vector3(33.333f, 0.06f, 1.0f);
 
@@ -97,8 +97,6 @@ namespace OpenGL_Game.Managers
                         Entity newWall = new Entity("wall" + row  + '.' + col ); //needs unique name 
                         if (c == 'o' || c == 'l')
                             newWall.AddComponent(new ComponentGeometry(CONNECTOR_OBJ_RELPATH, renderSystem));
-                        else if (c == 'x')
-                            newWall.AddComponent(new ComponentGeometry(WALL_OBJ_RELPATH, renderSystem, "Textures\\marble.jpg"));
                         else
                             newWall.AddComponent(new ComponentGeometry(WALL_OBJ_RELPATH, renderSystem));
                         Vector3 position = new Vector3(col * modelScale, 0.0f, row * modelScale);

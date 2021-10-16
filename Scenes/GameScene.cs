@@ -20,12 +20,13 @@ namespace OpenGL_Game.Scenes
         public static float dt = 0;
         EntityManager entityManager;
         SystemManager systemManager;
+        ScriptManager scriptManager;
         InputManager inputManager;
         ISystem renderSystem;
 
         //Temp variables
         Entity skyBox;
-        const float cameraVelocity = 2.7f;
+        const float cameraVelocity = 10.7f;
 
         public Camera camera;
 
@@ -36,6 +37,7 @@ namespace OpenGL_Game.Scenes
             gameInstance = this;
             entityManager = new EntityManager();
             systemManager = new SystemManager();
+            scriptManager = new ScriptManager();
             inputManager = new InputManager(sceneManager);
             renderSystem = new OpenGLRenderer();
             // Set the title of the window
@@ -73,7 +75,7 @@ namespace OpenGL_Game.Scenes
             skyBox.AddComponent(new ComponentGeometry(SKYBOX_TEX_RELPATH, renderSystem));
             entityManager.AddEntity(skyBox);
 
-            scriptManager.LoadMaze("default.txt", entityManager, renderSystem);
+            scriptManager.LoadMaze("default.txt", 4.0f, entityManager, renderSystem);
         }
 
         private void CreateSystems()
@@ -96,7 +98,6 @@ namespace OpenGL_Game.Scenes
 
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();
-            Console.WriteLine(camera.cameraPosition);
             inputManager.Update(e);
             ProcessInput();
 

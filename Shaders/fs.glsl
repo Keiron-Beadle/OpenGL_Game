@@ -2,7 +2,7 @@
 
 in vec2 v_TexCoord;
 in vec3 v_Normal;
-in vec3 v_LightPos;
+in vec3 v_LightPos[4];
 in vec3 v_FragPos;
 
 uniform sampler2D s_texture;
@@ -11,6 +11,7 @@ out vec4 Color;
  
 void main()
 {
+	Color = vec4(0,0,0,1.0);
 	vec4 lightColor = vec4(1,1,1,1);
 	vec4 lightAmbient = vec4(0.0323, 0.017837, 0.03432, 0.0);
 	vec4 lightSpec = vec4(0.1,0.1,0.1,0.0);

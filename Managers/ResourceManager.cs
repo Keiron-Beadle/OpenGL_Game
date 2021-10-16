@@ -27,7 +27,7 @@ namespace OpenGL_Game.Managers
             textureDictionary.Clear();
         }
 
-        public static IGeometry LoadGeometry(string filename, ISystem renderSystem, string optionalTextureOverride = null)
+        public static IGeometry LoadGeometry(string filename, ISystem renderSystem)
         {
             IGeometry geometry;
             geometryDictionary.TryGetValue(filename, out geometry);
@@ -35,8 +35,8 @@ namespace OpenGL_Game.Managers
             {
                 if (renderSystem is OpenGLRenderer)
                     geometry = new OpenGLGeometry();
-                geometry.LoadObject(filename, renderSystem, optionalTextureOverride);
-                geometryDictionary.Add(filename + overrideString, geometry);
+                geometry.LoadObject(filename, renderSystem);
+                geometryDictionary.Add(filename, geometry);
             }
 
             return geometry;

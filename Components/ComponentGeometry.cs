@@ -8,9 +8,9 @@ namespace OpenGL_Game.Components
     {
         IGeometry geometry;
 
-        public ComponentGeometry(string geometryName, ISystem renderSystem, string optionalTextureOverride = null)
+        public ComponentGeometry(string geometryName, ISystem renderSystem)
         {
-            this.geometry = ResourceManager.LoadGeometry(geometryName, renderSystem, optionalTextureOverride);
+            this.geometry = ResourceManager.LoadGeometry(geometryName, renderSystem);
         }
 
         public ComponentTypes ComponentType

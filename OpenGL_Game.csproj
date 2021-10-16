@@ -79,6 +79,7 @@
     <Compile Include="Components\ComponentTransform.cs" />
     <Compile Include="Components\ComponentVelocity.cs" />
     <Compile Include="Managers\InputManager.cs" />
+    <Compile Include="Managers\ScriptManager.cs" />
     <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Common\StringExtensions.cs" />
     <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Data\DataStore\DataStore.cs" />
     <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Data\DataStore\IDataStore.cs" />
@@ -187,6 +188,12 @@
     <None Include="Geometry\TestCube\untitled.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Geometry\Wall\wall.mtl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Geometry\Wall\wall.obj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Geometry\Wraith_Raider_Starship\Wraith_Raider_Starship.mtl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -239,7 +246,7 @@
     <Content Include="default.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Amogus\Plastic_4K_Diffuse.jpg">
+    <Content Include="Geometry\Wall\moss.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\cobblestone_diffuse.jpg">
