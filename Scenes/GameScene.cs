@@ -9,7 +9,6 @@ using System.Drawing;
 using System;
 using System.Diagnostics;
 using static OpenGL_Game.Managers.InputManager;
-using System.Collections.Generic;
 
 namespace OpenGL_Game.Scenes
 {
@@ -22,12 +21,11 @@ namespace OpenGL_Game.Scenes
         EntityManager entityManager;
         SystemManager systemManager;
         InputManager inputManager;
-        ScriptManager scriptManager;
         ISystem renderSystem;
 
         //Temp variables
         Entity skyBox;
-        const float cameraVelocity = 10.7f;
+        const float cameraVelocity = 2.7f;
 
         public Camera camera;
 
@@ -39,7 +37,6 @@ namespace OpenGL_Game.Scenes
             entityManager = new EntityManager();
             systemManager = new SystemManager();
             inputManager = new InputManager(sceneManager);
-            scriptManager = new ScriptManager();
             renderSystem = new OpenGLRenderer();
             // Set the title of the window
             sceneManager.Title = "Game";
@@ -76,7 +73,7 @@ namespace OpenGL_Game.Scenes
             skyBox.AddComponent(new ComponentGeometry(SKYBOX_TEX_RELPATH, renderSystem));
             entityManager.AddEntity(skyBox);
 
-            scriptManager.LoadMaze("default.txt", 4.0f, entityManager, renderSystem);
+            scriptManager.LoadMaze("default.txt", entityManager, renderSystem);
         }
 
         private void CreateSystems()
