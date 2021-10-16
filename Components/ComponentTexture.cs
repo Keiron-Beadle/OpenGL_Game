@@ -8,7 +8,7 @@ namespace OpenGL_Game.Components
     {
         ITexture texture;
 
-        public ComponentTexture(string textureName, ISystem renderSystem)
+        public ComponentTexture(string textureName, SystemRender renderSystem)
         {
             texture = ResourceManager.LoadTexture(textureName, renderSystem);
         }

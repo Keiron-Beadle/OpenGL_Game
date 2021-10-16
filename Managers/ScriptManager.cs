@@ -19,7 +19,7 @@ namespace OpenGL_Game.Managers
         /// Used in the main game scene, this is called to populate a List of walls
         /// via reading in a map in the form of a .xml file
         /// </summary>
-        public void LoadMaze(string xmlFilePath, EntityManager entityManager, ISystem renderSystem)
+        public void LoadMaze(string xmlFilePath, EntityManager entityManager, SystemRender renderSystem)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(xmlFilePath);
@@ -46,7 +46,7 @@ namespace OpenGL_Game.Managers
         /// <param name="temp"></param>
         /// <param name="type"></param>
         /// <param name="renderSystem"></param>
-        private void AddGeometryComponent(ref Entity temp, string type, ISystem renderSystem)
+        private void AddGeometryComponent(ref Entity temp, string type, SystemRender renderSystem)
         {
             switch (type)
             {

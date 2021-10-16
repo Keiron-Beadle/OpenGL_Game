@@ -18,17 +18,17 @@ namespace OpenGL_Game.Scenes
     class GameScene : Scene
     {
         public static float dt = 0;
-        EntityManager entityManager;
-        SystemManager systemManager;
-        ScriptManager scriptManager;
-        InputManager inputManager;
-        ISystem renderSystem;
+        EntityManager entityManager; //Used to hold entities and manage them
+        ScriptManager scriptManager; //Used to hot-load data
+        InputManager inputManager; //Used as a means of getting universal control responses from
+                                   //a varied number of controllers
 
-        //Temp variables
-        Entity skyBox;
-        const float cameraVelocity = 10.7f;
+        SystemManager systemManager; //Manages and actions other systems
+        SystemRender renderSystem; //Abstract system to render entities
+        SystemPhysics physicsSystem; //System to apply motion & do collision detection & response
 
         public Camera camera;
+        const float cameraVelocity = 10.7f;
 
         public static GameScene gameInstance;
 
@@ -36,9 +36,10 @@ namespace OpenGL_Game.Scenes
         {
             gameInstance = this;
             entityManager = new EntityManager();
-            systemManager = new SystemManager();
-            scriptManager = new ScriptManager();
+            scriptManager = new ScriptManager(); 
             inputManager = new InputManager(sceneManager);
+            systemManager = new SystemManager();
+            physicsSystem = new SystemPhysics();
             renderSystem = new OpenGLRenderer();
             // Set the title of the window
             sceneManager.Title = "Game";
@@ -70,7 +71,7 @@ namespace OpenGL_Game.Scenes
             //const string SUSSY_OBJ_RELPATH = "Geometry/Amogus/amogus.obj";
             //const string TESTCUBE_OBJ_RELPATH = "Geometry/TestCube/untitled.obj";
 
-            skyBox = new Entity("Skybox"); //Skybox needs to be rendered first, as Depth first is disabled for the draw
+            Entity skyBox = new Entity("Skybox"); //Skybox needs to be rendered first, as Depth first is disabled for the draw
             skyBox.AddComponent(new ComponentTransform(0.0f, 0.0f, 0.0f));
             skyBox.AddComponent(new ComponentGeometry(SKYBOX_TEX_RELPATH, renderSystem));
             entityManager.AddEntity(skyBox);
@@ -81,7 +82,6 @@ namespace OpenGL_Game.Scenes
         private void CreateSystems()
         {
             //ISystem newSystem; //For future systems
-            SystemPhysics physicsSystem = new SystemPhysics();
             systemManager.AddSystem(renderSystem);
             systemManager.AddSystem(physicsSystem);
         }

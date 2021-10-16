@@ -39,7 +39,7 @@ namespace OpenGL_Game.OBJLoader
         {
         }
 
-        public void LoadObject(string filename, ISystem renderSystem, string optionalTextureOverride = null)
+        public void LoadObject(string filename, SystemRender renderSystem, string optionalTextureOverride = null)
         {
             OverrideTexturePath = optionalTextureOverride;
             OpenGLRenderer renderer = renderSystem as OpenGLRenderer;

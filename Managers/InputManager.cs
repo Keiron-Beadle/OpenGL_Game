@@ -48,6 +48,7 @@ namespace OpenGL_Game.Managers
             controlFlags = new bool[Enum.GetNames(typeof(CONTROLS)).Length];
             controlBindings = new Dictionary<Key, CONTROLS>();
             DeltaMouse = new Vector2(0, 0);
+            //GenerateControls();
             LoadControls();
         }
 
@@ -69,6 +70,7 @@ namespace OpenGL_Game.Managers
             writer.WriteEndElement();
             writer.WriteEndDocument();
             writer.Flush();
+            writer.Close();
         }
 
         private void GenerateControls()
@@ -97,20 +99,12 @@ namespace OpenGL_Game.Managers
             controlBindings.Add(right,rightC);
 
             SaveControls();
+            Environment.Exit(0);
         }
 
         private void LoadControls()
         {
-            XmlDocument doc = new XmlDocument();
-            doc.Load("controls.xml");
-            XmlNode root = null;
-            root = doc.SelectSingleNode("rootElement");
-            foreach (XmlNode n in root.ChildNodes)
-            {
-                CONTROLS c = (CONTROLS)int.Parse(n.Attributes["Control"].Value);
-                Key k = (Key)int.Parse(n.Attributes["Key"].Value);
-                controlBindings.Add(k, c);
-            }
+            ScriptManager.LoadControls(ref controlBindings);
         }
 
         public void Update(FrameEventArgs e)
@@ -144,12 +138,11 @@ namespace OpenGL_Game.Managers
         private void UpdateKeyboard()
         {
             KeyboardState currentKeyState = Keyboard.GetState();
+            for (int i = 0; i < controlFlags.Length; i++) { controlFlags[i] = false; }
             foreach (var pair in controlBindings)
             {
                 if (currentKeyState.IsKeyDown(pair.Key))
                     controlFlags[(int)pair.Value] = true;
-                else
-                    controlFlags[(int)pair.Value] = false;
             }
             prevKeyState = currentKeyState;
         }

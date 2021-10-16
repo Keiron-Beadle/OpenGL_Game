@@ -8,7 +8,7 @@ namespace OpenGL_Game.OBJLoader
 {
     interface IGeometry
     {
-        void LoadObject(string filename, ISystem renderSystem, string optionalTextureOverride = null);
+        void LoadObject(string filename, SystemRender renderSystem, string optionalTextureOverride = null);
         void RemoveGeometry();
     }
 }

@@ -27,7 +27,7 @@ namespace OpenGL_Game.Managers
             textureDictionary.Clear();
         }
 
-        public static IGeometry LoadGeometry(string filename, ISystem renderSystem)
+        public static IGeometry LoadGeometry(string filename, SystemRender renderSystem)
         {
             IGeometry geometry;
             geometryDictionary.TryGetValue(filename, out geometry);
@@ -42,21 +42,12 @@ namespace OpenGL_Game.Managers
             return geometry;
         }
         
-        public static ITexture LoadTexture(string filename, ISystem renderSystem) //This return type will need to change for D3D I think
+        public static ITexture LoadTexture(string filename, SystemRender renderSystem) //This return type will need to change for D3D I think
         {
             if (String.IsNullOrEmpty(filename))
                 throw new ArgumentException(filename);
-            
-            if (renderSystem is OpenGLRenderer)
-            {
-                return LoadOpenGLTexture(filename, renderSystem as OpenGLRenderer);
-            }
-            return null;
-        }
 
-        private static ITexture LoadOpenGLTexture(string filename, OpenGLRenderer renderSystem)
-        {
-            return renderSystem.LoadTexture(filename, ref textureDictionary);      
+            return renderSystem.LoadTexture(filename, ref textureDictionary);
         }
     }
 }

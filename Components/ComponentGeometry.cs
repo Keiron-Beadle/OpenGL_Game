@@ -8,7 +8,7 @@ namespace OpenGL_Game.Components
     {
         IGeometry geometry;
 
-        public ComponentGeometry(string geometryName, ISystem renderSystem)
+        public ComponentGeometry(string geometryName, SystemRender renderSystem)
         {
             this.geometry = ResourceManager.LoadGeometry(geometryName, renderSystem);
         }
