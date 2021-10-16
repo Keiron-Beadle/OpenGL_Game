@@ -92,20 +92,13 @@ namespace OpenGL_Game.Managers
         /// <param name="renderSystem"></param>
         private void AddGeometryComponent(ref Entity temp, string type, SystemRender renderSystem)
         {
-            switch (type)
+            try
             {
-                case "Corner":
-                case "XWall":
-                case "ZWall":
-                case "Floor":
-                    temp.AddComponent(new ComponentGeometry("Geometry/Wall/wall.obj", renderSystem));
-                    break;
-                case "XConnector":
-                case "ZConnector":
-                    temp.AddComponent(new ComponentGeometry("Geometry/Connector/connector.obj", renderSystem));
-                    break;
-                default:
-                    throw new Exception("Undefined type when forming geometry component for .xml map object");
+                temp.AddComponent(new ComponentGeometry("Geometry/" + type + '/' + type + ".obj", renderSystem));
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Error loading geometry component from xml file: " + e.Message);
             }
 
             //Temporarily removed while I create the other models / textures. 
@@ -142,33 +135,13 @@ namespace OpenGL_Game.Managers
             Vector3 position = new Vector3( float.Parse(attributes["XPos"].Value),
                                             float.Parse(attributes["YPos"].Value),
                                             float.Parse(attributes["ZPos"].Value));
-            Vector3 scale = Vector3.One;
-            Vector3 rotation = Vector3.Zero;
-            switch (attributes["Type"].Value)
-            {
-                case "Floor":
-                    scale = new Vector3(33.333f, 0.06f, 1.0f);
-                    break;
-                case "Corner":
-                    scale = new Vector3(35.0f, 0.7f, 1.0f);
-                    break;
-                case "XWall":
-                    scale = new Vector3(1.0f, 0.5f, 1.0f);
-                    rotation = new Vector3(0.0f, -MathHelper.PiOver2, 0.0f);
-                    break;
-                case "ZWall":
-                    scale = new Vector3(1.0f, 0.5f, 1.0f);
-                    break;
-                case "XConnector":
-                    scale = new Vector3(1.0f, 1.2f, 1.0f);
-                    break;
-                case "ZConnector":
-                    scale = new Vector3(1.0f, 1.2f, 1.0f);
-                    rotation = new Vector3(0.0f, -MathHelper.PiOver2, 0.0f);
-                    break;
-                default:
-                    throw new Exception("Undefined type of object in map .xml");
-            }
+            Vector3 rotation = new Vector3(float.Parse(attributes["XRot"].Value),
+                                float.Parse(attributes["YRot"].Value),
+                                float.Parse(attributes["ZRot"].Value));
+            Vector3 scale = new Vector3(float.Parse(attributes["XScale"].Value),
+                                            float.Parse(attributes["YScale"].Value),
+                                            float.Parse(attributes["ZScale"].Value));
+
             temp.AddComponent(new ComponentTransform(position + worldTranslate, scale, rotation));
         }
 

@@ -1,13 +1,14 @@
 # Blender MTL File: 'None'
 # Material Count: 1
 
-newmtl Material
-Ns 900.000000
+newmtl Material.001
+Ns 452.528899
 Ka 1.000000 1.000000 1.000000
-Kd 0.100119 0.000000 0.800000
+Kd 0.800000 0.800000 0.800000
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd moss.jpg
+map_Bump -bm 1.100000 MetalPipeWallRusty_normal.png
+map_Kd MetalPipeWallRusty_basecolor.png

@@ -1,8 +1,8 @@
 # Blender MTL File: 'None'
 # Material Count: 1
 
-newmtl Material.001
-Ns 900.000000
+newmtl Material.004
+Ns 728.999998
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
 Ks 0.000000 0.000000 0.000000
@@ -10,4 +10,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd connectorMoss.jpg
+map_Bump -bm 3.100000 Metal_Corrugated_011_normal.jpg
+map_Kd Metal_Corrugated_011_basecolor.jpg
+map_Ns Metal_Corrugated_011_roughness.jpg
+refl Metal_Corrugated_011_metallic.jpg
