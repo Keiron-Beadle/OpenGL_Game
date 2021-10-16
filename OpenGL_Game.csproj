@@ -142,9 +142,9 @@
     <Compile Include="Scenes\IScene.cs" />
     <Compile Include="Scenes\MainMenuScene.cs" />
     <Compile Include="Scenes\Scene.cs" />
-    <Compile Include="Systems\ISystem.cs" />
     <Compile Include="Managers\SystemManager.cs" />
     <Compile Include="Systems\OpenGLRenderer.cs" />
+    <Compile Include="Systems\ASystem.cs" />
     <Compile Include="Systems\SystemPhysics.cs" />
     <Compile Include="Systems\SystemRender.cs" />
   </ItemGroup>

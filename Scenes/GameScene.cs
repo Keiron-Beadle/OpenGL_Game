@@ -59,8 +59,8 @@ namespace OpenGL_Game.Scenes
 
             // Set Camera
             camera = new Camera(new Vector3(0, 2.23f, 0), new Vector3(0, 2.23f, 5), (float)(sceneManager.Width) / (float)(sceneManager.Height), 0.1f, 100f);
-            CreateSystems();
             CreateEntities();
+            CreateSystems();
         }
 
         private void CreateEntities()
@@ -81,9 +81,8 @@ namespace OpenGL_Game.Scenes
 
         private void CreateSystems()
         {
-            //ISystem newSystem; //For future systems
-            systemManager.AddSystem(renderSystem);
-            systemManager.AddSystem(physicsSystem);
+            systemManager.AddRenderSystem(renderSystem, entityManager);
+            systemManager.AddNonRenderSystem(physicsSystem, entityManager);
         }
 
         /// <summary>
@@ -98,8 +97,12 @@ namespace OpenGL_Game.Scenes
 
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();
+
             inputManager.Update(e);
             ProcessInput();
+
+            //Action NON-RENDER systems
+            systemManager.ActionNonRenderSystems();
 
         }
 
@@ -112,8 +115,8 @@ namespace OpenGL_Game.Scenes
             GL.Viewport(0, 0, sceneManager.Width, sceneManager.Height);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            // Action ALL systems
-            systemManager.ActionSystems(entityManager);
+            // Action RENDER systems
+            systemManager.ActionRenderSystems();
 
             // Render score
             float width = sceneManager.Width, height = sceneManager.Height, fontSize = Math.Min(width, height) / 10f;

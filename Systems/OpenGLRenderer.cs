@@ -1,4 +1,5 @@
 ﻿using OpenGL_Game.Components;
+using OpenGL_Game.Managers;
 using OpenGL_Game.Objects;
 using OpenGL_Game.OBJLoader;
 using OpenGL_Game.Scenes;
@@ -49,9 +50,9 @@ namespace OpenGL_Game.Systems
             Console.WriteLine(GL.GetShaderInfoLog(address));
         }
 
-        public override void OnAction(Entity entity)
+        public override void OnAction(ComponentTypes currentMask)
         {
-            if ((entity.Mask & MASK) == MASK)
+            foreach (Entity entity in entities)
             {
                 List<IComponent> components = entity.Components;
 
@@ -80,6 +81,7 @@ namespace OpenGL_Game.Systems
                 }
                 else
                     Draw(model, geometry);
+
             }
         }
 

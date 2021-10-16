@@ -7,22 +7,20 @@ using OpenGL_Game.Components;
 using OpenGL_Game.OBJLoader;
 using OpenGL_Game.Objects;
 using OpenGL_Game.Scenes;
+using OpenGL_Game.Managers;
 
 namespace OpenGL_Game.Systems
 {
-    abstract class SystemRender : ISystem
+    abstract class SystemRender : ASystem
     {
-        protected const ComponentTypes MASK = (ComponentTypes.COMPONENT_TRANSFORM | ComponentTypes.COMPONENT_GEOMETRY);
-
-        public string Name { get; protected set; }
-
         public SystemRender()
         {
             Name = "System Render";
+            masks.Add(ComponentTypes.COMPONENT_TRANSFORM | ComponentTypes.COMPONENT_GEOMETRY);
         }
 
         public abstract ITexture LoadTexture(string filepath, ref Dictionary<string, ITexture> textureDictionary);
-        public abstract void OnAction(Entity entity);
         public abstract void Draw(Matrix4 mat4, OpenGLGeometry geom);
+  
     }
 }

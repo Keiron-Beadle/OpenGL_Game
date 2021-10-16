@@ -6,39 +6,57 @@ namespace OpenGL_Game.Managers
 {
     class SystemManager
     {
-        List<ISystem> systemList = new List<ISystem>();
-        
+        List<ASystem> renderList = new List<ASystem>();
+        List<ASystem> nonRenderList = new List<ASystem>();
 
         public SystemManager()
         {
         }
 
-        public void ActionSystems(EntityManager entityManager)
+        public void ActionRenderSystems()
         {
-            List<Entity> entityList = entityManager.Entities();
-            foreach(ISystem system in systemList)
+            foreach (ASystem system in renderList)
             {
-                foreach(Entity entity in entityList)
-                {
-                    system.OnAction(entity);
-                }
+                system.Action();
             }
         }
 
-        public void AddSystem(ISystem system)
+        public void ActionNonRenderSystems()
         {
-            ISystem result = FindSystem(system.Name);
-            //Debug.Assert(result != null, "System '" + system.Name + "' already exists");
-            systemList.Add(system);
+            foreach (ASystem system in nonRenderList)
+            {
+                system.Action();
+            }
         }
 
-        private ISystem FindSystem(string name)
+        public void AddRenderSystem(ASystem system, EntityManager entities)
         {
-            return systemList.Find(delegate(ISystem system)
+            bool result = FindSystem(system.Name);
+            system.InitialiseEntities(entities);
+            renderList.Add(system);
+        }
+
+        public void AddNonRenderSystem(ASystem system, EntityManager entities)
+        {
+            bool result = FindSystem(system.Name);
+            system.InitialiseEntities(entities);
+            nonRenderList.Add(system);
+        }
+
+        private bool FindSystem(string name)
+        {
+            ASystem renderReturn = renderList.Find(delegate(ASystem system)
             {
                 return system.Name == name;
             }
             );
+
+            ASystem nonRenderReturn = nonRenderList.Find(delegate (ASystem system)
+            {
+                return system.Name == name;
+            });
+
+            return (renderReturn != null) || (nonRenderReturn != null);
         }
     }
 }
