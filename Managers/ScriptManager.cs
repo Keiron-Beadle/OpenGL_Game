@@ -15,7 +15,13 @@ namespace OpenGL_Game.Managers
 {
     class ScriptManager
     {
-        Random rnd = new Random();
+        private Vector3 worldTranslate;
+        private float modelScale; 
+
+        public ScriptManager()
+        {
+            worldTranslate = new Vector3(0,0,0);
+        }
 
         /// <summary>
         /// Used in the main game scene, this is called to populate a List of walls
@@ -23,16 +29,33 @@ namespace OpenGL_Game.Managers
         /// </summary>
         /// <param name="pFilePath"></param>
         /// <param name="walls"></param>
-        public void LoadMaze(string pFilePath, EntityManager entityManager, ISystem renderSystem)
+        public void LoadMaze(string pFilePath, float pModelScale, EntityManager entityManager, ISystem renderSystem)
         {
+            modelScale = pModelScale;
+            SetWorldTranslate(pFilePath);
             LoadWalls(pFilePath, entityManager, renderSystem);
             LoadFloor("defaultFloor.txt", entityManager, renderSystem);
+        }
+
+        private void SetWorldTranslate(string pFilePath)
+        {
+            int rowCount = 0, colCount = 0;
+            using (StreamReader s = new StreamReader(pFilePath))
+            {
+                string line;
+                while ((line = s.ReadLine()) != null)
+                {
+                    if (line.Length > colCount)
+                        colCount = line.Length;
+                    rowCount++;
+                }
+            }
+            worldTranslate = new Vector3( -colCount * modelScale / 2 ,0.0f, -rowCount * modelScale / 2 );
         }
 
         private void LoadFloor(string pFilePath, EntityManager entityManager, ISystem renderSystem)
         {
             const string WALL_OBJ_RELPATH = "Geometry/Wall/wall.obj";
-            float wallScale = 4.0f; //This is how wide 1 wall is in the model of wall.obj. 
             int col = 0, row = 0;
             using (StreamReader sRead = new StreamReader(pFilePath))
             {
@@ -43,11 +66,11 @@ namespace OpenGL_Game.Managers
                     {
                         if (c == ' ') { col++; continue; }
                         Entity floorboard = new Entity("Floor" + col + '.' + row); //needs unique name 
-                        floorboard.AddComponent(new ComponentGeometry(WALL_OBJ_RELPATH, renderSystem));
-                        Vector3 position = new Vector3(col * wallScale, 0.0f, row * wallScale);
+                        floorboard.AddComponent(new ComponentGeometry(WALL_OBJ_RELPATH, renderSystem, "Textures\\cobblestone_diffuse.jpg"));
+                        Vector3 position = new Vector3(col * modelScale, 0.0f, row * modelScale);
                         Vector3 scale = new Vector3(33.333f, 0.06f, 1.0f);
 
-                        floorboard.AddComponent(new ComponentTransform(position, scale, Vector3.Zero));
+                        floorboard.AddComponent(new ComponentTransform(position + worldTranslate, scale, Vector3.Zero));
                         entityManager.AddEntity(floorboard);
                         col++;
                     }
@@ -61,7 +84,6 @@ namespace OpenGL_Game.Managers
         {
             const string WALL_OBJ_RELPATH = "Geometry/Wall/wall.obj";
             const string CONNECTOR_OBJ_RELPATH = "Geometry/ConnectorWall/connector.obj";
-            float wallScale = 4.0f; //This is how wide 1 wall is in the model of wall.obj. 
             int col = 0, row = 0;
 
             using (StreamReader sRead = new StreamReader(pFilePath))
@@ -79,7 +101,7 @@ namespace OpenGL_Game.Managers
                             newWall.AddComponent(new ComponentGeometry(WALL_OBJ_RELPATH, renderSystem, "Textures\\marble.jpg"));
                         else
                             newWall.AddComponent(new ComponentGeometry(WALL_OBJ_RELPATH, renderSystem));
-                        Vector3 position = new Vector3(col * wallScale, 0.0f, row * wallScale);
+                        Vector3 position = new Vector3(col * modelScale, 0.0f, row * modelScale);
                         Vector3 rotation;
                         Vector3 scale;
                         if (c == '-' || c == 'l') 
@@ -88,7 +110,7 @@ namespace OpenGL_Game.Managers
                             rotation = Vector3.Zero;
 
                         if (c == 'x')
-                            scale = new Vector3(35.0f, 0.5f, 1.0f);
+                            scale = new Vector3(35.0f, 0.7f, 1.0f);
                         else if (c == ' ')
                             scale = new Vector3(33.333f, 0.06f, 1.0f);
                         else if (c == 'o' || c == 'l')
@@ -96,7 +118,7 @@ namespace OpenGL_Game.Managers
                         else
                             scale = new Vector3(1.0f, 0.5f, 1.0f);
 
-                        newWall.AddComponent(new ComponentTransform(position, scale, rotation));
+                        newWall.AddComponent(new ComponentTransform(position + worldTranslate, scale, rotation));
                         entityManager.AddEntity(newWall);
                         col++;
                     }

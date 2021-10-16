@@ -58,26 +58,25 @@ namespace OpenGL_Game.Scenes
             GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
             // Set Camera
-            camera = new Camera(new Vector3(0, 10, 7), new Vector3(0, 4, 7), (float)(sceneManager.Width) / (float)(sceneManager.Height), 0.1f, 100f);
+            camera = new Camera(new Vector3(0, 2.23f, 0), new Vector3(0, 2.23f, 5), (float)(sceneManager.Width) / (float)(sceneManager.Height), 0.1f, 100f);
             CreateSystems();
             CreateEntities();
         }
 
         private void CreateEntities()
         {
-            Entity newEntity, starshipEntity, intergalacticShip, sussybaka, testcube;
-            const string STARSHIP_OBJ_RELPATH = "Geometry/Wraith_Raider_Starship/Wraith_Raider_Starship.obj";
-            const string INTERGALACTIC_SHIP_OBJ_RELPATH = "Geometry/Intergalactic_Ship/Intergalactic_Spaceship.obj";
+            //const string STARSHIP_OBJ_RELPATH = "Geometry/Wraith_Raider_Starship/Wraith_Raider_Starship.obj";
+            //const string INTERGALACTIC_SHIP_OBJ_RELPATH = "Geometry/Intergalactic_Ship/Intergalactic_Spaceship.obj";
             const string SKYBOX_TEX_RELPATH = "Geometry/Skybox/skybox.obj";
-            const string SUSSY_OBJ_RELPATH = "Geometry/Amogus/amogus.obj";
-            const string TESTCUBE_OBJ_RELPATH = "Geometry/TestCube/untitled.obj";
+            //const string SUSSY_OBJ_RELPATH = "Geometry/Amogus/amogus.obj";
+            //const string TESTCUBE_OBJ_RELPATH = "Geometry/TestCube/untitled.obj";
 
             skyBox = new Entity("Skybox"); //Skybox needs to be rendered first, as Depth first is disabled for the draw
             skyBox.AddComponent(new ComponentTransform(0.0f, 0.0f, 0.0f));
             skyBox.AddComponent(new ComponentGeometry(SKYBOX_TEX_RELPATH, renderSystem));
             entityManager.AddEntity(skyBox);
 
-            scriptManager.LoadMaze("default.txt", entityManager, renderSystem);
+            scriptManager.LoadMaze("default.txt", 4.0f, entityManager, renderSystem);
         }
 
         private void CreateSystems()
@@ -100,7 +99,7 @@ namespace OpenGL_Game.Scenes
 
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();
-
+            Console.WriteLine(camera.cameraPosition);
             inputManager.Update(e);
             ProcessInput();
 

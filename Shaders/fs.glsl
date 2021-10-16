@@ -13,7 +13,7 @@ void main()
 {
 	Color = vec4(0,0,0,1.0);
 	vec4 lightColor = vec4(1,1,1,1);
-	vec4 lightAmbient = vec4(0.1, 0.1, 0.1, 0.0);
+	vec4 lightAmbient = vec4(0.0323, 0.017837, 0.03432, 0.0);
 	vec4 lightSpec = vec4(0.1,0.1,0.1,0.0);
 	float fSpecularPower = 10.0;
 	vec3 result = vec3(0,0,0);
@@ -25,5 +25,5 @@ void main()
 		vec3 diffuse = diff * fvBaseColour.xyz;
 		result += diffuse / 4;
 	}
-	Color = vec4(result,1.0);
+	Color = vec4(result,1.0) + lightAmbient;
 }
