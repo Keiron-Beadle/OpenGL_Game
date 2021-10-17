@@ -3,20 +3,13 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using OpenGL_Game.Scenes;
+using System.Collections.Generic;
 
 namespace OpenGL_Game.Managers
 {
-    public enum SceneType
-    {
-        NULL_SCENE,
-        GAME_SCENE,
-        MAIN_MENU_SCENE,
-        GAME_OVER_SCENE,
-    }
-
     class SceneManager : GameWindow
     {
-        Scene scene;
+        Stack<Scene> scenes;
         public static int width = 1600, height = 1200;
         public static int windowXPos = 200, windowYPos = 80;
 
@@ -26,6 +19,7 @@ namespace OpenGL_Game.Managers
 
         public SceneManager() : base(width, height, new OpenTK.Graphics.GraphicsMode(new OpenTK.Graphics.ColorFormat(8, 8, 8, 8), 16))
         {
+            scenes = new Stack<Scene>();
             this.X = windowXPos;
             this.Y = windowYPos;
         }
@@ -82,20 +76,23 @@ namespace OpenGL_Game.Managers
 
         private void StartGameOver()
         {
-            if (scene != null) scene.Close();
-            scene = new GameOverScene(this);
+            scenes.Pop().Close();
+            scenes.Push(new GameOverScene(this));
         }
 
         private void StartNewGame()
         {
-            if(scene != null) scene.Close();
-            scene = new GameScene(this);
+            scenes.Push(new GameScene(this));
         }
 
         private void StartMenu()
         {
-            if (scene != null) scene.Close();
-            scene = new MainMenuScene(this);
+            if (scenes.Count == 0) //Only want 1 Main menu scene at the bottom of stack
+            {
+                scenes.Push(new MainMenuScene(this));
+                return;
+            }
+            scenes.Pop().Close();
         }
 
         public static int WindowWidth
