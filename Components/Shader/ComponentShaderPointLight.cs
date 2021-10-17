@@ -13,7 +13,7 @@ namespace OpenGL_Game.Components
     class ComponentShaderPointLight : ComponentShader
     {
         static int lightIndex = 0;
-        static int NUMBEROFLIGHTS = 1;
+        static int NUMBEROFLIGHTS = 3;
         static Vector3[] pointLights = new Vector3[NUMBEROFLIGHTS];
 
         private int uniform_stex;
@@ -44,8 +44,8 @@ namespace OpenGL_Game.Components
             {
                 GL.Uniform3(GL.GetUniformLocation(ShaderID, "pointLights["+i+"].position"), pointLights[i]);
                 GL.Uniform1(GL.GetUniformLocation(ShaderID, "pointLights["+i+"].constant"), 1.0f);
-                GL.Uniform1(GL.GetUniformLocation(ShaderID, "pointLights["+i+"].linear"), 0.09f);
-                GL.Uniform1(GL.GetUniformLocation(ShaderID, "pointLights["+i+"].quadratic"), 0.032f);
+                GL.Uniform1(GL.GetUniformLocation(ShaderID, "pointLights["+i+"].linear"), 0.55f);
+                GL.Uniform1(GL.GetUniformLocation(ShaderID, "pointLights["+i+"].quadratic"), 0.252f);
                 GL.Uniform3(GL.GetUniformLocation(ShaderID, "pointLights["+i+"].ambient"), new Vector3(0.01f, 0.01f, 0.01f));
                 GL.Uniform3(GL.GetUniformLocation(ShaderID, "pointLights["+i+"].diffuse"), new Vector3(0.06666f, 0.4705f, 0.23529f));
                 GL.Uniform3(GL.GetUniformLocation(ShaderID, "pointLights["+i+"].specular"), new Vector3(1.0f, 1.0f, 1.0f));

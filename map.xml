@@ -3,6 +3,8 @@
   <WorldTranslate XTranslate="-7.5" ZTranslate="-6" />
   <Lights>
     <PointLight PosX="-6.681" PosY="1" PosZ="-5.1238" />
+    <PointLight PosX="-3.347" PosY="1" PosZ="4.27" />
+    <PointLight PosX="4.08" PosY="1" PosZ="-3.031" />
   </Lights>
   <Objects>
     <Object Type="Floor" Name="Floor0.0">

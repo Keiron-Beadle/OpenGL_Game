@@ -17,7 +17,7 @@ in vec3 v_Normal;
 in vec3 v_FragPos;
 
 
-#define NUMBEROFLIGHTS 1
+#define NUMBEROFLIGHTS 3
 uniform PointLight pointLights[NUMBEROFLIGHTS];
 uniform vec3 viewPos;
 uniform sampler2D s_texture;
