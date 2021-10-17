@@ -9,6 +9,7 @@
     <PointLight XPos="-0.714" YPos="0.3" ZPos="-3.156" />
     <PointLight XPos="3.835" YPos="0.3" ZPos="6.524" />
     <PointLight XPos="-4.7811" YPos="0.3" ZPos="4.323" />
+    <PointLight XPos="10.8709" YPos="1.06" ZPos="1.5" />
   </Lights>
   <Objects>
     <Object Type="Floor" Name="Floor0.0">
@@ -1157,6 +1158,10 @@
     </Object>
     <Object Type="Floor" Name="Floor23.11">
       <Transform XPos="23" YPos="0" ZPos="11" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
+      <Geometry />
+    </Object>
+    <Object Type="Portal" Name="MapObject23.11">
+      <Transform XPos="23" YPos="0" ZPos="11" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
     </Object>
     <Object Type="Floor" Name="Floor24.11">

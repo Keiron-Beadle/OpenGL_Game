@@ -13,13 +13,14 @@ namespace OpenGL_Game.Components
     class ComponentShaderPointLight : ComponentShader
     {
         static int lightIndex = 0;
-        static int NUMBEROFLIGHTS = 7;
+        static int NUMBEROFLIGHTS = 8;
         static Vector3[] pointLights = new Vector3[NUMBEROFLIGHTS];
 
         private int uniform_stex;
         private int uniform_mproj;
         private int uniform_mmodel;
         private int uniform_mview;
+        private int uniform_mdiffuse;
 
         private int uniform_lightPosition;
         private int uniform_lightConstant;
@@ -36,6 +37,7 @@ namespace OpenGL_Game.Components
             uniform_mproj = GL.GetUniformLocation(ShaderID, "projection");
             uniform_mmodel = GL.GetUniformLocation(ShaderID, "model");
             uniform_mview = GL.GetUniformLocation(ShaderID, "view");
+            uniform_mdiffuse = GL.GetUniformLocation(ShaderID, "diffuse");
             uniform_lightPosition = GL.GetUniformLocation(ShaderID, "pointLights[0].position");
             uniform_lightConstant = GL.GetUniformLocation(ShaderID, "pointLights[0].constant");
             uniform_lightLinear = GL.GetUniformLocation(ShaderID, "pointLights[0].linear");
@@ -72,7 +74,7 @@ namespace OpenGL_Game.Components
             GL.UniformMatrix4(uniform_mview, false, ref GameScene.gameInstance.camera.view);
             GL.UniformMatrix4(uniform_mproj, false, ref GameScene.gameInstance.camera.projection);
 
-            geometry.Render();   // OBJ CHANGED
+            geometry.Render(uniform_mdiffuse);   // OBJ CHANGED
         }
     }
 }

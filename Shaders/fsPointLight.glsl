@@ -17,8 +17,9 @@ in vec3 v_Normal;
 in vec3 v_FragPos;
 
 
-#define NUMBEROFLIGHTS 7
+#define NUMBEROFLIGHTS 8
 uniform PointLight pointLights[NUMBEROFLIGHTS];
+uniform vec3 diffuse;
 uniform vec3 viewPos;
 uniform sampler2D s_texture;
 
@@ -36,7 +37,7 @@ void main()
 		resultingFrag += calcPointLight(pointLights[i], normal, v_FragPos, viewDir);
 	}
 	
-	Color = vec4(resultingFrag,1.0);
+	Color = vec4(resultingFrag,1.0) * vec4(diffuse,1.0);
 }
 
 vec3 calcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)

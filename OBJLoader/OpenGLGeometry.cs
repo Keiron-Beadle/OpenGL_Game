@@ -24,6 +24,7 @@ namespace OpenGL_Game.OBJLoader
         public int vbo_verts;
         public int vbo_texs;
         public int vbo_normals;
+        public Vector3 diffuse;
     }
     /// <summary>
     /// This is the object that we use to store our geometry that we will use to render in the game
@@ -173,7 +174,7 @@ namespace OpenGL_Game.OBJLoader
                     }
 
                     // Diffuse colour   // OBJ NEW
-                    //newGroup.diffuse = new Vector3(group.Material.DiffuseColor.X, group.Material.DiffuseColor.Y, group.Material.DiffuseColor.Z); ;
+                    newGroup.diffuse = new Vector3(group.Material.DiffuseColor.X, group.Material.DiffuseColor.Y, group.Material.DiffuseColor.Z); ;
 
                     groups.Add(newGroup);
                     GL.BindVertexArray(0);
@@ -199,10 +200,14 @@ namespace OpenGL_Game.OBJLoader
         }
 
         // Render this object
-        public void Render()  // OBJ CHANGED
+        public void Render(int uniform_diffuseLocation)  // OBJ CHANGED
         {
             foreach (var group in groups)
             {
+                if (uniform_diffuseLocation != -1)
+                {
+                    GL.Uniform3(uniform_diffuseLocation, group.diffuse);
+                }
                 if (group.texture != null)
                 {
                     GL.BindVertexArray(group.vao_Handle);

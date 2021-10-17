@@ -95,6 +95,10 @@ namespace OpenGL_Game.Managers
                     //temp.AddComponent(new ComponentShaderBasic("Shaders/vs.glsl", "Shaders/fs.glsl"));
                     temp.AddComponent(new ComponentShaderPointLight("Shaders/vsPointLight.glsl", "Shaders/fsPointLight.glsl"));
                     break;
+                case "Portal":
+                    //temp.AddComponent(new ComponentShaderBasic("Shaders/vs.glsl", "Shaders/fs.glsl"));
+                    temp.AddComponent(new ComponentShaderPointLight("Shaders/vsPointLight.glsl", "Shaders/fsPointLight.glsl"));
+                    break;
             }
         }
 

@@ -150,6 +150,7 @@
     <Compile Include="Managers\SystemManager.cs" />
     <Compile Include="Systems\OpenGLRenderer.cs" />
     <Compile Include="Systems\ASystem.cs" />
+    <Compile Include="Systems\SystemAudio.cs" />
     <Compile Include="Systems\SystemPhysics.cs" />
     <Compile Include="Systems\SystemRender.cs" />
   </ItemGroup>
@@ -191,6 +192,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Geometry\Moon\moon.obj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Geometry\Portal\Portal.mtl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Geometry\Portal\Portal.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Geometry\Skybox\skybox.mtl">
@@ -304,6 +311,12 @@
     </Content>
     <Content Include="Geometry\Moon\moon_diffuse.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Geometry\Portal\Obsidian_001_basecolor.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Geometry\Portal\Obsidian_001_normal.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Geometry\Skybox\SkySkybox.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
