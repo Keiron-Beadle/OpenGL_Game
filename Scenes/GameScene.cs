@@ -58,7 +58,7 @@ namespace OpenGL_Game.Scenes
             GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
             // Set Camera
-            camera = new Camera(new Vector3(0, 1.0f, 0), new Vector3(0, 2.23f, 5), (float)(sceneManager.Width) / (float)(sceneManager.Height), 0.1f, 100f);
+            camera = new Camera(new Vector3(0, 1.06f, 0), new Vector3(0, 2.23f, 5), (float)(sceneManager.Width) / (float)(sceneManager.Height), 0.1f, 100f);
             CreateEntities();
             CreateSystems();
         }
@@ -94,7 +94,7 @@ namespace OpenGL_Game.Scenes
         public override void Update(FrameEventArgs e)
         {
             dt = (float)e.Time;
-            //System.Console.WriteLine("fps=" + (int)(1.0/dt));
+            System.Console.WriteLine("fps=" + (int)(1.0/dt));
 
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();

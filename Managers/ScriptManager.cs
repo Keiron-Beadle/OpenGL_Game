@@ -39,9 +39,9 @@ namespace OpenGL_Game.Managers
             XmlNodeList listLights = doc.SelectSingleNode("MapConfig/Lights").ChildNodes;
             foreach (XmlNode n in listLights)
             {
-                float xpos = float.Parse(n.Attributes["PosX"].Value);
-                float ypos = float.Parse(n.Attributes["PosY"].Value);
-                float zpos = float.Parse(n.Attributes["PosZ"].Value);
+                float xpos = float.Parse(n.Attributes["XPos"].Value);
+                float ypos = float.Parse(n.Attributes["YPos"].Value);
+                float zpos = float.Parse(n.Attributes["ZPos"].Value);
 
                 Vector3 pos = new Vector3(xpos, ypos, zpos);
                 
@@ -92,6 +92,7 @@ namespace OpenGL_Game.Managers
                 case "Corner":
                 case "Connector":
                 case "Floor":
+                    //temp.AddComponent(new ComponentShaderBasic("Shaders/vs.glsl", "Shaders/fs.glsl"));
                     temp.AddComponent(new ComponentShaderPointLight("Shaders/vsPointLight.glsl", "Shaders/fsPointLight.glsl"));
                     break;
             }
