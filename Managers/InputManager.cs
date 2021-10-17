@@ -30,6 +30,7 @@ namespace OpenGL_Game.Managers
         public Vector2 DeltaMouse { get; private set; }
         public bool[] ControlFlags { get { return controlFlags; } }
         public bool LeftClicked { get { return mouseLeftClick; } }
+        public bool AnyKeyPressed { get; private set; }
 
         public enum CONTROLS
         {
@@ -38,6 +39,7 @@ namespace OpenGL_Game.Managers
             Left,
             Right,
             Escape,
+            GameOver,
         }
 
         public InputManager(SceneManager pSceneManager)
@@ -50,6 +52,11 @@ namespace OpenGL_Game.Managers
             DeltaMouse = new Vector2(0, 0);
             //GenerateControls();
             LoadControls();
+        }
+
+        ~InputManager()
+        {
+            SaveControls();
         }
 
         private void SaveControls()
@@ -144,6 +151,9 @@ namespace OpenGL_Game.Managers
                 if (currentKeyState.IsKeyDown(pair.Key))
                     controlFlags[(int)pair.Value] = true;
             }
+
+            AnyKeyPressed = currentKeyState.IsAnyKeyDown && !prevKeyState.IsAnyKeyDown ? true : false;
+
             prevKeyState = currentKeyState;
         }
 

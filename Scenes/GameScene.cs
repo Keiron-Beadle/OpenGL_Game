@@ -65,11 +65,7 @@ namespace OpenGL_Game.Scenes
 
         private void CreateEntities()
         {
-            //const string STARSHIP_OBJ_RELPATH = "Geometry/Wraith_Raider_Starship/Wraith_Raider_Starship.obj";
-            //const string INTERGALACTIC_SHIP_OBJ_RELPATH = "Geometry/Intergalactic_Ship/Intergalactic_Spaceship.obj";
             const string SKYBOX_TEX_RELPATH = "Geometry/Skybox/skybox.obj";
-            //const string SUSSY_OBJ_RELPATH = "Geometry/Amogus/amogus.obj";
-            //const string TESTCUBE_OBJ_RELPATH = "Geometry/TestCube/untitled.obj";
 
             Entity skyBox = new Entity("Skybox"); //Skybox needs to be rendered first, as Depth first is disabled for the draw
             skyBox.AddComponent(new ComponentTransform(0.0f, 0.0f, 0.0f));
@@ -94,7 +90,7 @@ namespace OpenGL_Game.Scenes
         public override void Update(FrameEventArgs e)
         {
             dt = (float)e.Time;
-            System.Console.WriteLine("fps=" + (int)(1.0/dt));
+            //System.Console.WriteLine("fps=" + (int)(1.0/dt));
 
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();
@@ -131,6 +127,7 @@ namespace OpenGL_Game.Scenes
         /// </summary>
         public override void Close()
         {
+            ResourceManager.RemoveAllAssets();
         }
 
         private void ProcessInput()
@@ -144,6 +141,9 @@ namespace OpenGL_Game.Scenes
                 camera.MoveRight(-cameraVelocity * dt);
             if (inputManager.ControlFlags[(int)CONTROLS.Right])
                 camera.MoveRight(cameraVelocity * dt);
+            //Check if we need to change scene
+            if (inputManager.ControlFlags[(int)CONTROLS.GameOver])
+                sceneManager.ChangeScene(SceneType.GAME_OVER_SCENE);
             //Check if we need to exit
             if (inputManager.ControlFlags[(int)CONTROLS.Escape])
                 sceneManager.Exit();

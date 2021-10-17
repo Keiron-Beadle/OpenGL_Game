@@ -141,6 +141,7 @@
     <Compile Include="OBJLoader\OpenGLTexture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Managers\ResourceManager.cs" />
+    <Compile Include="Scenes\GameOverScene.cs" />
     <Compile Include="Scenes\GameScene.cs" />
     <Compile Include="Scenes\GUI.cs" />
     <Compile Include="Scenes\IScene.cs" />

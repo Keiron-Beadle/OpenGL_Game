@@ -48,7 +48,9 @@ namespace OpenGL_Game.Components
         public static void AddLight(Vector3 position)
         {
             pointLights[lightIndex] = position;
-            lightIndex++;       
+            lightIndex++;
+            if (lightIndex >= pointLights.Length)
+                lightIndex = 0;
         }
 
         public override void ApplyShader(Matrix4 model, IGeometry geometry)

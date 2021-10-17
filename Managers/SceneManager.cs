@@ -6,6 +6,14 @@ using OpenGL_Game.Scenes;
 
 namespace OpenGL_Game.Managers
 {
+    public enum SceneType
+    {
+        NULL_SCENE,
+        GAME_SCENE,
+        MAIN_MENU_SCENE,
+        GAME_OVER_SCENE,
+    }
+
     class SceneManager : GameWindow
     {
         Scene scene;
@@ -21,32 +29,6 @@ namespace OpenGL_Game.Managers
             this.X = windowXPos;
             this.Y = windowYPos;
         }
-
-        //protected override void OnKeyDown(KeyboardKeyEventArgs e)
-        //{
-        //    base.OnKeyDown(e);
-        //    if (e.Key == Key.Escape) Exit();
-        //    if (keyboardDownDelegate != null) keyboardDownDelegate.Invoke(e);
-        //}
-
-        //protected override void OnKeyUp(KeyboardKeyEventArgs e)
-        //{
-        //    base.OnKeyUp(e);
-        //    if (keyboardUpDelegate != null) keyboardUpDelegate.Invoke(e);
-        //}
-
-        //protected override void OnMouseDown(MouseButtonEventArgs e)
-        //{
-        //    base.OnMouseDown(e);
-        //    if(mouseDelegate != null) mouseDelegate.Invoke(e);
-        //}
-
-        //protected override void OnMouseMove(MouseMoveEventArgs e)
-        //{
-            
-        //    if (mouseMoveDelegate != null) mouseMoveDelegate.Invoke(e);
-        //    base.OnMouseMove(e);
-        //}
 
         protected override void OnLoad(EventArgs e)
         {
@@ -80,13 +62,37 @@ namespace OpenGL_Game.Managers
             SwapBuffers();
         }
 
-        public void StartNewGame()
+        public void ChangeScene(SceneType sceneType)
+        {
+            switch (sceneType)
+            {
+                case SceneType.GAME_SCENE:
+                    StartNewGame();
+                    break;
+                case SceneType.MAIN_MENU_SCENE:
+                    StartMenu();
+                    break;
+                case SceneType.GAME_OVER_SCENE:
+                    StartGameOver();
+                    break;
+                case SceneType.NULL_SCENE:
+                    break;
+            }
+        }
+
+        private void StartGameOver()
+        {
+            if (scene != null) scene.Close();
+            scene = new GameOverScene(this);
+        }
+
+        private void StartNewGame()
         {
             if(scene != null) scene.Close();
             scene = new GameScene(this);
         }
 
-        public void StartMenu()
+        private void StartMenu()
         {
             if (scene != null) scene.Close();
             scene = new MainMenuScene(this);

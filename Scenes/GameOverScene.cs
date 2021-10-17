@@ -1,21 +1,23 @@
-﻿using System;
+﻿using OpenGL_Game.Managers;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using System.Drawing;
 using OpenTK.Input;
-using OpenGL_Game.Managers;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
 
 namespace OpenGL_Game.Scenes
 {
-    class MainMenuScene : Scene
+    class GameOverScene : Scene
     {
-        InputManager inputManager;
+        private KeyboardState prevState = Keyboard.GetState();
 
-        public MainMenuScene(SceneManager sceneManager) : base(sceneManager)
+        public GameOverScene(SceneManager sceneManager) : base(sceneManager)
         {
-            inputManager = new InputManager(sceneManager);
             // Set the title of the window
-            sceneManager.Title = "Main Menu";
+            sceneManager.Title = "Game Over";
             // Set the Render and Update delegates to the Update and Render methods of this class
             sceneManager.renderer = Render;
             sceneManager.updater = Update;
@@ -25,11 +27,12 @@ namespace OpenGL_Game.Scenes
 
         public override void Update(FrameEventArgs e)
         {
-            inputManager.Update(e);
-            if (inputManager.LeftClicked) 
+            KeyboardState currState = Keyboard.GetState();
+            if (currState.IsAnyKeyDown && !prevState.IsAnyKeyDown)
             {
-                sceneManager.ChangeScene(SceneType.GAME_SCENE);
+                sceneManager.ChangeScene(SceneType.MAIN_MENU_SCENE);
             }
+            prevState = currState;
         }
 
         public override void Render(FrameEventArgs e)
@@ -45,14 +48,13 @@ namespace OpenGL_Game.Scenes
 
             //Display the Title
             float width = sceneManager.Width, height = sceneManager.Height, fontSize = Math.Min(width, height) / 10f;
-            GUI.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int)(fontSize * 2f)), "Main Menu", (int)fontSize, StringAlignment.Center);
+            GUI.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int)(fontSize * 2f)), "Game Over", (int)fontSize, StringAlignment.Center);
 
             GUI.Render();
         }
 
         public override void Close()
         {
-            
         }
     }
 }
