@@ -39,13 +39,20 @@ namespace OpenGL_Game.Managers
             XmlNodeList listLights = doc.SelectSingleNode("MapConfig/Lights").ChildNodes;
             foreach (XmlNode n in listLights)
             {
-                float xpos = float.Parse(n.Attributes["XPos"].Value);
-                float ypos = float.Parse(n.Attributes["YPos"].Value);
-                float zpos = float.Parse(n.Attributes["ZPos"].Value);
+                PointLight light = new PointLight
+                {
+                    position = new Vector3(float.Parse(n.Attributes["XPos"].Value),
+                                            float.Parse(n.Attributes["YPos"].Value),
+                                            float.Parse(n.Attributes["ZPos"].Value)),
+                    constant = 1.0f,
+                    linear = 0.25f,
+                    quadratic = 0.052f,
+                    ambient = new Vector3(0.01f, 0.01f, 0.01f),
+                    diffuse = new Vector3(0.06666f, 0.4705f, 0.23529f),
+                    specular = new Vector3(0.1f,0.1f,0.1f)
+                };
 
-                Vector3 pos = new Vector3(xpos, ypos, zpos);
-                
-                ComponentShaderPointLight.AddLight(pos);
+                ComponentShaderPointLight.AddLight(light);
             }
         }
 

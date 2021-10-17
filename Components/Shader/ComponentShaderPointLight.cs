@@ -14,7 +14,7 @@ namespace OpenGL_Game.Components
     {
         static int lightIndex = 0;
         static int NUMBEROFLIGHTS = 8;
-        static Vector3[] pointLights = new Vector3[NUMBEROFLIGHTS];
+        static PointLight[] pointLights = new PointLight[NUMBEROFLIGHTS];
 
         private int uniform_stex;
         private int uniform_mproj;
@@ -47,9 +47,10 @@ namespace OpenGL_Game.Components
             uniform_lightSpec = GL.GetUniformLocation(ShaderID, "pointLights[0].specular");
         }
 
-        public static void AddLight(Vector3 position)
+        public static void AddLight(PointLight pointLight)
         {
-            pointLights[lightIndex] = position;
+            pointLights[lightIndex] = pointLight;
+
             lightIndex++;
             if (lightIndex >= pointLights.Length)
                 lightIndex = 0;
@@ -62,13 +63,13 @@ namespace OpenGL_Game.Components
 
             for (int i = 0; i < pointLights.Length; i++)
             {
-                GL.Uniform3(uniform_lightPosition + (i*7) , pointLights[i]);
-                GL.Uniform1(uniform_lightConstant + (i * 7), 1.0f);
-                GL.Uniform1(uniform_lightLinear + (i * 7), 0.25f);
-                GL.Uniform1(uniform_lightQuadratic + (i * 7), 0.052f);
-                GL.Uniform3(uniform_lightAmbient + (i * 7), 0.01f, 0.01f, 0.01f);
-                GL.Uniform3(uniform_lightDiffuse + (i * 7), 0.06666f, 0.4705f, 0.23529f);
-                GL.Uniform3(uniform_lightSpec + (i * 7), 0.1f, 0.1f, 0.1f);
+                GL.Uniform3(uniform_lightPosition + (i*7) , pointLights[i].position); //Position
+                GL.Uniform1(uniform_lightConstant + (i * 7), pointLights[i].constant); //Constant
+                GL.Uniform1(uniform_lightLinear + (i * 7), pointLights[i].linear); //Linear
+                GL.Uniform1(uniform_lightQuadratic + (i * 7), pointLights[i].quadratic); //Quadratic 
+                GL.Uniform3(uniform_lightAmbient + (i * 7), pointLights[i].ambient); //Ambient
+                GL.Uniform3(uniform_lightDiffuse + (i * 7), pointLights[i].diffuse); //Diffuse
+                GL.Uniform3(uniform_lightSpec + (i * 7), pointLights[i].specular); //Specular
             }
             GL.UniformMatrix4(uniform_mmodel, false, ref model);
             GL.UniformMatrix4(uniform_mview, false, ref GameScene.gameInstance.camera.view);
