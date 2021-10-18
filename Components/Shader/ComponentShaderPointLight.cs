@@ -38,13 +38,13 @@ namespace OpenGL_Game.Components
             uniform_mmodel = GL.GetUniformLocation(ShaderID, "model");
             uniform_mview = GL.GetUniformLocation(ShaderID, "view");
             uniform_mdiffuse = GL.GetUniformLocation(ShaderID, "diffuse");
-            uniform_lightPosition = GL.GetUniformLocation(ShaderID, "pointLights[0].position");
-            uniform_lightConstant = GL.GetUniformLocation(ShaderID, "pointLights[0].constant");
-            uniform_lightLinear = GL.GetUniformLocation(ShaderID, "pointLights[0].linear");
-            uniform_lightQuadratic = GL.GetUniformLocation(ShaderID, "pointLights[0].quadratic");
-            uniform_lightAmbient = GL.GetUniformLocation(ShaderID, "pointLights[0].ambient");
-            uniform_lightDiffuse = GL.GetUniformLocation(ShaderID, "pointLights[0].diffuse");
-            uniform_lightSpec = GL.GetUniformLocation(ShaderID, "pointLights[0].specular");
+            uniform_lightPosition = GL.GetUniformLocation(ShaderID, "pointLights[0].position"); //Arrays in GLSL
+            uniform_lightConstant = GL.GetUniformLocation(ShaderID, "pointLights[0].constant"); //are contiguous
+            uniform_lightLinear = GL.GetUniformLocation(ShaderID, "pointLights[0].linear"); //meaning I can get these
+            uniform_lightQuadratic = GL.GetUniformLocation(ShaderID, "pointLights[0].quadratic"); //initial values of 
+            uniform_lightAmbient = GL.GetUniformLocation(ShaderID, "pointLights[0].ambient"); //element 0 and then
+            uniform_lightDiffuse = GL.GetUniformLocation(ShaderID, "pointLights[0].diffuse"); // * index by number of uniforms
+            uniform_lightSpec = GL.GetUniformLocation(ShaderID, "pointLights[0].specular"); //to get next array uniform locations
         }
 
         public static void AddLight(PointLight pointLight)
