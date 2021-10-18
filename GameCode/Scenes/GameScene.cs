@@ -29,7 +29,9 @@ namespace OpenGL_Game.Scenes
         SystemPhysics physicsSystem; //System to apply motion & do collision detection & response
 
         public Camera camera;
-        const float cameraVelocity = 2.7f;
+        const float cameraVelocity = 2.0f;
+        private bool walking = false, walkingUp = false, walkingDown = true;
+        private float walkingVelocity = 0.18f;
 
         public static GameScene gameInstance;
 
@@ -80,7 +82,7 @@ namespace OpenGL_Game.Scenes
         private void CreateSystems()
         {
             systemManager.AddRenderSystem(renderSystem, entityManager);
-           //systemManager.AddNonRenderSystem(physicsSystem, entityManager);
+            systemManager.AddNonRenderSystem(physicsSystem, entityManager);
         }
 
         /// <summary>
@@ -98,8 +100,24 @@ namespace OpenGL_Game.Scenes
             inputManager.Update(e);
             ProcessInput();
 
+            if (walking)
+            {
+                if (walkingUp)
+                {
+                    camera.cameraPosition.Y += walkingVelocity * dt;
+                    walkingUp = camera.cameraPosition.Y < 1.06f;
+                    walkingDown = camera.cameraPosition.Y > 1.06f;
+                }
+                else if (walkingDown)
+                {
+                    camera.cameraPosition.Y -= walkingVelocity * dt;
+                    walkingUp = camera.cameraPosition.Y < 1.0f;
+                    walkingDown = camera.cameraPosition.Y > 1.0f;
+                }
+            }
+
             //Action NON-RENDER systems
-            systemManager.ActionNonRenderSystems();
+            //systemManager.ActionNonRenderSystems();
 
         }
 
@@ -132,15 +150,27 @@ namespace OpenGL_Game.Scenes
 
         private void ProcessInput()
         {
+            Vector2 movementVec = new Vector2(0,0);
             //Process any movement commands
             if (inputManager.IsActive("Forward"))
-                camera.MoveForward(cameraVelocity * dt);
+                movementVec.X = cameraVelocity * dt;
             if (inputManager.IsActive("Backward"))
-                camera.MoveForward(-cameraVelocity * dt);
+                movementVec.X = -cameraVelocity * dt;
             if (inputManager.IsActive("Left"))
-                camera.MoveRight(-cameraVelocity * dt);
+                movementVec.Y = -cameraVelocity * dt;
             if (inputManager.IsActive("Right"))
-                camera.MoveRight(cameraVelocity * dt);
+                movementVec.Y = cameraVelocity * dt;
+
+            if (movementVec.Length == 0 && walking)
+            {
+                camera.cameraPosition.Y = 1.06f;
+                walking = false; //Walking is used for Visual effect of 'head-bob'
+            }
+            else if (movementVec.Length > 0 && !walking)
+                walking = true;
+            camera.MoveForward(movementVec.X);
+            camera.MoveRight(movementVec.Y);
+
             //Check if we need to change scene
             if (inputManager.IsActive("Continue"))
                 sceneManager.ChangeScene(SceneType.GAME_OVER_SCENE);
