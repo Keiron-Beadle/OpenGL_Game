@@ -9,6 +9,7 @@ using System.Drawing;
 using System;
 using System.Diagnostics;
 using static OpenGL_Game.Managers.InputManager;
+using OpenGL_Game.GameCode.Managers;
 
 namespace OpenGL_Game.Scenes
 {
@@ -19,7 +20,7 @@ namespace OpenGL_Game.Scenes
     {
         public static float dt = 0;
         EntityManager entityManager; //Used to hold entities and manage them
-        ScriptManager scriptManager; //Used to hot-load data
+        MazeScriptManager scriptManager; //Used to hot-load data
         OpenTKInputManager inputManager; //Used as a means of getting universal control responses from
                                    //a varied number of controllers
 
@@ -36,7 +37,7 @@ namespace OpenGL_Game.Scenes
         {
             gameInstance = this;
             entityManager = new EntityManager();
-            scriptManager = new ScriptManager(); 
+            scriptManager = new MazeScriptManager(); 
             inputManager = new OpenTKInputManager(sceneManager);
             systemManager = new SystemManager();
             physicsSystem = new SystemPhysics();
@@ -79,7 +80,7 @@ namespace OpenGL_Game.Scenes
         private void CreateSystems()
         {
             systemManager.AddRenderSystem(renderSystem, entityManager);
-            systemManager.AddNonRenderSystem(physicsSystem, entityManager);
+           //systemManager.AddNonRenderSystem(physicsSystem, entityManager);
         }
 
         /// <summary>
@@ -91,7 +92,6 @@ namespace OpenGL_Game.Scenes
         {
             dt = (float)e.Time;
             //System.Console.WriteLine("fps=" + (int)(1.0/dt));
-
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();
             //Console.WriteLine(camera.cameraPosition);

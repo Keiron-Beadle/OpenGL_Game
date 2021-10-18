@@ -15,81 +15,7 @@ namespace OpenGL_Game.Managers
 {
     class ScriptManager
     {
-        /// <summary>
-        /// Used in the main game scene, this is called to populate a List of walls
-        /// via reading in a map in the form of a .xml file
-        /// </summary>
-        public void LoadMaze(string xmlFilePath, EntityManager entityManager, SystemRender renderSystem)
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(xmlFilePath);
-            float modelScale;
-            Vector3 worldTranslate;
-            modelScale = float.Parse(doc.SelectSingleNode("MapConfig/ModelScale").InnerText);
-            XmlNode worldNode = doc.SelectSingleNode("MapConfig/WorldTranslate");
-            worldTranslate = new Vector3(float.Parse(worldNode.Attributes["XTranslate"].Value), 0.0f,
-                                            float.Parse(worldNode.Attributes["ZTranslate"].Value));
-
-            LoadLights(doc, worldTranslate);
-            LoadObjects(entityManager, renderSystem, doc, worldTranslate);
-        }
-
-        private void LoadLights(XmlDocument doc, Vector3 worldTranslate)
-        {
-            XmlNodeList listLights = doc.SelectSingleNode("MapConfig/Lights").ChildNodes;
-            foreach (XmlNode n in listLights)
-            {
-                PointLight light = new PointLight
-                {
-                    position = new Vector3(float.Parse(n.Attributes["XPos"].Value),
-                                            float.Parse(n.Attributes["YPos"].Value),
-                                            float.Parse(n.Attributes["ZPos"].Value)),
-                    constant = 1.0f,
-                    linear = 0.25f,
-                    quadratic = 0.052f,
-                    ambient = new Vector3(0.01f, 0.01f, 0.01f),
-                    diffuse = new Vector3(0.06666f, 0.4705f, 0.23529f),
-                    specular = new Vector3(0.1f,0.1f,0.1f)
-                };
-
-                ComponentShaderPointLight.AddLight(light);
-            }
-        }
-
-        private void LoadObjects(EntityManager entityManager, SystemRender renderSystem, XmlDocument doc, Vector3 worldTranslate)
-        {
-            XmlNodeList objectNodeList = doc.SelectSingleNode("MapConfig/Objects").ChildNodes;
-            Random rnd = new Random();
-            foreach (XmlNode n in objectNodeList)
-            {
-                Entity temp = new Entity(n.Attributes["Name"].Value);
-                XmlNodeList components = n.ChildNodes;
-                foreach (XmlNode component in components)
-                {
-                    switch (component.Name)
-                    {
-                        case "Transform":
-                            AddTransformComponent(ref temp, component.Attributes, worldTranslate);
-                            break;
-                        case "Geometry":
-                            AddGeometryComponent(ref temp, n.Attributes["Type"].Value, renderSystem);
-                            AddShaderComponent(ref temp, n.Attributes["Type"].Value, renderSystem);
-                            break;
-                        case "Rotation":
-                            AddRotationComponent(ref temp, component.Attributes);
-                            break;
-                        case "Velocity":
-                            AddVelocityComponent(ref temp, component.Attributes);
-                            break;
-                    }
-
-                }
-
-                entityManager.AddEntity(temp);
-            }
-        }
-
-        private void AddShaderComponent(ref Entity temp, string type, SystemRender renderSystem)
+        protected void AddShaderComponent(ref Entity temp, string type)
         {
             switch (type)
             {
@@ -114,20 +40,20 @@ namespace OpenGL_Game.Managers
         /// </summary>
         /// <param name="temp"></param>
         /// <param name="attributes"></param>
-        private void AddVelocityComponent(ref Entity temp, XmlAttributeCollection attributes)
+        protected void AddVelocityComponent(ref Entity temp, XmlAttributeCollection attributes)
         {
             Vector3 velocity = new Vector3(float.Parse(attributes["XVel"].Value),
                                             float.Parse(attributes["YVel"].Value),
                                             float.Parse(attributes["ZVel"].Value));
             temp.AddComponent(new ComponentVelocity(velocity));
         }
-        
+
         /// <summary>
         /// Adds a rotation component to the entity
         /// </summary>
         /// <param name="temp"></param>
         /// <param name="attributes"></param>
-        private void AddRotationComponent(ref Entity temp, XmlAttributeCollection attributes)
+        protected void AddRotationComponent(ref Entity temp, XmlAttributeCollection attributes)
         {
             Vector3 rotation = new Vector3(float.Parse(attributes["XRot"].Value),
                                             float.Parse(attributes["YRot"].Value),
@@ -142,7 +68,7 @@ namespace OpenGL_Game.Managers
         /// <param name="temp"></param>
         /// <param name="type"></param>
         /// <param name="renderSystem"></param>
-        private void AddGeometryComponent(ref Entity temp, string type, SystemRender renderSystem)
+        protected void AddGeometryComponent(ref Entity temp, string type, SystemRender renderSystem)
         {
             try
             {
@@ -161,7 +87,7 @@ namespace OpenGL_Game.Managers
         /// <param name="temp"></param>
         /// <param name="attributes"></param>
         /// <param name="worldTranslate"></param>
-        private void AddTransformComponent(ref Entity temp, XmlAttributeCollection attributes, Vector3 worldTranslate)
+        protected void AddTransformComponent(ref Entity temp, XmlAttributeCollection attributes, Vector3 worldTranslate)
         {
             Vector3 position = new Vector3( float.Parse(attributes["XPos"].Value),
                                             float.Parse(attributes["YPos"].Value),
