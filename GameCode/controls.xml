@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?><rootElement>
+  <Config Control="Forward" Key="105" />
+  <Config Control="Backward" Key="101" />
+  <Config Control="Left" Key="83" />
+  <Config Control="Right" Key="86" />
+  <Config Control="Forward" Key="45" />
+  <Config Control="Backward" Key="46" />
+  <Config Control="Left" Key="47" />
+  <Config Control="Right" Key="48" />
+  <Config Control="Escape" Key="50"/>
+  <Config Control="Continue" Key="95"/>
+</rootElement>

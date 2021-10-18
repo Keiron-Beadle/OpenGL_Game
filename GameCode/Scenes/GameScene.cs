@@ -65,15 +65,15 @@ namespace OpenGL_Game.Scenes
 
         private void CreateEntities()
         {
-            const string SKYBOX_TEX_RELPATH = "Geometry/Skybox/skybox.obj";
+            const string SKYBOX_TEX_RELPATH = "GameCode/Geometry/Skybox/skybox.obj";
 
             Entity skyBox = new Entity("Skybox"); //Skybox needs to be rendered first, as Depth first is disabled for the draw
             skyBox.AddComponent(new ComponentTransform(0.0f, 0.0f, 0.0f));
             skyBox.AddComponent(new ComponentGeometry(SKYBOX_TEX_RELPATH, renderSystem));
-            skyBox.AddComponent(new ComponentShaderBasic("Shaders/vs.glsl", "Shaders/fs.glsl"));
+            skyBox.AddComponent(new ComponentShaderBasic("GameCode/Shaders/vs.glsl", "GameCode/Shaders/fs.glsl"));
             entityManager.AddEntity(skyBox);
 
-            scriptManager.LoadMaze("map.xml", entityManager, renderSystem);
+            scriptManager.LoadMaze("GameCode/map.xml", entityManager, renderSystem);
         }
 
         private void CreateSystems()
@@ -133,19 +133,19 @@ namespace OpenGL_Game.Scenes
         private void ProcessInput()
         {
             //Process any movement commands
-            if (inputManager.ControlFlags[(int)CONTROLS.Forward])
+            if (inputManager.IsActive("Forward"))
                 camera.MoveForward(cameraVelocity * dt);
-            if (inputManager.ControlFlags[(int)CONTROLS.Backward])
+            if (inputManager.IsActive("Backward"))
                 camera.MoveForward(-cameraVelocity * dt);
-            if (inputManager.ControlFlags[(int)CONTROLS.Left])
+            if (inputManager.IsActive("Left"))
                 camera.MoveRight(-cameraVelocity * dt);
-            if (inputManager.ControlFlags[(int)CONTROLS.Right])
+            if (inputManager.IsActive("Right"))
                 camera.MoveRight(cameraVelocity * dt);
             //Check if we need to change scene
-            if (inputManager.ControlFlags[(int)CONTROLS.GameOver])
+            if (inputManager.IsActive("Continue"))
                 sceneManager.ChangeScene(SceneType.GAME_OVER_SCENE);
             //Check if we need to exit
-            if (inputManager.ControlFlags[(int)CONTROLS.Escape])
+            if (inputManager.IsActive("Escape"))
                 sceneManager.Exit();
 
             //Process mouse movement for the current frame

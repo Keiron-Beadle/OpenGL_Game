@@ -69,7 +69,7 @@ namespace OpenGL_Game.OBJLoader
                     }
                     else
                     {
-                        newGroup.texture = ResourceManager.LoadTexture("Geometry\\Default\\default.png", renderer);   // OBJ NEW 
+                        newGroup.texture = ResourceManager.LoadTexture("GameCode\\Geometry\\Default\\default.png", renderer);   // OBJ NEW 
                     }
                     bool error = false;
                     string errorMessage = "";

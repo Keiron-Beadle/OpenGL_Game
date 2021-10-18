@@ -94,17 +94,17 @@ namespace OpenGL_Game.Managers
             switch (type)
             {
                 case "Wall":
-                    //temp.AddComponent(new ComponentShaderBasic("Shaders/vs.glsl", "Shaders/fs.glsl"));
-                    //break;
+                //temp.AddComponent(new ComponentShaderBasic("GameCode/Shaders/vs.glsl", "GameCode/Shaders/fs.glsl"));
+                //break;
                 case "Corner":
                 case "Connector":
                 case "Floor":
-                    //temp.AddComponent(new ComponentShaderBasic("Shaders/vs.glsl", "Shaders/fs.glsl"));
-                    temp.AddComponent(new ComponentShaderPointLight("Shaders/vsPointLight.glsl", "Shaders/fsPointLight.glsl"));
+                    //temp.AddComponent(new ComponentShaderBasic("GameCode/Shaders/vs.glsl", "GameCode/Shaders/fs.glsl"));
+                    temp.AddComponent(new ComponentShaderPointLight("GameCode/Shaders/vsPointLight.glsl", "GameCode/Shaders/fsPointLight.glsl"));
                     break;
                 case "Portal":
-                    //temp.AddComponent(new ComponentShaderBasic("Shaders/vs.glsl", "Shaders/fs.glsl"));
-                    temp.AddComponent(new ComponentShaderPointLight("Shaders/vsPointLight.glsl", "Shaders/fsPointLight.glsl"));
+                    //temp.AddComponent(new ComponentShaderBasic("GameCode/Shaders/vs.glsl", "GameCode/Shaders/fs.glsl"));
+                    temp.AddComponent(new ComponentShaderPointLight("GameCode/Shaders/vsPointLight.glsl", "GameCode/Shaders/fsPointLight.glsl"));
                     break;
             }
         }
@@ -146,7 +146,7 @@ namespace OpenGL_Game.Managers
         {
             try
             {
-                temp.AddComponent(new ComponentGeometry("Geometry/" + type + '/' + type + ".obj", renderSystem));
+                temp.AddComponent(new ComponentGeometry("GameCode/Geometry/" + type + '/' + type + ".obj", renderSystem));
             }
             catch(Exception e)
             {
@@ -181,21 +181,21 @@ namespace OpenGL_Game.Managers
         /// a dictionary of Keys/Controls for the caller.
         /// </summary>
         /// <param name="controlBindings"></param>
-        public static void LoadTKControls(ref Dictionary<Key, CONTROLS> controlBindings)
+        public static void LoadTKControls(ref Dictionary<Key, string> controlBindings)
         {
             XmlDocument doc = new XmlDocument();
-            doc.Load("controls.xml");
+            doc.Load("GameCode/controls.xml");
             XmlNode root = null;
             root = doc.SelectSingleNode("rootElement");
             foreach (XmlNode n in root.ChildNodes)
             {
-                CONTROLS c = (CONTROLS)int.Parse(n.Attributes["Control"].Value);
+                string c = n.Attributes["Control"].Value;
                 Key k = (Key)int.Parse(n.Attributes["Key"].Value);
                 controlBindings.Add(k, c);
             }
         }
 
-        public static void SaveTKControls(ref Dictionary<Key,CONTROLS> controlBindings)
+        public static void SaveTKControls(ref Dictionary<Key, string> controlBindings)
         {
             XmlWriter writer = XmlWriter.Create("controls.xml");
             writer.WriteStartDocument();
@@ -204,7 +204,7 @@ namespace OpenGL_Game.Managers
             foreach (var pair in controlBindings)
             {
                 writer.WriteStartElement("Config");
-                writer.WriteAttributeString("Control", ((int)pair.Value).ToString());
+                writer.WriteAttributeString("Control",pair.Value);
                 writer.WriteAttributeString("Key", ((int)pair.Key).ToString());
                 writer.WriteEndElement();
                 writer.WriteString("\n");

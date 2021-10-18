@@ -12,16 +12,6 @@ namespace OpenGL_Game.Managers
     {
         protected SceneManager sceneManager;
 
-        public enum CONTROLS
-        {
-            Forward,
-            Backward,
-            Left,
-            Right,
-            Escape,
-            GameOver,
-        }
-
         public InputManager(SceneManager pSceneManager)
         {
             sceneManager = pSceneManager;
@@ -29,9 +19,9 @@ namespace OpenGL_Game.Managers
 
         public abstract void Update(FrameEventArgs e);
 
-        protected abstract void SaveControls();
+        protected abstract void SaveXMLControls();
 
-        protected abstract void LoadControls();
+        protected abstract void LoadXMLControls();
 
         public abstract void UpdateFPSCamera(ref Camera camera, float dt);
     }

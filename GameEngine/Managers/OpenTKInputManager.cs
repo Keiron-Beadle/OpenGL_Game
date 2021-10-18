@@ -11,39 +11,54 @@ namespace OpenGL_Game.Managers
     {
         //Keyboard variables
         private KeyboardState prevKeyState;
-        private bool[] controlFlags; //Array to hold which keys are pressed currently
-        private Dictionary<Key, CONTROLS> controlBindings;
+        private Dictionary<Key, string> controlBindings;
+        public Dictionary<string, bool> controlFlags;
+        private List<string> controls;
 
         //Mouse variables
         private Vector2 centerOfWindow;
         private MouseState prevMouseState;
         private bool mouseLeftClick = false; //Bool for if left mouse button clicked right now
-        private bool firstRun = true;
-        float mouseHAngle = 0.0f;
-        float mouseVAngle = 0.0f;
-        const float SENSITIVITY = 0.14f;
+        private bool firstUpdate = true;
+        private float mouseHAngle = 0.0f;
+        private float mouseVAngle = 0.0f;
+        static float MOUSE_SENSITIVITY = 0.14f;
 
         //Properties
         public Vector2 DeltaMouse { get; private set; }
-        public bool[] ControlFlags { get { return controlFlags; } }
         public bool LeftClicked { get { return mouseLeftClick; } }
         public bool AnyKeyPressed { get; private set; }
+
+        public bool IsActive(string command) => controlFlags[command];
 
 
         public OpenTKInputManager(SceneManager sceneManger) : base(sceneManger)
         {
-            centerOfWindow = new Vector2((sceneManager.Bounds.Left + sceneManager.Bounds.Right) / 2,
-                (sceneManager.Bounds.Top + sceneManager.Bounds.Bottom) / 2);
-            controlFlags = new bool[Enum.GetNames(typeof(CONTROLS)).Length];
-            controlBindings = new Dictionary<Key, CONTROLS>();
+            controls = new List<string>();
+            controlFlags = new Dictionary<string, bool>();
+            AddDefaultControlStrings();
+            controlBindings = new Dictionary<Key, string>();
             DeltaMouse = new Vector2(0, 0);
-            //GenerateControls();
-            LoadControls();
+            centerOfWindow = new Vector2((sceneManager.Bounds.Left + sceneManager.Bounds.Right) / 2,
+                    (sceneManager.Bounds.Top + sceneManager.Bounds.Bottom) / 2);
+            LoadXMLControls();
+        }
+
+        private void AddDefaultControlStrings()
+        {
+            controls.Add("Forward");
+            controls.Add("Backward");
+            controls.Add("Left");
+            controls.Add("Right");
+            controls.Add("Escape");
+            controls.Add("Continue");
+            foreach (string s in controls)
+                controlFlags.Add(s, false);
         }
 
         ~OpenTKInputManager()
         {
-            SaveControls();
+            SaveXMLControls();
         }
 
         public override void Update(FrameEventArgs e)
@@ -51,45 +66,16 @@ namespace OpenGL_Game.Managers
             UpdateKeyboard();
             UpdateMouse();
         }
-
-        protected override void SaveControls()
+        
+        protected override void SaveXMLControls()
         {
             ScriptManager.SaveTKControls(ref controlBindings);
         }
 
-        protected override void LoadControls()
+        protected override void LoadXMLControls()
         {
             ScriptManager.LoadTKControls(ref controlBindings);
         }
-
-        //private void GenerateControls()
-        //{
-        //    Key w = Key.W;
-        //    Key a = Key.A;
-        //    Key s = Key.S;
-        //    Key d = Key.D;
-        //    Key up = Key.Up;
-        //    Key down = Key.Down;
-        //    Key right = Key.Right;
-        //    Key left = Key.Left;
-
-        //    CONTROLS forward = CONTROLS.Forward;
-        //    CONTROLS backward = CONTROLS.Backward;
-        //    CONTROLS leftC = CONTROLS.Left;
-        //    CONTROLS rightC = CONTROLS.Right;
-
-        //    controlBindings.Add(w, forward);
-        //    controlBindings.Add(s, backward);
-        //    controlBindings.Add(a, leftC);
-        //    controlBindings.Add(d, rightC);
-        //    controlBindings.Add(up, forward);
-        //    controlBindings.Add(down, backward);
-        //    controlBindings.Add(left, leftC);
-        //    controlBindings.Add(right, rightC);
-
-        //    SaveControls();
-        //    Environment.Exit(0);
-        //}
 
         private void UpdateMouse()
         {
@@ -103,10 +89,10 @@ namespace OpenGL_Game.Managers
             else
                 mouseLeftClick = false;
 
-            if (firstRun)
+            if (firstUpdate)
             {
                 DeltaMouse = Vector2.Zero;
-                firstRun = false;
+                firstUpdate = false;
                 return;
             }
 
@@ -116,11 +102,12 @@ namespace OpenGL_Game.Managers
         private void UpdateKeyboard()
         {
             KeyboardState currentKeyState = Keyboard.GetState();
-            for (int i = 0; i < controlFlags.Length; i++) { controlFlags[i] = false; }
+            for (int i = 0; i < controls.Count; i++)
+            { controlFlags[controls[i]] = false; } //Reset to false
             foreach (var pair in controlBindings)
             {
                 if (currentKeyState.IsKeyDown(pair.Key))
-                    controlFlags[(int)pair.Value] = true;
+                    controlFlags[pair.Value] = true;
             }
 
             AnyKeyPressed = currentKeyState.IsAnyKeyDown && !prevKeyState.IsAnyKeyDown ? true : false;
@@ -130,8 +117,8 @@ namespace OpenGL_Game.Managers
 
         public override void UpdateFPSCamera(ref Camera camera, float dt)
         {
-            mouseHAngle += (-SENSITIVITY * DeltaMouse.X) * dt; //Append a new delta mouse change
-            mouseVAngle += (-SENSITIVITY * DeltaMouse.Y) * dt;
+            mouseHAngle += (-MOUSE_SENSITIVITY * DeltaMouse.X) * dt; //Append a new delta mouse change
+            mouseVAngle += (-MOUSE_SENSITIVITY * DeltaMouse.Y) * dt;
             mouseVAngle = MathHelper.Clamp(mouseVAngle, -1.4f, 1.4f); //Clamp vertical so we can't look upside down
             Vector3 dir = new Vector3((float)Math.Cos(mouseVAngle) * (float)Math.Sin(mouseHAngle),
                                        (float)Math.Sin(mouseVAngle),

@@ -74,86 +74,86 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Camera.cs" />
-    <Compile Include="Components\Physics\ComponentRotation.cs" />
-    <Compile Include="Components\Shader\ComponentShader.cs" />
-    <Compile Include="Components\Shader\ComponentShaderBasic.cs" />
-    <Compile Include="Components\Shader\ComponentShaderPointLight.cs" />
-    <Compile Include="Components\ComponentTransform.cs" />
-    <Compile Include="Components\Physics\ComponentVelocity.cs" />
-    <Compile Include="Managers\InputManager.cs" />
-    <Compile Include="Managers\OpenTKInputManager.cs" />
-    <Compile Include="Managers\ScriptManager.cs" />
-    <Compile Include="Objects\LightStructs.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Common\StringExtensions.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Data\DataStore\DataStore.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Data\DataStore\IDataStore.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Data\DataStore\IElementGroup.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Data\DataStore\IFaceGroup.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Data\DataStore\IGroupDataStore.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Data\DataStore\IMaterialLibrary.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Data\DataStore\INormalDataStore.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Data\DataStore\ITextureDataStore.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Data\DataStore\IVertexDataStore.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Data\Elements\Face.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Data\Elements\Group.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Data\Material.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Data\Vec3.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Data\VertexData\Normal.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Data\VertexData\Texture.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Data\VertexData\Vertex.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Loaders\IMaterialLibraryLoader.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Loaders\IMaterialLibraryLoaderFacade.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Loaders\IObjLoader.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Loaders\IObjLoaderFactory.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Loaders\LoaderBase.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Loaders\LoadResult.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Loaders\MaterialLibraryLoader.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Loaders\MaterialLibraryLoaderFacade.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Loaders\MaterialStreamProvider.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Loaders\ObjLoader.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Loaders\ObjLoaderFactory.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\FaceParser.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\GroupParser.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\Interfaces\IFaceParser.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\Interfaces\IGroupParser.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\Interfaces\IMaterialLibraryParser.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\Interfaces\INormalParser.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\Interfaces\ITextureParser.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\Interfaces\ITypeParser.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\Interfaces\IUseMaterialParser.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\Interfaces\IVertexParser.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\MaterialLibraryParser.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\NormalParser.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\TextureParser.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\TypeParserBase.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\UseMaterialParser.cs" />
-    <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\VertexParser.cs" />
-    <Compile Include="Components\Render\ComponentGeometry.cs" />
-    <Compile Include="Components\Render\ComponentTexture.cs" />
-    <Compile Include="Managers\SceneManager.cs" />
-    <Compile Include="Objects\Entity.cs" />
-    <Compile Include="Managers\EntityManager.cs" />
-    <Compile Include="OBJLoader\OpenGLGeometry.cs" />
-    <Compile Include="Components\IComponent.cs" />
+    <Compile Include="GameEngine\Camera.cs" />
+    <Compile Include="GameEngine\Components\Physics\ComponentRotation.cs" />
+    <Compile Include="GameEngine\Components\Shader\ComponentShader.cs" />
+    <Compile Include="GameCode\Components\ShaderComponents\ComponentShaderBasic.cs" />
+    <Compile Include="GameCode\Components\ShaderComponents\ComponentShaderPointLight.cs" />
+    <Compile Include="GameEngine\Components\ComponentTransform.cs" />
+    <Compile Include="GameEngine\Components\Physics\ComponentVelocity.cs" />
+    <Compile Include="GameEngine\Managers\InputManager.cs" />
+    <Compile Include="GameEngine\Managers\OpenTKInputManager.cs" />
+    <Compile Include="GameEngine\Managers\ScriptManager.cs" />
+    <Compile Include="GameEngine\Objects\LightStructs.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Common\StringExtensions.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Data\DataStore\DataStore.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Data\DataStore\IDataStore.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Data\DataStore\IElementGroup.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Data\DataStore\IFaceGroup.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Data\DataStore\IGroupDataStore.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Data\DataStore\IMaterialLibrary.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Data\DataStore\INormalDataStore.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Data\DataStore\ITextureDataStore.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Data\DataStore\IVertexDataStore.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Data\Elements\Face.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Data\Elements\Group.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Data\Material.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Data\Vec3.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Data\VertexData\Normal.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Data\VertexData\Texture.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Data\VertexData\Vertex.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Loaders\IMaterialLibraryLoader.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Loaders\IMaterialLibraryLoaderFacade.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Loaders\IObjLoader.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Loaders\IObjLoaderFactory.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Loaders\LoaderBase.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Loaders\LoadResult.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Loaders\MaterialLibraryLoader.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Loaders\MaterialLibraryLoaderFacade.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Loaders\MaterialStreamProvider.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Loaders\ObjLoader.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\Loaders\ObjLoaderFactory.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\FaceParser.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\GroupParser.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\Interfaces\IFaceParser.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\Interfaces\IGroupParser.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\Interfaces\IMaterialLibraryParser.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\Interfaces\INormalParser.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\Interfaces\ITextureParser.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\Interfaces\ITypeParser.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\Interfaces\IUseMaterialParser.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\Interfaces\IVertexParser.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\MaterialLibraryParser.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\NormalParser.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\TextureParser.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\TypeParserBase.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\UseMaterialParser.cs" />
+    <Compile Include="GameEngine\OBJLoader\CjClutter.ObjLoader.Loader\TypeParsers\VertexParser.cs" />
+    <Compile Include="GameEngine\Components\Render\ComponentGeometry.cs" />
+    <Compile Include="GameEngine\Components\Render\ComponentTexture.cs" />
+    <Compile Include="GameEngine\Managers\SceneManager.cs" />
+    <Compile Include="GameEngine\Objects\Entity.cs" />
+    <Compile Include="GameEngine\Managers\EntityManager.cs" />
+    <Compile Include="GameEngine\OBJLoader\OpenGLGeometry.cs" />
+    <Compile Include="GameEngine\Components\IComponent.cs" />
     <Compile Include="Main.cs" />
-    <Compile Include="OBJLoader\IGeometry.cs" />
-    <Compile Include="OBJLoader\ITexture.cs" />
-    <Compile Include="OBJLoader\OpenGLTexture.cs" />
+    <Compile Include="GameEngine\OBJLoader\IGeometry.cs" />
+    <Compile Include="GameEngine\OBJLoader\ITexture.cs" />
+    <Compile Include="GameEngine\OBJLoader\OpenGLTexture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Managers\ResourceManager.cs" />
-    <Compile Include="Scenes\GameOverScene.cs" />
-    <Compile Include="Scenes\GameScene.cs" />
-    <Compile Include="Scenes\GUI.cs" />
-    <Compile Include="Scenes\IScene.cs" />
-    <Compile Include="Scenes\MainMenuScene.cs" />
-    <Compile Include="Scenes\Scene.cs" />
-    <Compile Include="Managers\SystemManager.cs" />
-    <Compile Include="Systems\OpenGLRenderer.cs" />
-    <Compile Include="Systems\ASystem.cs" />
-    <Compile Include="Systems\SystemAudio.cs" />
-    <Compile Include="Systems\SystemPhysics.cs" />
-    <Compile Include="Systems\SystemRender.cs" />
+    <Compile Include="GameEngine\Managers\ResourceManager.cs" />
+    <Compile Include="GameCode\Scenes\GameOverScene.cs" />
+    <Compile Include="GameCode\Scenes\GameScene.cs" />
+    <Compile Include="GameEngine\Scenes\GUI.cs" />
+    <Compile Include="GameEngine\Scenes\IScene.cs" />
+    <Compile Include="GameCode\Scenes\MainMenuScene.cs" />
+    <Compile Include="GameEngine\Scenes\Scene.cs" />
+    <Compile Include="GameEngine\Managers\SystemManager.cs" />
+    <Compile Include="GameEngine\Systems\OpenGLRenderer.cs" />
+    <Compile Include="GameEngine\Systems\ASystem.cs" />
+    <Compile Include="GameEngine\Systems\SystemAudio.cs" />
+    <Compile Include="GameEngine\Systems\SystemPhysics.cs" />
+    <Compile Include="GameEngine\Systems\SystemRender.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=3.2.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
@@ -165,80 +165,80 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Geometry\Connector\connector.mtl">
+    <None Include="GameCode\Geometry\Connector\connector.mtl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Geometry\Connector\connector.obj">
+    <None Include="GameCode\Geometry\Connector\connector.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Geometry\Corner\Corner.mtl">
+    <None Include="GameCode\Geometry\Corner\Corner.mtl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Geometry\Corner\Corner.obj">
+    <None Include="GameCode\Geometry\Corner\Corner.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Geometry\Floor\Floor.mtl">
+    <None Include="GameCode\Geometry\Floor\Floor.mtl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Geometry\Floor\Floor.obj">
+    <None Include="GameCode\Geometry\Floor\Floor.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Geometry\Intergalactic_Ship\Intergalactic_Spaceship.mtl">
+    <None Include="GameCode\Geometry\Intergalactic_Ship\Intergalactic_Spaceship.mtl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Geometry\Intergalactic_Ship\Intergalactic_Spaceship.obj">
+    <None Include="GameCode\Geometry\Intergalactic_Ship\Intergalactic_Spaceship.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Geometry\Moon\moon.mtl">
+    <None Include="GameCode\Geometry\Moon\moon.mtl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Geometry\Moon\moon.obj">
+    <None Include="GameCode\Geometry\Moon\moon.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Geometry\Portal\Portal.mtl">
+    <None Include="GameCode\Geometry\Portal\Portal.mtl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Geometry\Portal\Portal.obj">
+    <None Include="GameCode\Geometry\Portal\Portal.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Geometry\Skybox\skybox.mtl">
+    <None Include="GameCode\Geometry\Skybox\skybox.mtl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Geometry\Skybox\skybox.obj">
+    <None Include="GameCode\Geometry\Skybox\skybox.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Geometry\TestCube\untitled.mtl">
+    <None Include="GameCode\Geometry\TestCube\untitled.mtl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Geometry\TestCube\untitled.obj">
+    <None Include="GameCode\Geometry\TestCube\untitled.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Geometry\Wall\wall.mtl">
+    <None Include="GameCode\Geometry\Wall\wall.mtl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Geometry\Wall\wall.obj">
+    <None Include="GameCode\Geometry\Wall\wall.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Geometry\Wraith_Raider_Starship\Wraith_Raider_Starship.mtl">
+    <None Include="GameCode\Geometry\Wraith_Raider_Starship\Wraith_Raider_Starship.mtl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Geometry\Wraith_Raider_Starship\Wraith_Raider_Starship.obj">
+    <None Include="GameCode\Geometry\Wraith_Raider_Starship\Wraith_Raider_Starship.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
-    <None Include="Shaders\fsPointLight.glsl">
+    <None Include="GameCode\Shaders\fsPointLight.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Shaders\vsPointLight.glsl">
+    <None Include="GameCode\Shaders\vsPointLight.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\fs.glsl">
+    <None Include="GameCode\Shaders\fs.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Shaders\vs.glsl">
+    <None Include="GameCode\Shaders\vs.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -265,104 +265,101 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Audio\buzz.wav">
+    <Content Include="GameCode\Audio\buzz.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="controls.xml">
+    <Content Include="GameCode\controls.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Connector\Metal_Corrugated_011_basecolor.jpg">
+    <Content Include="GameCode\Geometry\Connector\Metal_Corrugated_011_basecolor.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Connector\Metal_Corrugated_011_metallic.jpg">
+    <Content Include="GameCode\Geometry\Connector\Metal_Corrugated_011_metallic.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Connector\Metal_Corrugated_011_normal.jpg">
+    <Content Include="GameCode\Geometry\Connector\Metal_Corrugated_011_normal.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Connector\Metal_Corrugated_011_roughness.jpg">
+    <Content Include="GameCode\Geometry\Connector\Metal_Corrugated_011_roughness.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Corner\Stylized_Stone_Wall_001_basecolor.jpg">
+    <Content Include="GameCode\Geometry\Corner\Stylized_Stone_Wall_001_basecolor.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Corner\Stylized_Stone_Wall_001_normal.jpg">
+    <Content Include="GameCode\Geometry\Corner\Stylized_Stone_Wall_001_normal.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Corner\Stylized_Stone_Wall_001_roughness.jpg">
+    <Content Include="GameCode\Geometry\Corner\Stylized_Stone_Wall_001_roughness.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Default\default.png">
+    <Content Include="GameCode\Geometry\Default\default.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Floor\Metal_Rusted_009_basecolor.jpg">
+    <Content Include="GameCode\Geometry\Floor\Metal_Rusted_009_basecolor.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Floor\Metal_Rusted_009_normal.jpg">
+    <Content Include="GameCode\Geometry\Floor\Metal_Rusted_009_normal.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Intergalactic_Ship\Intergalactic_Spaceship_color_4.jpg">
+    <Content Include="GameCode\Geometry\Intergalactic_Ship\Intergalactic_Spaceship_color_4.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Intergalactic_Ship\Intergalactic_Spaceship_nmap_2_Tris.jpg">
+    <Content Include="GameCode\Geometry\Intergalactic_Ship\Intergalactic_Spaceship_nmap_2_Tris.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Intergalactic_Ship\Intergalactic_Spaceship_rough.jpg">
+    <Content Include="GameCode\Geometry\Intergalactic_Ship\Intergalactic_Spaceship_rough.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Moon\moon_diffuse.png">
+    <Content Include="GameCode\Geometry\Moon\moon_diffuse.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Portal\Obsidian_001_basecolor.jpg">
+    <Content Include="GameCode\Geometry\Portal\Obsidian_001_basecolor.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Portal\Obsidian_001_normal.jpg">
+    <Content Include="GameCode\Geometry\Portal\Obsidian_001_normal.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Skybox\SkySkybox.png">
+    <Content Include="GameCode\Geometry\Skybox\SkySkybox.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Wall\MetalPipeWallRusty_basecolor.png">
+    <Content Include="GameCode\Geometry\Wall\MetalPipeWallRusty_basecolor.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Wall\MetalPipeWallRusty_normal.png">
+    <Content Include="GameCode\Geometry\Wall\MetalPipeWallRusty_normal.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Wraith_Raider_Starship\bmq1.jpg">
+    <Content Include="GameCode\Geometry\Wraith_Raider_Starship\bmq1.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Wraith_Raider_Starship\cockpit_mtl1_diffcol.jpg">
+    <Content Include="GameCode\Geometry\Wraith_Raider_Starship\cockpit_mtl1_diffcol.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Wraith_Raider_Starship\d10.jpg">
+    <Content Include="GameCode\Geometry\Wraith_Raider_Starship\d10.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Wraith_Raider_Starship\d17.jpg">
+    <Content Include="GameCode\Geometry\Wraith_Raider_Starship\d17.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Wraith_Raider_Starship\d17b.jpg">
+    <Content Include="GameCode\Geometry\Wraith_Raider_Starship\d17b.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Wraith_Raider_Starship\door_mtl1_diffcol.jpg">
+    <Content Include="GameCode\Geometry\Wraith_Raider_Starship\door_mtl1_diffcol.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Wraith_Raider_Starship\door_mtl2_diffcol.jpg">
+    <Content Include="GameCode\Geometry\Wraith_Raider_Starship\door_mtl2_diffcol.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Wraith_Raider_Starship\vj2c.jpg">
+    <Content Include="GameCode\Geometry\Wraith_Raider_Starship\vj2c.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Geometry\Wraith_Raider_Starship\yx1_02_01_01.jpg">
+    <Content Include="GameCode\Geometry\Wraith_Raider_Starship\yx1_02_01_01.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="map.xml">
+    <Content Include="GameCode\map.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GameCode\" />
-    <Folder Include="GameEngine\" />
-  </ItemGroup>
+  <ItemGroup />
   <!-- Specify the search path explicitly so the ResolveAssemblyReferences task picks the right ones -->
   <Target Name="BeforeResolveReferences">
   </Target>

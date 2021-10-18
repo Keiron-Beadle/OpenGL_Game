@@ -8,7 +8,6 @@ namespace OpenGL_Game.Scenes
 {
     static class GUI
     {
-
         static private Bitmap textBMP; //The image being drawn
         static Bitmap TextBMP
         {
