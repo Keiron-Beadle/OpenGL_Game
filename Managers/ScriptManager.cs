@@ -181,7 +181,7 @@ namespace OpenGL_Game.Managers
         /// a dictionary of Keys/Controls for the caller.
         /// </summary>
         /// <param name="controlBindings"></param>
-        public static void LoadControls(ref Dictionary<Key, CONTROLS> controlBindings)
+        public static void LoadTKControls(ref Dictionary<Key, CONTROLS> controlBindings)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load("controls.xml");
@@ -193,6 +193,27 @@ namespace OpenGL_Game.Managers
                 Key k = (Key)int.Parse(n.Attributes["Key"].Value);
                 controlBindings.Add(k, c);
             }
+        }
+
+        public static void SaveTKControls(ref Dictionary<Key,CONTROLS> controlBindings)
+        {
+            XmlWriter writer = XmlWriter.Create("controls.xml");
+            writer.WriteStartDocument();
+            writer.WriteStartElement("rootElement");
+            writer.WriteString("\n");
+            foreach (var pair in controlBindings)
+            {
+                writer.WriteStartElement("Config");
+                writer.WriteAttributeString("Control", ((int)pair.Value).ToString());
+                writer.WriteAttributeString("Key", ((int)pair.Key).ToString());
+                writer.WriteEndElement();
+                writer.WriteString("\n");
+                writer.Flush();
+            }
+            writer.WriteEndElement();
+            writer.WriteEndDocument();
+            writer.Flush();
+            writer.Close();
         }
     }
 }

@@ -82,6 +82,7 @@
     <Compile Include="Components\ComponentTransform.cs" />
     <Compile Include="Components\Physics\ComponentVelocity.cs" />
     <Compile Include="Managers\InputManager.cs" />
+    <Compile Include="Managers\OpenTKInputManager.cs" />
     <Compile Include="Managers\ScriptManager.cs" />
     <Compile Include="Objects\LightStructs.cs" />
     <Compile Include="OBJLoader\CjClutter.ObjLoader.Loader\Common\StringExtensions.cs" />
@@ -358,7 +359,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="GameCode\" />
+    <Folder Include="GameEngine\" />
+  </ItemGroup>
   <!-- Specify the search path explicitly so the ResolveAssemblyReferences task picks the right ones -->
   <Target Name="BeforeResolveReferences">
   </Target>

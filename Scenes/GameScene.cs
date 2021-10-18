@@ -20,7 +20,7 @@ namespace OpenGL_Game.Scenes
         public static float dt = 0;
         EntityManager entityManager; //Used to hold entities and manage them
         ScriptManager scriptManager; //Used to hot-load data
-        InputManager inputManager; //Used as a means of getting universal control responses from
+        OpenTKInputManager inputManager; //Used as a means of getting universal control responses from
                                    //a varied number of controllers
 
         SystemManager systemManager; //Manages and actions other systems
@@ -37,7 +37,7 @@ namespace OpenGL_Game.Scenes
             gameInstance = this;
             entityManager = new EntityManager();
             scriptManager = new ScriptManager(); 
-            inputManager = new InputManager(sceneManager);
+            inputManager = new OpenTKInputManager(sceneManager);
             systemManager = new SystemManager();
             physicsSystem = new SystemPhysics();
             renderSystem = new OpenGLRenderer();
