@@ -8,12 +8,10 @@ namespace OpenGL_Game
         public Matrix4 view, projection;
         public Vector3 cameraPosition, cameraDirection, cameraUp;
         private Vector3 targetPosition;
-        float originalYPos;
 
         public Camera()
         {
             cameraPosition = new Vector3(0.0f, 0.0f, 0.0f);
-            originalYPos = 0.0f;
             cameraDirection = new Vector3(0.0f, 0.0f, -1.0f);
             cameraUp = new Vector3(0.0f, 1.0f, 0.0f);
             UpdateView();
@@ -24,7 +22,6 @@ namespace OpenGL_Game
         {
             cameraUp = new Vector3(0.0f, 1.0f, 0.0f);
             cameraPosition = cameraPos;
-            originalYPos = cameraPos.Y;
             cameraDirection = targetPos-cameraPos;
             cameraDirection.Normalize();
             UpdateView();
@@ -36,8 +33,6 @@ namespace OpenGL_Game
             Vector3 movement = move * cameraDirection;
             movement.Y = 0;
             cameraPosition += movement;
-            //cameraPosition.Y = originalYPos;
-            //UpdateView();
         }
 
         public void MoveRight(float move)
@@ -45,20 +40,16 @@ namespace OpenGL_Game
             Vector3 movement = move * Vector3.Cross(cameraDirection.Normalized(), cameraUp.Normalized());
             movement.Y = 0;
             cameraPosition += movement;
-            //cameraPosition.Y = originalYPos;
-            //UpdateView();
         }
 
         public void Translate(Vector3 move)
         {
             cameraPosition += move;
-            //UpdateView();
         }
 
         public void RotateY(float angle)
         {
             cameraDirection = Matrix3.CreateRotationY(angle) * cameraDirection;
-            //UpdateView();
         }
 
         public void UpdateView()

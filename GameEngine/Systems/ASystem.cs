@@ -32,7 +32,8 @@ namespace OpenGL_Game.Systems
                 OnAction(masks[i]);
             }
         }
-        public abstract void OnAction(ComponentTypes currentMask);
+
+        protected abstract void OnAction(ComponentTypes currentMask);
 
         public void InitialiseEntities(EntityManager em)
         {

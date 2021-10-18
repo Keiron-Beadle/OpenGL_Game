@@ -20,7 +20,7 @@ namespace OpenGL_Game.Systems
             Name = "OpenGL Renderer";
         }
 
-        public override void OnAction(ComponentTypes currentMask)
+        protected override void OnAction(ComponentTypes currentMask)
         {
             foreach (Entity entity in entities)
             {

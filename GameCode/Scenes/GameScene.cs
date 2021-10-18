@@ -10,6 +10,8 @@ using System;
 using System.Diagnostics;
 using static OpenGL_Game.Managers.InputManager;
 using OpenGL_Game.GameCode.Managers;
+using OpenGL_Game.GameEngine.Components.Physics;
+using OpenTK.Audio.OpenAL;
 
 namespace OpenGL_Game.Scenes
 {
@@ -26,12 +28,14 @@ namespace OpenGL_Game.Scenes
 
         SystemManager systemManager; //Manages and actions other systems
         SystemRender renderSystem; //Abstract system to render entities
+        SystemAudio audioSystem;
         SystemPhysics physicsSystem; //System to apply motion & do collision detection & response
 
         public Camera camera;
-        const float cameraVelocity = 2.0f;
+        Entity footstepSource;
+        const float cameraVelocity = 2.0f; //2.0f
         private bool walking = false, walkingUp = false, walkingDown = true;
-        private float walkingVelocity = 0.18f;
+        private float walkingVelocity = 0.18f; // 0.18f
 
         public static GameScene gameInstance;
 
@@ -43,6 +47,7 @@ namespace OpenGL_Game.Scenes
             inputManager = new OpenTKInputManager(sceneManager);
             systemManager = new SystemManager();
             physicsSystem = new SystemPhysics();
+            audioSystem = new SystemAudio();
             renderSystem = new OpenGLRenderer();
             // Set the title of the window
             sceneManager.Title = "Game";
@@ -76,6 +81,12 @@ namespace OpenGL_Game.Scenes
             skyBox.AddComponent(new ComponentShaderBasic("GameCode/Shaders/vs.glsl", "GameCode/Shaders/fs.glsl"));
             entityManager.AddEntity(skyBox);
 
+            footstepSource = new Entity("FootstepsSfx");
+            footstepSource.AddComponent(new ComponentTransform(camera.cameraPosition - new Vector3(0.0f,-0.9f,0.0f)));
+            footstepSource.AddComponent(new ComponentVelocity(new Vector3(0.0f, 0.3f, 0.0f)));
+            footstepSource.AddComponent(new ComponentAudio("GameCode\\Audio\\footsteps.wav"));
+            entityManager.AddEntity(footstepSource);
+
             scriptManager.LoadMaze("GameCode/map.xml", entityManager, renderSystem);
         }
 
@@ -83,6 +94,7 @@ namespace OpenGL_Game.Scenes
         {
             systemManager.AddRenderSystem(renderSystem, entityManager);
             systemManager.AddNonRenderSystem(physicsSystem, entityManager);
+            systemManager.AddNonRenderSystem(audioSystem, entityManager);
         }
 
         /// <summary>
@@ -113,11 +125,13 @@ namespace OpenGL_Game.Scenes
                     camera.cameraPosition.Y -= walkingVelocity * dt;
                     walkingUp = camera.cameraPosition.Y < 1.0f;
                     walkingDown = camera.cameraPosition.Y > 1.0f;
+                    if (walkingUp)
+                        audioSystem.PlaySound(footstepSource);
                 }
             }
 
             //Action NON-RENDER systems
-            //systemManager.ActionNonRenderSystems();
+            systemManager.ActionNonRenderSystems();
 
         }
 

@@ -22,7 +22,7 @@ namespace OpenGL_Game.Systems
             masks.Add(ComponentTypes.COMPONENT_TRANSFORM | ComponentTypes.COMPONENT_ROTATION);
         }
 
-        public override void OnAction(ComponentTypes currentMask)
+        protected override void OnAction(ComponentTypes currentMask)
         {
             switch (currentMask)
             {
