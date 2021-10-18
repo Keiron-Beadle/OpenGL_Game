@@ -54,18 +54,17 @@ namespace OpenGL_Game.Systems
                     return component.ComponentType == ComponentTypes.COMPONENT_TRANSFORM;
                 });
 
+                IComponent velocityComponent = components.Find(delegate (IComponent component)
+                {
+                    return component.ComponentType == ComponentTypes.COMPONENT_VELOCITY;
+                });
+
                 IComponent audioComponent = components.Find(delegate (IComponent component)
                 {
                     return component.ComponentType == ComponentTypes.COMPONENT_AUDIO;
                 });
 
-                IComponent velocityComponent = components.Find(delegate (IComponent component)
-                {
-                    return component.ComponentType == ComponentTypes.COMPONENT_VELOCITY;
-                });
-                //Vector3 position = ((ComponentTransform)transformComponent).Position;
-                Vector3 position = GameScene.gameInstance.camera.cameraPosition + new Vector3(0.0f,-0.9f,0.0f);
-                AL.Source(((ComponentAudio)audioComponent).Source, ALSource3f.Position, ref position);
+                ((ComponentAudio)audioComponent).Update((ComponentTransform)transformComponent, (ComponentVelocity)velocityComponent);
             }
         }
     }

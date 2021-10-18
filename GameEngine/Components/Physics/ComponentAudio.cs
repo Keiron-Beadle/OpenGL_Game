@@ -1,5 +1,6 @@
 ﻿using OpenGL_Game.Components;
 using OpenGL_Game.Managers;
+using OpenTK;
 using OpenTK.Audio.OpenAL;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,12 @@ namespace OpenGL_Game.GameEngine.Components.Physics
             Source = AL.GenSource();
             Buffer = ResourceManager.LoadAudioBuffer(audioFilePath);
             AL.Source(Source, ALSourcei.Buffer, Buffer);
+        }
+
+        public void Update(ComponentTransform transform, ComponentVelocity velocity)
+        {
+            Vector3 pos = transform.Position;
+            AL.Source(Source, ALSource3f.Position, ref pos);
         }
     }
 }

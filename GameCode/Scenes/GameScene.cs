@@ -33,6 +33,7 @@ namespace OpenGL_Game.Scenes
 
         public Camera camera;
         Entity footstepSource;
+        ComponentTransform footstepTransform;
         const float cameraVelocity = 2.0f; //2.0f
         private bool walking = false, walkingUp = false, walkingDown = true;
         private float walkingVelocity = 0.18f; // 0.18f
@@ -82,7 +83,8 @@ namespace OpenGL_Game.Scenes
             entityManager.AddEntity(skyBox);
 
             footstepSource = new Entity("FootstepsSfx");
-            footstepSource.AddComponent(new ComponentTransform(camera.cameraPosition - new Vector3(0.0f,-0.9f,0.0f)));
+            footstepTransform = new ComponentTransform(camera.cameraPosition - new Vector3(0.0f, -0.9f, 0.0f));
+            footstepSource.AddComponent(footstepTransform);
             footstepSource.AddComponent(new ComponentVelocity(new Vector3(0.0f, 0.3f, 0.0f)));
             footstepSource.AddComponent(new ComponentAudio("GameCode\\Audio\\footsteps.wav"));
             entityManager.AddEntity(footstepSource);
@@ -114,6 +116,7 @@ namespace OpenGL_Game.Scenes
 
             if (walking)
             {
+                footstepTransform.Position = camera.cameraPosition;
                 if (walkingUp)
                 {
                     camera.cameraPosition.Y += walkingVelocity * dt;
