@@ -8,6 +8,7 @@ namespace OpenGL_Game.Scenes
 {
     static class GUI
     {
+        static private Image backgroundImage;
         static private Bitmap textBMP; //The image being drawn
         static Bitmap TextBMP
         {
@@ -34,6 +35,7 @@ namespace OpenGL_Game.Scenes
             //Setup the graphics
             textGFX = Graphics.FromImage(textBMP);
             textGFX.Clear(clearColour);
+          
 
             //Load the texture into the Graphics Card
             if (textTexture > 0)
@@ -49,6 +51,16 @@ namespace OpenGL_Game.Scenes
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, textBMP.Width, textBMP.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, IntPtr.Zero);
             GL.BindTexture(TextureTarget.Texture2D, 0);
             GL.Disable(EnableCap.Texture2D);
+        }
+
+        static public void LoadImage(string filepath) 
+        {
+            backgroundImage = Image.FromFile(filepath);
+        }
+
+        static public void UnloadImage()
+        {
+            backgroundImage = null;
         }
 
         static public void Label(Rectangle rect, string text)
@@ -69,6 +81,15 @@ namespace OpenGL_Game.Scenes
             Label(rect, text, fontSize, sa, Color.White);
         }
 
+        static public void Background()
+        {
+            if (backgroundImage != null)
+            {
+                Rectangle r = new Rectangle(0, 0, 1600, 1200);
+                textGFX.DrawImage(backgroundImage, r, r, GraphicsUnit.Pixel);
+            }
+        }
+
         static public void Label(Rectangle rect, string text, int fontSize, StringAlignment sa, Color color)
         {
             StringFormat stringFormat = new StringFormat();
@@ -76,7 +97,6 @@ namespace OpenGL_Game.Scenes
             stringFormat.LineAlignment = sa;
 
             SolidBrush brush = new SolidBrush(color);
-
             textGFX.DrawString(text, new Font("Arial", fontSize), brush, rect, stringFormat);
         }
 

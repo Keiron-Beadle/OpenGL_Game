@@ -34,9 +34,9 @@ namespace OpenGL_Game.Managers
             GL.CullFace(CullFaceMode.Back);
 
             //Load the GUI
-            GUI.SetUpGUI(width, height);
+            //GUI.SetUpGUI(width, height);
 
-            StartMenu();
+            ChangeScene(SceneType.MAIN_MENU_SCENE);
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
@@ -61,12 +61,15 @@ namespace OpenGL_Game.Managers
             switch (sceneType)
             {
                 case SceneType.GAME_SCENE:
+                    GUI.UnloadImage();
                     StartNewGame();
                     break;
                 case SceneType.MAIN_MENU_SCENE:
+                    GUI.LoadImage("GameCode//Scenes//MainMenuImage.jpg");
                     StartMenu();
                     break;
                 case SceneType.GAME_OVER_SCENE:
+                    GUI.LoadImage("GameCode//Scenes//GameOverImage.jpg");
                     StartGameOver();
                     break;
                 case SceneType.NULL_SCENE:
