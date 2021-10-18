@@ -89,6 +89,14 @@ namespace OpenGL_Game.Scenes
             footstepSource.AddComponent(new ComponentAudio("GameCode\\Audio\\footsteps.wav"));
             entityManager.AddEntity(footstepSource);
 
+            Entity testBox1 = new Entity("TB1");
+            testBox1.AddComponent(new ComponentBoxCollider(new Vector3(2.0f,1.0f,2.0f), 1.0f, 1.0f, 1.0f));
+            entityManager.AddEntity(testBox1);
+
+            Entity testBox2 = new Entity("TB2");
+            testBox2.AddComponent(new ComponentBoxCollider(new Vector3(5.0f, 1.0f, 4.0f), 1.0f, 1.0f, 1.0f));
+            entityManager.AddEntity(testBox2);
+
             scriptManager.LoadMaze("GameCode/map.xml", entityManager, renderSystem);
         }
 
@@ -113,6 +121,8 @@ namespace OpenGL_Game.Scenes
             //Console.WriteLine(camera.cameraPosition);
             inputManager.Update(e);
             ProcessInput();
+
+            
 
             if (walking)
             {
