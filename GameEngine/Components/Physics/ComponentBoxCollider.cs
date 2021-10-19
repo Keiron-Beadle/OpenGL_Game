@@ -10,8 +10,6 @@ namespace OpenGL_Game.GameEngine.Components.Physics
 {
     class ComponentBoxCollider : Collider
     {
-        ComponentTransform transform;
-
         /// <summary>
         /// Use this constructor to create an arbitrarily-sized bounding box
         /// around an entity's transform
@@ -29,13 +27,6 @@ namespace OpenGL_Game.GameEngine.Components.Physics
             transform = (trans as ComponentTransform);
             Min = minPos;
             Max = maxPos;
-            Matrix4 model = Matrix4.CreateScale(transform.Scale) * (Matrix4.CreateRotationX(transform.Rotation.X) *
-                            Matrix4.CreateRotationY(transform.Rotation.Y) * Matrix4.CreateRotationZ(transform.Rotation.Z)) *
-                            Matrix4.CreateTranslation(transform.Position);
-            Vector4 tempMax = new Vector4(Max.X, Max.Y, Max.Z, 1.0f) * model;
-            Vector4 tempMin = new Vector4(Min.X, Min.Y, Min.Z, 1.0f) * model;
-            WorldMax = tempMax.Xyz;
-            WorldMin = tempMin.Xyz; 
         }
 
         /// <summary>
@@ -53,11 +44,10 @@ namespace OpenGL_Game.GameEngine.Components.Physics
             IComponent geom = components.Find(delegate (IComponent component) {
                 return component.ComponentType == ComponentTypes.COMPONENT_GEOMETRY;
             });
+            transform = trans as ComponentTransform;
 
             Vector3[] vertices = (geom as ComponentGeometry).GetVertices();
             FindMinMax(vertices);
-            WorldMin = Min + (trans as ComponentTransform).Position; //Turn local model vertices 
-            WorldMax = Max + (trans as ComponentTransform).Position; //into world coordinates
         }
 
         private void FindMinMax(Vector3[] vertices)

@@ -19,7 +19,7 @@ namespace OpenGL_Game.Systems
         public SystemPhysics()
         {
             Name = "System Physics";
-            MASK = MotionMASK | RotationMASK;
+            MASK = MotionMASK ;
         }
 
         public override void OnAction()

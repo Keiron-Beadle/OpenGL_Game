@@ -92,15 +92,20 @@ namespace OpenGL_Game.Scenes
             footstepSource.AddComponent(new ComponentAudio("GameCode\\Audio\\footsteps.wav"));
             entityManager.AddEntity(footstepSource);
 
-            Entity testBox1 = new Entity("TB1");
-            testBox1.AddComponent(new ComponentTransform(new Vector3(2.0f, 1.0f, 2.0f), new Vector3(1.0f, 1.0f, 1.0f), Vector3.Zero));
-            testBox1.AddComponent(new ComponentBoxCollider(testBox1, new Vector3(-1.0f, -1.0f, -1.0f), new Vector3(1.0f, 1.0f, 1.0f)));
-            entityManager.AddEntity(testBox1);
+            //Entity testBox1 = new Entity("TB1");
+            //testBox1.AddComponent(new ComponentTransform(new Vector3(-7.0f, 1.0f, 0.0f), new Vector3(0.4f), Vector3.Zero));
+            //testBox1.AddComponent(new ComponentGeometry("GameCode\\Geometry\\TestCube\\untitled.obj", renderSystem));
+            //testBox1.AddComponent(new ComponentVelocity(new Vector3(2.7f, 0.0f, 0.0f)));
+            //testBox1.AddComponent(new ComponentShaderBasic("GameCode/Shaders/vs.glsl", "GameCode/Shaders/fs.glsl"));
+            //testBox1.AddComponent(new ComponentBoxCollider(testBox1));
+            //entityManager.AddEntity(testBox1);
 
-            Entity testBox2 = new Entity("TB2");
-            testBox2.AddComponent(new ComponentTransform(new Vector3(4.1f, 1.0f, 1.5f), new Vector3(1.0f, 1.0f, 1.0f), Vector3.Zero));
-            testBox2.AddComponent(new ComponentBoxCollider(testBox2, new Vector3(-1.0f, -1.0f, -1.0f), new Vector3(1.0f, 1.0f, 1.0f)));
-            entityManager.AddEntity(testBox2);
+            //Entity testBox2 = new Entity("TB2");
+            //testBox2.AddComponent(new ComponentTransform(new Vector3(0.0f, 1.0f, 0.0f), new Vector3(0.4f), Vector3.Zero));
+            //testBox2.AddComponent(new ComponentGeometry("GameCode\\Geometry\\TestCube\\untitled.obj", renderSystem));
+            //testBox2.AddComponent(new ComponentShaderBasic("GameCode/Shaders/vs.glsl", "GameCode/Shaders/fs.glsl"));
+            //testBox2.AddComponent(new ComponentBoxCollider(testBox2));
+            //entityManager.AddEntity(testBox2);
 
             scriptManager.LoadMaze("GameCode/map.xml", entityManager, renderSystem);
         }

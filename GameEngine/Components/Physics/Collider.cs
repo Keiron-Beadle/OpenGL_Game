@@ -9,6 +9,7 @@ namespace OpenGL_Game.GameEngine.Components.Physics
 {
     abstract class Collider : IComponent
     {
+        protected ComponentTransform transform;
         public ComponentTypes ComponentType { get { return ComponentTypes.COMPONENT_COLLIDER; } }
         public Vector3 Min;
         public Vector3 Max;
@@ -45,6 +46,16 @@ namespace OpenGL_Game.GameEngine.Components.Physics
                 maxVec.Z = u.Z;
 
             return maxVec;
+        }
+
+        public void Update()
+        {
+            //No rotation in model matrix, AABB are axis aligned and spheres are rotation invariant. 
+            Matrix4 model = Matrix4.CreateScale(transform.Scale) * Matrix4.CreateTranslation(transform.Position);
+            Vector4 tempMax = new Vector4(Max.X, Max.Y, Max.Z, 1.0f) * model;
+            Vector4 tempMin = new Vector4(Min.X, Min.Y, Min.Z, 1.0f) * model;
+            WorldMax = tempMax.Xyz;
+            WorldMin = tempMin.Xyz;
         }
 
         public bool Intersect(ComponentBoxCollider box, ComponentSphereCollider sphere)

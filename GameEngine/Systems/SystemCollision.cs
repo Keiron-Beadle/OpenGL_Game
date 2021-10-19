@@ -22,12 +22,23 @@ namespace OpenGL_Game.GameEngine.Systems
 
         public override void OnAction()
         {
+            UpdateColliders();
             DoCollisionDetection();
             if (collisionList.Count > 0)
             {
                 DoCollisionResponse();
             }
             collisionList.Clear();
+        }
+
+        private void UpdateColliders()
+        {
+            foreach (var entity in entities)
+            {
+                IComponent collider = entity.Components.Find(delegate (IComponent component)
+                { return component.ComponentType == ComponentTypes.COMPONENT_COLLIDER; });
+                ((Collider)collider).Update();
+            }
         }
 
         private void DoCollisionResponse()

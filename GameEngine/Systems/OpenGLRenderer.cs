@@ -7,6 +7,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -71,6 +72,7 @@ namespace OpenGL_Game.Systems
 
         public override void Draw(Matrix4 model, OpenGLGeometry geometry, ComponentShader shader)
         {
+            Debug.Assert(shader != null, "No shader attached to object.");
             shader.BindShader();
             shader.ApplyShader(model, geometry);
             shader.UnbindShader();
