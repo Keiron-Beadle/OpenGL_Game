@@ -51,14 +51,10 @@ namespace OpenGL_Game.GameEngine.Systems
 
         public override void OnAction()
         {
-            HasCollisions = false;
             Collisions.Clear();
             UpdateColliders();
             DoCollisionDetection();
-            if (Collisions.Count > 0)
-            {
-                HasCollisions = true;
-            }
+            HasCollisions = Collisions.Count > 0;
         }
 
         private void UpdateColliders()
@@ -89,9 +85,12 @@ namespace OpenGL_Game.GameEngine.Systems
 
                     if (collider1 is ComponentBoxCollider b1 && collider2 is ComponentBoxCollider b2)
                     {
-                        if (!b1.Intersect(ref b2)) continue;
-                        var collision = new Tuple<Entity, Entity>(colliderables[i], entities[j]);
-                        Collisions.Add(collision);
+                        foreach (var box in b2.Colliders)
+                        {
+                            if (!b1.Colliders[0].Intersect(box)) continue;
+                            var collision = new Tuple<Entity, Entity>(colliderables[i], entities[j]);
+                            Collisions.Add(collision);
+                        }
                     }
                 }
             }

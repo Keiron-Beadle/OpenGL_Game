@@ -66,11 +66,7 @@ namespace OpenGL_Game.GameCode.Managers
             Random rnd = new Random();
             foreach (XmlNode n in objectNodeList)
             {
-                TAGS tag;
-                if (n.Attributes["Type"].Value != "Floor")
-                    tag = TAGS.WORLD;
-                else
-                    tag = TAGS.NONE;
+                TAGS tag = (n.Attributes["Type"].Value != "Floor") ? TAGS.WORLD : TAGS.NONE;
                 Entity temp = new Entity(n.Attributes["Name"].Value, tag);
                 XmlNodeList components = n.ChildNodes;
                 foreach (XmlNode component in components)

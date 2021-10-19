@@ -1,4 +1,5 @@
 ﻿using OpenGL_Game.Components;
+using OpenGL_Game.GameEngine.Colliders;
 using OpenGL_Game.Objects;
 using OpenTK;
 using System;
@@ -11,6 +12,7 @@ namespace OpenGL_Game.GameEngine.Components.Physics
     class ComponentBoxCollider : ComponentCollider
     {
         public override ComponentTypes ComponentType { get { return ComponentTypes.COMPONENT_COLLIDER; } }
+        public List<BoxCollider> Colliders = new List<BoxCollider>();
 
         /// <summary>
         /// Use this constructor to create an arbitrarily-sized bounding box
@@ -22,9 +24,8 @@ namespace OpenGL_Game.GameEngine.Components.Physics
         public ComponentBoxCollider(Entity entity, Vector3 minPos, Vector3 maxPos)
         {
             IComponent trans = entity.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM);
-            transform = (trans as ComponentTransform);
-            Min = minPos;
-            Max = maxPos;
+            transform = trans as ComponentTransform;
+            Colliders.Add(new BoxCollider(minPos, maxPos, transform));
         }
 
         /// <summary>
@@ -37,32 +38,21 @@ namespace OpenGL_Game.GameEngine.Components.Physics
             IComponent trans = entity.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM);
             IComponent geom = entity.FindComponentByType(ComponentTypes.COMPONENT_GEOMETRY);
             transform = trans as ComponentTransform;
-            Matrix4 rot = Matrix4.CreateRotationX(transform.Rotation.X) * 
-                          Matrix4.CreateRotationY(transform.Rotation.Y) * Matrix4.CreateRotationZ(transform.Rotation.Z);
-            Vector3[] vertices = (geom as ComponentGeometry).GetVertices();
-            for (int i = 0; i <vertices.Length; i++)
-            {
-                vertices[i] = (new Vector4(vertices[i], 1.0f) * rot).Xyz;
+            Vector3[][] vertices = (geom as ComponentGeometry).GetVertices();
+
+            //Create a collider for each group in the mesh
+            //Allows for some simple means of colliding with concave meshes, if 
+            //mesh is split into convex groups in blender/3D modelling software
+            for (int i = 0; i <= vertices.GetUpperBound(0); i++) 
+            {                                         
+                Colliders.Add(new BoxCollider(vertices[i], transform));
             }
-            FindMinMax(vertices);
         }
 
-        private void FindMinMax(Vector3[] vertices)
-        { 
-            Vector3 min = vertices[0];
-            Vector3 max = vertices[0];
-
-            foreach (Vector3 v in vertices)
-            {
-                for (int i = 0; i < vertices.Length; i++)
-                {
-                    min = MinVec(min, vertices[i]);
-                    max = MaxVec(max, vertices[i]);
-                }
-
-                Min = min;
-                Max = max;
-            }
+        public override void Update()
+        {
+            foreach (var collider in Colliders)
+                collider.Update(transform);
         }
     }
 }

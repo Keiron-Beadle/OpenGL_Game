@@ -77,6 +77,9 @@
     <Compile Include="GameCode\Components\ComponentPlayerController.cs" />
     <Compile Include="GameCode\Managers\CollisionManager.cs" />
     <Compile Include="GameCode\Managers\MazeScriptManager.cs" />
+    <Compile Include="GameEngine\Colliders\BoxCollider.cs" />
+    <Compile Include="GameEngine\Colliders\ICollider.cs" />
+    <Compile Include="GameEngine\Colliders\SphereCollider.cs" />
     <Compile Include="GameEngine\Components\ComponentController.cs" />
     <Compile Include="GameEngine\Components\Physics\ComponentBoxCollider.cs" />
     <Compile Include="GameEngine\Components\Physics\ComponentCollider.cs" />

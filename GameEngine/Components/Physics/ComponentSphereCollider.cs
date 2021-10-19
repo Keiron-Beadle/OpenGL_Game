@@ -9,5 +9,10 @@ namespace OpenGL_Game.GameEngine.Components.Physics
     class ComponentSphereCollider : ComponentCollider
     {
         public override ComponentTypes ComponentType { get { return ComponentTypes.COMPONENT_COLLIDER; } }
+
+        public override void Update()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

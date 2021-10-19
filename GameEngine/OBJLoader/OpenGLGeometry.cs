@@ -229,18 +229,20 @@ namespace OpenGL_Game.OBJLoader
             }
         }
 
-        public Vector3[] GetVertices()
+        public Vector3[][] GetVertices()
         {
-            List<Vector3> vertices = new List<Vector3>();
-
-            foreach (Group g in groups)
+            Vector3[][] vertices = new Vector3[groups.Count][];
+            List<Vector3> currentGroupVertices = new List<Vector3>();
+            for (int j = 0; j < groups.Count; j++)
             {
-                for (int i = 0; i < g.vertices.Count / 3; i+=3)
+                for (int i = 0; i < groups[j].vertices.Count / 3; i+=3)
                 {
-                    vertices.Add(new Vector3(g.vertices[i], g.vertices[i + 1], g.vertices[i + 2]));
+                    currentGroupVertices.Add(new Vector3(groups[j].vertices[i], groups[j].vertices[i + 1], groups[j].vertices[i + 2]));
                 }
+                vertices[j] = new Vector3[currentGroupVertices.Count];
+                vertices[j] = currentGroupVertices.ToArray();
             }
-            return vertices.ToArray();
+            return vertices;
         }
     }
 }

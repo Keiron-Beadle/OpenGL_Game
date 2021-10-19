@@ -24,7 +24,7 @@ namespace OpenGL_Game.Components
             return geometry;
         }
 
-        public Vector3[] GetVertices()
+        public Vector3[][] GetVertices()
         {
             return geometry.GetVertices();
         }

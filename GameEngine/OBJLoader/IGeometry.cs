@@ -8,6 +8,6 @@ namespace OpenGL_Game.OBJLoader
         void Render(int diffuseLocation);
         void LoadObject(string filename, SystemRender renderSystem);
         void RemoveGeometry();
-        Vector3[] GetVertices();
+        Vector3[][] GetVertices();
     }
 }
