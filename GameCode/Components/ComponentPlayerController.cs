@@ -44,13 +44,13 @@ namespace OpenGL_Game.GameCode.Components
             {
                 if (walkingUp)
                 {
-                    camera.cameraPosition.Y += walkingVelocity * dt;
+                    transform.Position = new Vector3(transform.Position.X, transform.Position.Y + walkingVelocity * dt , transform.Position.Z);
                     walkingUp = camera.cameraPosition.Y < 1.06f;
                     walkingDown = camera.cameraPosition.Y > 1.06f;
                 }
                 else if (walkingDown)
                 {
-                    camera.cameraPosition.Y -= walkingVelocity * dt;
+                    transform.Position = new Vector3(transform.Position.X, transform.Position.Y-walkingVelocity * dt , transform.Position.Z);
                     walkingUp = camera.cameraPosition.Y < 1.0f;
                     walkingDown = camera.cameraPosition.Y > 1.0f;
                     if (walkingUp)
@@ -75,14 +75,24 @@ namespace OpenGL_Game.GameCode.Components
 
             if (movementVec.Length == 0 && walking)
             {
-                camera.cameraPosition.Y = 1.06f;
+                transform.Position = new Vector3(transform.Position.X, 1.06f, transform.Position.Z);
                 walking = false; //Walking is used for Visual effect of 'head-bob'
             }
             else if (movementVec.Length > 0 && !walking)
                 walking = true;
 
-            camera.MoveForward(movementVec.X);
-            camera.MoveRight(movementVec.Y);
+            if (movementVec.X != 0)
+            {
+                Vector3 movement = movementVec.X * camera.cameraDirection;
+                movement.Y = 0;
+                transform.Position += movement;                
+            }
+            if (movementVec.Y != 0)
+            {
+                Vector3 movement = movementVec.Y * Vector3.Cross(camera.cameraDirection.Normalized(), camera.cameraUp.Normalized());
+                movement.Y = 0;
+                transform.Position += movement;
+            }
 
             //Check if we need to change scene
             if (inputManager.IsActive("Continue"))
@@ -95,7 +105,6 @@ namespace OpenGL_Game.GameCode.Components
             UpdateView(dt);
             Mouse.SetPosition((sceneManager.Bounds.Left + sceneManager.Bounds.Right) / 2,
                             (sceneManager.Bounds.Top + sceneManager.Bounds.Bottom) / 2);
-            camera.UpdateView();
         }
 
         protected override void UpdateView(float dt)
@@ -113,6 +122,7 @@ namespace OpenGL_Game.GameCode.Components
             Vector3 up = Vector3.Cross(right, dir);
             camera.cameraDirection = dir; //Update camera dir & up vectors with our new calculated ones
             camera.cameraUp = up;
+            camera.UpdateView();
         }
     }
 }

@@ -45,22 +45,6 @@ namespace OpenGL_Game.GameEngine.Components.Render
             }
         }
 
-        public void MoveForward(float move)
-        {
-            Vector3 movement = move * cameraDirection;
-            movement.Y = 0;
-            cameraPosition += movement;
-            Notify();
-        }
-
-        public void MoveRight(float move)
-        {
-            Vector3 movement = move * Vector3.Cross(cameraDirection.Normalized(), cameraUp.Normalized());
-            movement.Y = 0;
-            cameraPosition += movement;
-            Notify();
-        }
-
         public void UpdateView()
         {
             targetPosition = cameraPosition + cameraDirection;

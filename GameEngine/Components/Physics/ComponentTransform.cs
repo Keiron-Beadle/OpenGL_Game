@@ -25,7 +25,11 @@ namespace OpenGL_Game.Components
         public Vector3 Position
         {
             get { return position; }
-            set { position = value; Notify(); }
+            set 
+            { 
+                position = value;
+                Notify();
+            }
         }
 
         public Vector3 Scale
