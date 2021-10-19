@@ -12,13 +12,6 @@ namespace OpenGL_Game.GameEngine.Components.Physics
         protected ComponentTransform transform;
         public override abstract ComponentTypes ComponentType { get; }
 
-
         public abstract void Update();
-
-        public bool Intersect(ComponentSphereCollider sphere1, ComponentSphereCollider sphere2)
-        {
-
-            return false;
-        }
     }
 }

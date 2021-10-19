@@ -92,6 +92,15 @@ namespace OpenGL_Game.GameEngine.Systems
                             Collisions.Add(collision);
                         }
                     }
+                    else if (collider1 is ComponentSphereCollider s1 && collider2 is ComponentBoxCollider b3)
+                    {
+                        foreach (var box in b3.Colliders)
+                        {
+                            if (!s1.Collider.Intersect(b3)) continue;
+                            var collision = new Tuple<Entity, Entity>(colliderables[i], entities[j]);
+                            Collisions.Add(collision);
+                        }
+                    }
                 }
             }
         }

@@ -86,13 +86,21 @@ namespace OpenGL_Game.Scenes
             Entity player = new Entity("Player", TAGS.PLAYER);
             ComponentTransform playerTransform = new ComponentTransform(new Vector3(0, 1.06f, 0));
             player.AddComponent(playerTransform);
-            playerCamera = new ComponentCamera(player, new Vector3(0, 2.23f, 5), sceneManager.Width / sceneManager.Height, 0.1f, 100f);
+            playerCamera = new ComponentCamera(player, new Vector3(0, 2.23f, 5), 
+                (float)sceneManager.Width / (float)sceneManager.Height, 0.1f, 100f);
             player.AddComponent(playerCamera);
             player.AddComponent(new ComponentAudio("GameCode\\Audio\\footsteps.wav", playerCamera, playerTransform));
             playerController = new ComponentPlayerController(sceneManager, inputManager, player);
             player.AddComponent(playerController);
-            player.AddComponent(new ComponentBoxCollider(player, new Vector3(-0.3f), new Vector3(0.3f)));
+            player.AddComponent(new ComponentSphereCollider(player, Vector3.Zero, 0.14f));
             entityManager.AddEntity(player);
+
+            //Entity test = new Entity("TesTcube", TAGS.WORLD);
+            //test.AddComponent(new ComponentTransform(new Vector3(0.0f, 0.0f, 0.0f), Vector3.One, new Vector3(0f,0f, 0f)));
+            //test.AddComponent(new ComponentGeometry("GameCode\\Geometry\\TestCube\\untitled.obj", renderSystem));
+            //test.AddComponent(new ComponentShaderBasic("GameCode/Shaders/vs.glsl", "GameCode/Shaders/fs.glsl"));
+            //test.AddComponent(new ComponentBoxCollider(test));
+            //entityManager.AddEntity(test);
 
             scriptManager.LoadMaze("GameCode/map.xml", entityManager, renderSystem);
         }

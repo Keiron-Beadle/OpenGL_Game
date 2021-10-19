@@ -27,7 +27,7 @@ namespace OpenGL_Game.GameCode.Components
 
         const float cameraVelocity = 2.0f; //2.0f
         private bool walking = false, walkingUp = false, walkingDown = true;
-        private float walkingVelocity = 0.18f; // 0.18f
+        private float walkingVelocity = 0.13f; // 0.18f
 
         public ComponentPlayerController(SceneManager pSceneManager, InputManager pInputManager, Entity player)
         {
