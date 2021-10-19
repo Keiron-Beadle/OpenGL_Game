@@ -241,6 +241,7 @@ namespace OpenGL_Game.OBJLoader
                 }
                 vertices[j] = new Vector3[currentGroupVertices.Count];
                 vertices[j] = currentGroupVertices.ToArray();
+                currentGroupVertices.Clear();
             }
             return vertices;
         }
