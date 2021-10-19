@@ -1,8 +1,5 @@
 ﻿using OpenGL_Game.Systems;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using OpenTK;
 
 namespace OpenGL_Game.OBJLoader
 {
@@ -11,5 +8,6 @@ namespace OpenGL_Game.OBJLoader
         void Render(int diffuseLocation);
         void LoadObject(string filename, SystemRender renderSystem);
         void RemoveGeometry();
+        Vector3[] GetVertices();
     }
 }

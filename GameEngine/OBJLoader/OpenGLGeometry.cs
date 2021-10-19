@@ -228,5 +228,19 @@ namespace OpenGL_Game.OBJLoader
                 GL.DeleteVertexArray(group.vao_Handle);
             }
         }
+
+        public Vector3[] GetVertices()
+        {
+            List<Vector3> vertices = new List<Vector3>();
+
+            foreach (Group g in groups)
+            {
+                for (int i = 0; i < g.vertices.Count / 3; i+=3)
+                {
+                    vertices.Add(new Vector3(g.vertices[i], g.vertices[i + 1], g.vertices[i + 2]));
+                }
+            }
+            return vertices.ToArray();
+        }
     }
 }

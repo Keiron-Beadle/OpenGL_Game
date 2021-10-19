@@ -17,7 +17,7 @@ namespace OpenGL_Game.Managers
         {
             foreach (ASystem system in renderList)
             {
-                system.Action();
+                system.OnAction();
             }
         }
 
@@ -25,7 +25,7 @@ namespace OpenGL_Game.Managers
         {
             foreach (ASystem system in nonRenderList)
             {
-                system.Action();
+                system.OnAction();
             }
         }
 

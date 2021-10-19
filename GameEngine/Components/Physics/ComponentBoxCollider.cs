@@ -1,4 +1,6 @@
-﻿using OpenTK;
+﻿using OpenGL_Game.Components;
+using OpenGL_Game.Objects;
+using OpenTK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,35 +10,72 @@ namespace OpenGL_Game.GameEngine.Components.Physics
 {
     class ComponentBoxCollider : Collider
     {
-        private Vector3[] vertices;
-        public float minX;
-        public float maxX;
-        public float minY;
-        public float maxY;
-        public float minZ;
-        public float maxZ;
+        ComponentTransform transform;
 
-        public ComponentBoxCollider(Vector3 center, float width, float height, float depth)
+        /// <summary>
+        /// Use this constructor to create an arbitrarily-sized bounding box
+        /// around an entity's transform
+        /// </summary>
+        /// <param name="entity">Entity which has Transform Component</param>
+        /// <param name="minPos">Min Vector3 point for Bounding Box</param>
+        /// <param name="maxPos">Max Vector3 point for Bounding Box</param>
+        public ComponentBoxCollider(Entity entity, Vector3 minPos, Vector3 maxPos)
         {
-            vertices = new Vector3[8];
-            vertices[0] = new Vector3(center.X - width / 2, center.Y + height / 2, center.Z + depth / 2);
-            vertices[1] = new Vector3(center.X + width / 2, center.Y + height / 2, center.Z + depth / 2);
-            vertices[2] = new Vector3(center.X + width / 2, center.Y + height / 2, center.Z - depth / 2);
-            vertices[3] = new Vector3(center.X - width / 2, center.Y + height / 2, center.Z - depth / 2);
+            List<IComponent> components = entity.Components;
+            IComponent trans = components.Find(delegate (IComponent component)
+            {
+                return component.ComponentType == ComponentTypes.COMPONENT_TRANSFORM;
+            });
+            transform = (trans as ComponentTransform);
+            Min = minPos;
+            Max = maxPos;
+            Matrix4 model = Matrix4.CreateScale(transform.Scale) * (Matrix4.CreateRotationX(transform.Rotation.X) *
+                            Matrix4.CreateRotationY(transform.Rotation.Y) * Matrix4.CreateRotationZ(transform.Rotation.Z)) *
+                            Matrix4.CreateTranslation(transform.Position);
+            Vector4 tempMax = new Vector4(Max.X, Max.Y, Max.Z, 1.0f) * model;
+            Vector4 tempMin = new Vector4(Min.X, Min.Y, Min.Z, 1.0f) * model;
+            WorldMax = tempMax.Xyz;
+            WorldMin = tempMin.Xyz; 
+        }
 
-            vertices[4] = new Vector3(center.X - width / 2, center.Y - height / 2, center.Z + depth / 2);
-            vertices[5] = new Vector3(center.X + width / 2, center.Y - height / 2, center.Z + depth / 2);
-            vertices[6] = new Vector3(center.X + width / 2, center.Y - height / 2, center.Z - depth / 2);
-            vertices[7] = new Vector3(center.X - width / 2, center.Y - height / 2, center.Z - depth / 2);
+        /// <summary>
+        /// Use this constructor if entity has geometry component we can 
+        /// get the vertices from
+        /// </summary>
+        /// <param name="entity">Entity which has Transform & Geometry Component</param>
+        public ComponentBoxCollider(Entity entity)
+        {
+            List<IComponent> components = entity.Components;
+            IComponent trans = components.Find(delegate (IComponent component)
+            {
+                return component.ComponentType == ComponentTypes.COMPONENT_TRANSFORM;
+            });
+            IComponent geom = components.Find(delegate (IComponent component) {
+                return component.ComponentType == ComponentTypes.COMPONENT_GEOMETRY;
+            });
 
-            minX = center.X - width / 2 < center.X + width / 2 ? vertices[0].X : vertices[1].X;
-            maxX = center.X - width / 2 > center.X + width / 2 ? vertices[0].X : vertices[1].X;
+            Vector3[] vertices = (geom as ComponentGeometry).GetVertices();
+            FindMinMax(vertices);
+            WorldMin = Min + (trans as ComponentTransform).Position; //Turn local model vertices 
+            WorldMax = Max + (trans as ComponentTransform).Position; //into world coordinates
+        }
 
-            minY = center.Y + height / 2 < center.Y - height / 2 ? vertices[4].Y : vertices[0].Y;
-            maxY = center.Y + height / 2 > center.Y - height / 2 ? vertices[4].Y : vertices[0].Y;
+        private void FindMinMax(Vector3[] vertices)
+        { 
+            Vector3 min = vertices[0];
+            Vector3 max = vertices[0];
 
-            minZ = center.Z - depth / 2 < center.Z + depth / 2 ? vertices[2].Z : vertices[0].Z;
-            maxZ = center.Z - depth / 2 > center.Z + depth / 2 ? vertices[2].Z : vertices[0].Z;
+            foreach (Vector3 v in vertices)
+            {
+                for (int i = 0; i < vertices.Length; i++)
+                {
+                    min = MinVec(min, vertices[i]);
+                    max = MaxVec(max, vertices[i]);
+                }
+
+                Min = min;
+                Max = max;
+            }
         }
     }
 }

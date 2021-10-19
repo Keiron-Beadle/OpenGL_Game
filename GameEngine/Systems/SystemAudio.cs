@@ -20,7 +20,7 @@ namespace OpenGL_Game.Systems
         public SystemAudio()
         {
             Name = "System Audio";
-            masks.Add(ComponentTypes.COMPONENT_TRANSFORM | ComponentTypes.COMPONENT_VELOCITY | ComponentTypes.COMPONENT_AUDIO);
+            MASK = ComponentTypes.COMPONENT_AUDIO | ComponentTypes.COMPONENT_TRANSFORM | ComponentTypes.COMPONENT_VELOCITY;
         }
 
         public void PlaySound(Entity entity)
@@ -40,7 +40,7 @@ namespace OpenGL_Game.Systems
             }
         }
 
-        protected override void OnAction(ComponentTypes currentMask)
+        public override void OnAction()
         {
             AL.Listener(ALListener3f.Position, ref GameScene.gameInstance.camera.cameraPosition);
             AL.Listener(ALListenerfv.Orientation, ref GameScene.gameInstance.camera.cameraDirection, ref GameScene.gameInstance.camera.cameraUp);

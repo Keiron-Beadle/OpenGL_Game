@@ -15,12 +15,13 @@ namespace OpenGL_Game.Systems
 {
     class OpenGLRenderer : SystemRender
     {
+        
         public OpenGLRenderer()
         {
             Name = "OpenGL Renderer";
         }
 
-        protected override void OnAction(ComponentTypes currentMask)
+        public override void OnAction()
         {
             foreach (Entity entity in entities)
             {

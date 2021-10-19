@@ -1,6 +1,7 @@
 ﻿using OpenGL_Game.Managers;
 using OpenGL_Game.OBJLoader;
 using OpenGL_Game.Systems;
+using OpenTK;
 
 namespace OpenGL_Game.Components
 {
@@ -21,6 +22,11 @@ namespace OpenGL_Game.Components
         public IGeometry Geometry()
         {
             return geometry;
+        }
+
+        public Vector3[] GetVertices()
+        {
+            return geometry.GetVertices();
         }
     }
 }

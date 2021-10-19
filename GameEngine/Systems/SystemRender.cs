@@ -12,11 +12,12 @@ using OpenGL_Game.Managers;
 namespace OpenGL_Game.Systems
 {
     abstract class SystemRender : ASystem
-    {
+    { 
+
         public SystemRender()
         {
+            MASK = ComponentTypes.COMPONENT_GEOMETRY | ComponentTypes.COMPONENT_TRANSFORM;
             Name = "System Render";
-            masks.Add(ComponentTypes.COMPONENT_TRANSFORM | ComponentTypes.COMPONENT_GEOMETRY | ComponentTypes.COMPONENT_SHADER);
         }
 
         public abstract ITexture LoadTexture(string filepath, ref Dictionary<string, ITexture> textureDictionary);

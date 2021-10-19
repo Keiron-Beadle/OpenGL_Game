@@ -12,6 +12,7 @@ using static OpenGL_Game.Managers.InputManager;
 using OpenGL_Game.GameCode.Managers;
 using OpenGL_Game.GameEngine.Components.Physics;
 using OpenTK.Audio.OpenAL;
+using OpenGL_Game.GameEngine.Systems;
 
 namespace OpenGL_Game.Scenes
 {
@@ -29,7 +30,8 @@ namespace OpenGL_Game.Scenes
         SystemManager systemManager; //Manages and actions other systems
         SystemRender renderSystem; //Abstract system to render entities
         SystemAudio audioSystem;
-        SystemPhysics physicsSystem; //System to apply motion & do collision detection & response
+        SystemPhysics physicsSystem; //System to apply motion & rotation
+        SystemCollision collisionSystem;
 
         public Camera camera;
         Entity footstepSource;
@@ -50,6 +52,7 @@ namespace OpenGL_Game.Scenes
             physicsSystem = new SystemPhysics();
             audioSystem = new SystemAudio();
             renderSystem = new OpenGLRenderer();
+            collisionSystem = new SystemCollision();
             // Set the title of the window
             sceneManager.Title = "Game";
             // Set the Render and Update delegates to the Update and Render methods of this class
@@ -90,11 +93,13 @@ namespace OpenGL_Game.Scenes
             entityManager.AddEntity(footstepSource);
 
             Entity testBox1 = new Entity("TB1");
-            testBox1.AddComponent(new ComponentBoxCollider(new Vector3(2.0f,1.0f,2.0f), 1.0f, 1.0f, 1.0f));
+            testBox1.AddComponent(new ComponentTransform(new Vector3(2.0f, 1.0f, 2.0f), new Vector3(1.0f, 1.0f, 1.0f), Vector3.Zero));
+            testBox1.AddComponent(new ComponentBoxCollider(testBox1, new Vector3(-1.0f, -1.0f, -1.0f), new Vector3(1.0f, 1.0f, 1.0f)));
             entityManager.AddEntity(testBox1);
 
             Entity testBox2 = new Entity("TB2");
-            testBox2.AddComponent(new ComponentBoxCollider(new Vector3(5.0f, 1.0f, 4.0f), 1.0f, 1.0f, 1.0f));
+            testBox2.AddComponent(new ComponentTransform(new Vector3(4.1f, 1.0f, 1.5f), new Vector3(1.0f, 1.0f, 1.0f), Vector3.Zero));
+            testBox2.AddComponent(new ComponentBoxCollider(testBox2, new Vector3(-1.0f, -1.0f, -1.0f), new Vector3(1.0f, 1.0f, 1.0f)));
             entityManager.AddEntity(testBox2);
 
             scriptManager.LoadMaze("GameCode/map.xml", entityManager, renderSystem);
@@ -105,6 +110,7 @@ namespace OpenGL_Game.Scenes
             systemManager.AddRenderSystem(renderSystem, entityManager);
             systemManager.AddNonRenderSystem(physicsSystem, entityManager);
             systemManager.AddNonRenderSystem(audioSystem, entityManager);
+            systemManager.AddNonRenderSystem(collisionSystem, entityManager);
         }
 
         /// <summary>

@@ -141,6 +141,7 @@
     <Compile Include="GameEngine\Managers\EntityManager.cs" />
     <Compile Include="GameEngine\OBJLoader\OpenGLGeometry.cs" />
     <Compile Include="GameEngine\Components\IComponent.cs" />
+    <Compile Include="GameEngine\Systems\SystemCollision.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="GameEngine\OBJLoader\IGeometry.cs" />
     <Compile Include="GameEngine\OBJLoader\ITexture.cs" />

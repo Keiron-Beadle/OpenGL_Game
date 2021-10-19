@@ -1,4 +1,5 @@
 ﻿using OpenGL_Game.Components;
+using OpenGL_Game.GameEngine.Components.Physics;
 using OpenGL_Game.Managers;
 using OpenGL_Game.Objects;
 using OpenGL_Game.Scenes;
@@ -18,70 +19,56 @@ namespace OpenGL_Game.Systems
         public SystemPhysics()
         {
             Name = "System Physics";
-            masks.Add(ComponentTypes.COMPONENT_TRANSFORM | ComponentTypes.COMPONENT_VELOCITY);
-            masks.Add(ComponentTypes.COMPONENT_TRANSFORM | ComponentTypes.COMPONENT_ROTATION);
+            MASK = MotionMASK | RotationMASK;
         }
 
-        protected override void OnAction(ComponentTypes currentMask)
-        {
-            switch (currentMask)
-            {
-                case MotionMASK:
-                    DoMotion();
-                    break;
-                case RotationMASK:
-                    DoRotation();
-                    break;
-            }
-        }
-
-        private void DoRotation()
+        public override void OnAction()
         {
             foreach (Entity entity in entities)
             {
-                if ((entity.Mask & RotationMASK) != RotationMASK) continue;
-                List<IComponent> components = entity.Components;
+                bool motion = (entity.Mask & MotionMASK) == MotionMASK;
+                bool rotation = (entity.Mask & MotionMASK) == RotationMASK;
 
-                IComponent transformComponent = components.Find(delegate (IComponent component)
-                {
-                    return component.ComponentType == ComponentTypes.COMPONENT_TRANSFORM;
-                });
-
-                IComponent rotationComponent = components.Find(delegate (IComponent component)
-                {
-                    return component.ComponentType == ComponentTypes.COMPONENT_ROTATION;
-                });
-
-                Vector3 rotationRate = (rotationComponent as ComponentRotation).Rotation;
-
-                ((ComponentTransform)transformComponent).Rotation += rotationRate * GameScene.dt;
+                if (rotation)
+                    DoRotation(entity.Components);
+                if (motion)
+                    DoMotion(entity.Components);
             }
         }
 
-        private void DoMotion()
+        private void DoRotation(List<IComponent> components)
         {
-            foreach (Entity entity in entities)
+            IComponent transformComponent = components.Find(delegate (IComponent component)
             {
-                //Not a perfect solution, still need to run through entity list when dealing with
-                //multiple mask systems, although it's a much SMALLER list. 
-                if ((entity.Mask & MotionMASK) != MotionMASK) continue; 
-                List<IComponent> components = entity.Components;
+                return component.ComponentType == ComponentTypes.COMPONENT_TRANSFORM;
+            });
 
-                IComponent transformComponent = components.Find(delegate (IComponent component)
-                {
-                    return component.ComponentType == ComponentTypes.COMPONENT_TRANSFORM;
-                });
+            IComponent rotationComponent = components.Find(delegate (IComponent component)
+            {
+                return component.ComponentType == ComponentTypes.COMPONENT_ROTATION;
+            });
 
-                IComponent velocityComponent = components.Find(delegate (IComponent component)
-                {
-                    return component.ComponentType == ComponentTypes.COMPONENT_VELOCITY;
-                });
+            Vector3 rotationRate = (rotationComponent as ComponentRotation).Rotation;
 
-                Vector3 velocity = (velocityComponent as ComponentVelocity).Velocity;
-                Vector3 position = (transformComponent as ComponentTransform).Position;
+            ((ComponentTransform)transformComponent).Rotation += rotationRate * GameScene.dt;
+        }
 
-                ((ComponentTransform)transformComponent).Position += velocity * GameScene.dt;
-            }
+        private void DoMotion(List<IComponent> components)
+        {
+            IComponent transformComponent = components.Find(delegate (IComponent component)
+            {
+                return component.ComponentType == ComponentTypes.COMPONENT_TRANSFORM;
+            });
+
+            IComponent velocityComponent = components.Find(delegate (IComponent component)
+            {
+                return component.ComponentType == ComponentTypes.COMPONENT_VELOCITY;
+            });
+
+            Vector3 velocity = (velocityComponent as ComponentVelocity).Velocity;
+            Vector3 position = (transformComponent as ComponentTransform).Position;
+
+            ((ComponentTransform)transformComponent).Position += velocity * GameScene.dt;
         }
     }
 }
