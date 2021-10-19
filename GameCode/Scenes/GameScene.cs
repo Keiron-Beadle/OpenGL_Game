@@ -13,6 +13,8 @@ using OpenGL_Game.GameCode.Managers;
 using OpenGL_Game.GameEngine.Components.Physics;
 using OpenTK.Audio.OpenAL;
 using OpenGL_Game.GameEngine.Systems;
+using OpenGL_Game.GameEngine.Components.Render;
+using OpenGL_Game.GameCode.Components;
 
 namespace OpenGL_Game.Scenes
 {
@@ -34,12 +36,8 @@ namespace OpenGL_Game.Scenes
         SystemCollision collisionSystem;
         CollisionManager collisionManager;
 
-        public Camera camera;
-        Entity footstepSource;
-        ComponentTransform footstepTransform;
-        const float cameraVelocity = 2.0f; //2.0f
-        private bool walking = false, walkingUp = false, walkingDown = true;
-        private float walkingVelocity = 0.18f; // 0.18f
+        ComponentPlayerController playerController;
+        public ComponentCamera playerCamera; //Static camera manager in future to access this
 
         public static GameScene gameInstance;
 
@@ -72,7 +70,7 @@ namespace OpenGL_Game.Scenes
             GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
             // Set Camera
-            camera = new Camera(new Vector3(0, 1.06f, 0), new Vector3(0, 2.23f, 5), (float)(sceneManager.Width) / (float)(sceneManager.Height), 0.1f, 100f);
+            //camera = new Camera(new Vector3(0, 1.06f, 0), new Vector3(0, 2.23f, 5), (float)(sceneManager.Width) / (float)(sceneManager.Height), 0.1f, 100f);
             CreateEntities();
             CreateSystems();
         }
@@ -87,27 +85,15 @@ namespace OpenGL_Game.Scenes
             skyBox.AddComponent(new ComponentShaderBasic("GameCode/Shaders/vs.glsl", "GameCode/Shaders/fs.glsl"));
             entityManager.AddEntity(skyBox);
 
-            footstepSource = new Entity("FootstepsSfx");
-            footstepTransform = new ComponentTransform(camera.cameraPosition - new Vector3(0.0f, -0.9f, 0.0f));
-            footstepSource.AddComponent(footstepTransform);
-            footstepSource.AddComponent(new ComponentVelocity(new Vector3(0.0f, 0.3f, 0.0f)));
-            footstepSource.AddComponent(new ComponentAudio("GameCode\\Audio\\footsteps.wav"));
-            entityManager.AddEntity(footstepSource);
-
-            //Entity testBox1 = new Entity("TB1");
-            //testBox1.AddComponent(new ComponentTransform(new Vector3(-7.0f, 1.0f, 0.0f), new Vector3(0.4f), Vector3.Zero));
-            //testBox1.AddComponent(new ComponentGeometry("GameCode\\Geometry\\TestCube\\untitled.obj", renderSystem));
-            //testBox1.AddComponent(new ComponentVelocity(new Vector3(2.7f, 0.0f, 0.0f)));
-            //testBox1.AddComponent(new ComponentShaderBasic("GameCode/Shaders/vs.glsl", "GameCode/Shaders/fs.glsl"));
-            //testBox1.AddComponent(new ComponentBoxCollider(testBox1));
-            //entityManager.AddEntity(testBox1);
-
-            //Entity testBox2 = new Entity("TB2");
-            //testBox2.AddComponent(new ComponentTransform(new Vector3(0.0f, 1.0f, 0.0f), new Vector3(0.4f), Vector3.Zero));
-            //testBox2.AddComponent(new ComponentGeometry("GameCode\\Geometry\\TestCube\\untitled.obj", renderSystem));
-            //testBox2.AddComponent(new ComponentShaderBasic("GameCode/Shaders/vs.glsl", "GameCode/Shaders/fs.glsl"));
-            //testBox2.AddComponent(new ComponentBoxCollider(testBox2));
-            //entityManager.AddEntity(testBox2);
+            Entity player = new Entity("Player", TAGS.PLAYER);
+            ComponentTransform playerTransform = new ComponentTransform(new Vector3(0, 1.06f, 0));
+            player.AddComponent(playerTransform);
+            playerCamera = new ComponentCamera(player, new Vector3(0, 2.23f, 5), sceneManager.Width / sceneManager.Height, 0.1f, 100f);
+            player.AddComponent(playerCamera);
+            player.AddComponent(new ComponentAudio("GameCode\\Audio\\footsteps.wav", playerCamera, playerTransform));
+            playerController = new ComponentPlayerController(sceneManager, inputManager, player);
+            player.AddComponent(playerController);
+            //player.AddComponent(new ComponentSphereCollider(player));
 
             scriptManager.LoadMaze("GameCode/map.xml", entityManager, renderSystem);
         }
@@ -133,26 +119,7 @@ namespace OpenGL_Game.Scenes
                 sceneManager.Exit();
             //Console.WriteLine(camera.cameraPosition);
             inputManager.Update(e);
-            ProcessInput();
-
-            if (walking)
-            {
-                footstepTransform.Position = camera.cameraPosition;
-                if (walkingUp)
-                {
-                    camera.cameraPosition.Y += walkingVelocity * dt;
-                    walkingUp = camera.cameraPosition.Y < 1.06f;
-                    walkingDown = camera.cameraPosition.Y > 1.06f;
-                }
-                else if (walkingDown)
-                {
-                    camera.cameraPosition.Y -= walkingVelocity * dt;
-                    walkingUp = camera.cameraPosition.Y < 1.0f;
-                    walkingDown = camera.cameraPosition.Y > 1.0f;
-                    if (walkingUp)
-                        audioSystem.PlaySound(footstepSource);
-                }
-            }
+            playerController.Update(audioSystem, dt);
 
             //Action NON-RENDER systems
             systemManager.ActionNonRenderSystems();
@@ -184,43 +151,6 @@ namespace OpenGL_Game.Scenes
         public override void Close()
         {
             ResourceManager.RemoveAllAssets();
-        }
-
-        private void ProcessInput()
-        {
-            Vector2 movementVec = new Vector2(0,0);
-            //Process any movement commands
-            if (inputManager.IsActive("Forward"))
-                movementVec.X = cameraVelocity * dt;
-            if (inputManager.IsActive("Backward"))
-                movementVec.X = -cameraVelocity * dt;
-            if (inputManager.IsActive("Left"))
-                movementVec.Y = -cameraVelocity * dt;
-            if (inputManager.IsActive("Right"))
-                movementVec.Y = cameraVelocity * dt;
-
-            if (movementVec.Length == 0 && walking)
-            {
-                camera.cameraPosition.Y = 1.06f;
-                walking = false; //Walking is used for Visual effect of 'head-bob'
-            }
-            else if (movementVec.Length > 0 && !walking)
-                walking = true;
-            camera.MoveForward(movementVec.X);
-            camera.MoveRight(movementVec.Y);
-
-            //Check if we need to change scene
-            if (inputManager.IsActive("Continue"))
-                sceneManager.ChangeScene(SceneType.GAME_OVER_SCENE);
-            //Check if we need to exit
-            if (inputManager.IsActive("Escape"))
-                sceneManager.Exit();
-
-            //Process mouse movement for the current frame
-            inputManager.UpdateFPSCamera(ref camera, dt);
-            Mouse.SetPosition((sceneManager.Bounds.Left + sceneManager.Bounds.Right) / 2, 
-                            (sceneManager.Bounds.Top + sceneManager.Bounds.Bottom) / 2);
-            camera.UpdateView();
         }
     }
 }

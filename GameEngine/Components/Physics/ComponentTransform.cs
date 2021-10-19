@@ -25,22 +25,22 @@ namespace OpenGL_Game.Components
         public Vector3 Position
         {
             get { return position; }
-            set { position = value; }
+            set { position = value; Notify(); }
         }
 
         public Vector3 Scale
         {
             get { return scale; }
-            set { scale = value; }
+            set { scale = value; Notify(); }
         }
 
         public Vector3 Rotation
         {
             get { return rotation; }
-            set { rotation = value; }
+            set { rotation = value; Notify(); }
         }
 
-        public ComponentTypes ComponentType
+        public override ComponentTypes ComponentType
         {
             get { return ComponentTypes.COMPONENT_TRANSFORM; }
         }

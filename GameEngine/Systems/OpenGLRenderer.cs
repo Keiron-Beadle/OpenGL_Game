@@ -54,7 +54,7 @@ namespace OpenGL_Game.Systems
         private void DrawSkybox(OpenGLGeometry geometry, ComponentShader shader)
         {
             GL.DepthMask(false);
-            Matrix4 model = Matrix4.CreateTranslation(GameScene.gameInstance.camera.cameraPosition);
+            Matrix4 model = Matrix4.CreateTranslation(GameScene.gameInstance.playerCamera.cameraPosition);
             Draw(model, geometry, shader);
             GL.DepthMask(true);
         }

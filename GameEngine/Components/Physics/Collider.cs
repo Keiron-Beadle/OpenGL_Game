@@ -10,7 +10,7 @@ namespace OpenGL_Game.GameEngine.Components.Physics
     abstract class Collider : IComponent
     {
         protected ComponentTransform transform;
-        public ComponentTypes ComponentType { get { return ComponentTypes.COMPONENT_COLLIDER; } }
+        public override abstract ComponentTypes ComponentType { get; }
         public Vector3 Min;
         public Vector3 Max;
         public Vector3 WorldMin;

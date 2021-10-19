@@ -74,14 +74,16 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="GameCode\Components\ComponentPlayerController.cs" />
     <Compile Include="GameCode\Managers\CollisionManager.cs" />
     <Compile Include="GameCode\Managers\MazeScriptManager.cs" />
-    <Compile Include="GameEngine\Camera.cs" />
+    <Compile Include="GameEngine\Components\ComponentController.cs" />
     <Compile Include="GameEngine\Components\Physics\ComponentBoxCollider.cs" />
     <Compile Include="GameEngine\Components\Physics\Collider.cs" />
     <Compile Include="GameEngine\Components\Physics\ComponentAudio.cs" />
     <Compile Include="GameEngine\Components\Physics\ComponentRotation.cs" />
     <Compile Include="GameEngine\Components\Physics\ComponentSphereCollider.cs" />
+    <Compile Include="GameEngine\Components\Render\ComponentCamera.cs" />
     <Compile Include="GameEngine\Components\Shader\ComponentShader.cs" />
     <Compile Include="GameCode\Components\ShaderComponents\ComponentShaderBasic.cs" />
     <Compile Include="GameCode\Components\ShaderComponents\ComponentShaderPointLight.cs" />

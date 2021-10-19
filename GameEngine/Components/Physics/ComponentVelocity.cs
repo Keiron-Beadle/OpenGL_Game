@@ -10,7 +10,7 @@ namespace OpenGL_Game.Components
     {
         private Vector3 velocity;
 
-        public ComponentTypes ComponentType { get { return ComponentTypes.COMPONENT_VELOCITY; } }
+        public override ComponentTypes ComponentType { get { return ComponentTypes.COMPONENT_VELOCITY; } }
 
         public ComponentVelocity(float x,float y, float z) : this(new Vector3(x,y,z)) { }
         public ComponentVelocity(Vector3 pVelocity)

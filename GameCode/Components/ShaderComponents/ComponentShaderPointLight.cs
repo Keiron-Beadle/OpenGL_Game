@@ -72,8 +72,8 @@ namespace OpenGL_Game.Components
                 GL.Uniform3(uniform_lightSpec + (i * 7), pointLights[i].specular); //Specular
             }
             GL.UniformMatrix4(uniform_mmodel, false, ref model);
-            GL.UniformMatrix4(uniform_mview, false, ref GameScene.gameInstance.camera.view);
-            GL.UniformMatrix4(uniform_mproj, false, ref GameScene.gameInstance.camera.projection);
+            GL.UniformMatrix4(uniform_mview, false, ref GameScene.gameInstance.playerCamera.view);
+            GL.UniformMatrix4(uniform_mproj, false, ref GameScene.gameInstance.playerCamera.projection);
 
             geometry.Render(uniform_mdiffuse);   // OBJ CHANGED
         }

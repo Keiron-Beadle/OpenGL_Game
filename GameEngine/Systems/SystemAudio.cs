@@ -23,13 +23,11 @@ namespace OpenGL_Game.Systems
             MASK = ComponentTypes.COMPONENT_AUDIO | ComponentTypes.COMPONENT_TRANSFORM | ComponentTypes.COMPONENT_VELOCITY;
         }
 
-        public void PlaySound(Entity entity)
+        public void PlaySound(ComponentAudio audioComp)
         {
             try
             {
-                IComponent audioComp = entity.FindComponentByType(ComponentTypes.COMPONENT_AUDIO);
-                ComponentAudio acomp = audioComp as ComponentAudio;
-                AL.SourcePlay(acomp.Source);
+                AL.SourcePlay(audioComp.Source);
             }
             catch (Exception e)
             {
@@ -39,17 +37,7 @@ namespace OpenGL_Game.Systems
 
         public override void OnAction()
         {
-            AL.Listener(ALListener3f.Position, ref GameScene.gameInstance.camera.cameraPosition);
-            AL.Listener(ALListenerfv.Orientation, ref GameScene.gameInstance.camera.cameraDirection, ref GameScene.gameInstance.camera.cameraUp);
 
-            for (int i = 0; i < entities.Count; i++)
-            {
-                IComponent transformComponent = entities[i].FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM);
-                IComponent velocityComponent = entities[i].FindComponentByType(ComponentTypes.COMPONENT_VELOCITY);
-                IComponent audioComponent = entities[i].FindComponentByType(ComponentTypes.COMPONENT_AUDIO);
-
-                ((ComponentAudio)audioComponent).Update((ComponentTransform)transformComponent, (ComponentVelocity)velocityComponent);
-            }
         }
     }
 }

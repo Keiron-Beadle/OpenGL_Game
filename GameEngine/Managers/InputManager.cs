@@ -11,10 +11,18 @@ namespace OpenGL_Game.Managers
     abstract class InputManager
     {
         protected SceneManager sceneManager;
+        public Vector2 DeltaAxis { get; protected set; } //Used for rotation of camera
+        public Dictionary<string, bool> controlFlags;
+        protected List<string> controls;
+
+        public bool IsActive(string command) => controlFlags[command];
 
         public InputManager(SceneManager pSceneManager)
         {
             sceneManager = pSceneManager;
+            controls = new List<string>();
+            controlFlags = new Dictionary<string, bool>();
+
         }
 
         public abstract void Update(FrameEventArgs e);
@@ -22,7 +30,5 @@ namespace OpenGL_Game.Managers
         protected abstract void SaveXMLControls();
 
         protected abstract void LoadXMLControls();
-
-        public abstract void UpdateFPSCamera(ref Camera camera, float dt);
     }
 }

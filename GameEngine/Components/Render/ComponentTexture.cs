@@ -18,7 +18,7 @@ namespace OpenGL_Game.Components
             get { return texture; }
         }
 
-        public ComponentTypes ComponentType
+        public override ComponentTypes ComponentType
         {
             get { return ComponentTypes.COMPONENT_TEXTURE; }
         }

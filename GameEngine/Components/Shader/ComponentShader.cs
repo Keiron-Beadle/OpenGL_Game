@@ -11,7 +11,7 @@ namespace OpenGL_Game.Components
 {
     abstract class ComponentShader : IComponent
     {
-        public ComponentTypes ComponentType { get { return ComponentTypes.COMPONENT_SHADER; } }
+        public override ComponentTypes ComponentType { get { return ComponentTypes.COMPONENT_SHADER; } }
 
         public int ShaderID { get; private set; }
 

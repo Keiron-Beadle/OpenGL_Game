@@ -10,6 +10,8 @@ namespace OpenGL_Game.GameEngine.Components.Physics
 {
     class ComponentBoxCollider : Collider
     {
+        public override ComponentTypes ComponentType { get { return ComponentTypes.COMPONENT_COLLIDER; } }
+
         /// <summary>
         /// Use this constructor to create an arbitrarily-sized bounding box
         /// around an entity's transform

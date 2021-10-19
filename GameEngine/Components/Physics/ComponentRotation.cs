@@ -10,7 +10,7 @@ namespace OpenGL_Game.Components
     {
         private Vector3 rotation;
 
-        public ComponentTypes ComponentType { get { return ComponentTypes.COMPONENT_ROTATION; } }
+        public override ComponentTypes ComponentType { get { return ComponentTypes.COMPONENT_ROTATION; } }
 
         public ComponentRotation(float x, float y, float z) : this(new Vector3(x, y, z)) { }
         public ComponentRotation(Vector3 pRotation)

@@ -14,7 +14,7 @@ namespace OpenGL_Game.Components
             this.geometry = ResourceManager.LoadGeometry(geometryName, renderSystem);
         }
 
-        public ComponentTypes ComponentType
+        public override ComponentTypes ComponentType
         {
             get { return ComponentTypes.COMPONENT_GEOMETRY; }
         }

@@ -31,11 +31,11 @@ namespace OpenGL_Game.Components
         {
             GL.Uniform1(uniform_stex, 0);
             GL.ActiveTexture(TextureUnit.Texture0);
-            Matrix4 modelView = model * GameScene.gameInstance.camera.view;
+            Matrix4 modelView = model * GameScene.gameInstance.playerCamera.view;
             GL.UniformMatrix4(uniform_mmodelview, false, ref modelView);
-            Matrix4 modelViewProjection = modelView * GameScene.gameInstance.camera.projection;
+            Matrix4 modelViewProjection = modelView * GameScene.gameInstance.playerCamera.projection;
             GL.UniformMatrix4(uniform_mmodelviewproj, false, ref modelViewProjection);
-            GL.UniformMatrix4(uniform_mview, false, ref GameScene.gameInstance.camera.view);
+            GL.UniformMatrix4(uniform_mview, false, ref GameScene.gameInstance.playerCamera.view);
 
             geometry.Render(uniform_mdiffuse);   // OBJ CHANGED
 
