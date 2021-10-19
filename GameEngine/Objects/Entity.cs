@@ -5,15 +5,25 @@ using OpenGL_Game.Components;
 
 namespace OpenGL_Game.Objects
 {
+    public enum TAGS
+    {
+        NONE,
+        WORLD,
+        ENEMY,
+        PLAYER
+    }
+
     class Entity
     {
-        string name;
+        readonly string name;
+        readonly TAGS tag;
         List<IComponent> componentList = new List<IComponent>();
         ComponentTypes mask;
  
-        public Entity(string name)
+        public Entity(string name, TAGS optionalTag = TAGS.NONE)
         {
             this.name = name;
+            this.tag = optionalTag;
         }
 
         /// <summary>Adds a single component</summary>
@@ -29,6 +39,8 @@ namespace OpenGL_Game.Objects
         {
             get { return name; }
         }
+
+        public TAGS Tag { get { return tag; } }
 
         public ComponentTypes Mask
         {

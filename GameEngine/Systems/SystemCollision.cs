@@ -12,6 +12,9 @@ namespace OpenGL_Game.GameEngine.Systems
     class SystemCollision : ASystem
     {
         private List<Tuple<Entity, Entity>> collisionList;
+        public bool HasCollisions = false;
+
+        public List<Tuple<Entity,Entity>> Collisions { get { return collisionList; } }
 
         public SystemCollision()
         {
@@ -22,11 +25,12 @@ namespace OpenGL_Game.GameEngine.Systems
 
         public override void OnAction()
         {
+            HasCollisions = false;
             UpdateColliders();
             DoCollisionDetection();
             if (collisionList.Count > 0)
             {
-                DoCollisionResponse();
+                HasCollisions = true;
             }
             collisionList.Clear();
         }
@@ -38,16 +42,6 @@ namespace OpenGL_Game.GameEngine.Systems
                 IComponent collider = entity.Components.Find(delegate (IComponent component)
                 { return component.ComponentType == ComponentTypes.COMPONENT_COLLIDER; });
                 ((Collider)collider).Update();
-            }
-        }
-
-        private void DoCollisionResponse()
-        {
-            foreach (var collision in collisionList)
-            {
-                Entity item1 = collision.Item1;
-                Entity item2 = collision.Item2;
-                Console.WriteLine(item1.Name + " collided with " + item2.Name);
             }
         }
 

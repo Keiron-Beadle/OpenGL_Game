@@ -74,6 +74,7 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="GameCode\Managers\CollisionManager.cs" />
     <Compile Include="GameCode\Managers\MazeScriptManager.cs" />
     <Compile Include="GameEngine\Camera.cs" />
     <Compile Include="GameEngine\Components\Physics\ComponentBoxCollider.cs" />

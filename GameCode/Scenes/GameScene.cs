@@ -133,8 +133,6 @@ namespace OpenGL_Game.Scenes
             inputManager.Update(e);
             ProcessInput();
 
-            
-
             if (walking)
             {
                 footstepTransform.Position = camera.cameraPosition;
@@ -156,6 +154,23 @@ namespace OpenGL_Game.Scenes
 
             //Action NON-RENDER systems
             systemManager.ActionNonRenderSystems();
+
+            if (collisionSystem.HasCollisions)
+            {
+                DoCollisionResponse();
+            }
+        }
+
+        /// <summary>
+        /// Method for handling collision response between objects
+        /// </summary>
+        private void DoCollisionResponse()
+        {
+            var collisions = collisionSystem.Collisions;
+            foreach (var collision in collisions)
+            {
+
+            }
 
         }
 
