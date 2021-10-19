@@ -32,6 +32,7 @@ namespace OpenGL_Game.Scenes
         SystemAudio audioSystem;
         SystemPhysics physicsSystem; //System to apply motion & rotation
         SystemCollision collisionSystem;
+        CollisionManager collisionManager;
 
         public Camera camera;
         Entity footstepSource;
@@ -53,6 +54,7 @@ namespace OpenGL_Game.Scenes
             audioSystem = new SystemAudio();
             renderSystem = new OpenGLRenderer();
             collisionSystem = new SystemCollision();
+            collisionManager = new CollisionManager(collisionSystem);
             // Set the title of the window
             sceneManager.Title = "Game";
             // Set the Render and Update delegates to the Update and Render methods of this class
@@ -154,24 +156,7 @@ namespace OpenGL_Game.Scenes
 
             //Action NON-RENDER systems
             systemManager.ActionNonRenderSystems();
-
-            if (collisionSystem.HasCollisions)
-            {
-                DoCollisionResponse();
-            }
-        }
-
-        /// <summary>
-        /// Method for handling collision response between objects
-        /// </summary>
-        private void DoCollisionResponse()
-        {
-            var collisions = collisionSystem.Collisions;
-            foreach (var collision in collisions)
-            {
-
-            }
-
+            collisionManager.Update();
         }
 
         /// <summary>

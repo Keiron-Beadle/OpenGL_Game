@@ -30,43 +30,30 @@ namespace OpenGL_Game.Systems
                 bool rotation = (entity.Mask & MotionMASK) == RotationMASK;
 
                 if (rotation)
-                    DoRotation(entity.Components);
+                    DoRotation(entity);
                 if (motion)
-                    DoMotion(entity.Components);
+                    DoMotion(entity);
             }
         }
 
-        private void DoRotation(List<IComponent> components)
+        private void DoRotation(Entity entity)
         {
-            IComponent transformComponent = components.Find(delegate (IComponent component)
-            {
-                return component.ComponentType == ComponentTypes.COMPONENT_TRANSFORM;
-            });
+            IComponent transformComponent = entity.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM);
 
-            IComponent rotationComponent = components.Find(delegate (IComponent component)
-            {
-                return component.ComponentType == ComponentTypes.COMPONENT_ROTATION;
-            });
+            IComponent rotationComponent = entity.FindComponentByType(ComponentTypes.COMPONENT_ROTATION);
 
             Vector3 rotationRate = (rotationComponent as ComponentRotation).Rotation;
 
             ((ComponentTransform)transformComponent).Rotation += rotationRate * GameScene.dt;
         }
 
-        private void DoMotion(List<IComponent> components)
+        private void DoMotion(Entity entity)
         {
-            IComponent transformComponent = components.Find(delegate (IComponent component)
-            {
-                return component.ComponentType == ComponentTypes.COMPONENT_TRANSFORM;
-            });
+            IComponent transformComponent = entity.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM);
 
-            IComponent velocityComponent = components.Find(delegate (IComponent component)
-            {
-                return component.ComponentType == ComponentTypes.COMPONENT_VELOCITY;
-            });
+            IComponent velocityComponent = entity.FindComponentByType(ComponentTypes.COMPONENT_VELOCITY);
 
             Vector3 velocity = (velocityComponent as ComponentVelocity).Velocity;
-            Vector3 position = (transformComponent as ComponentTransform).Position;
 
             ((ComponentTransform)transformComponent).Position += velocity * GameScene.dt;
         }

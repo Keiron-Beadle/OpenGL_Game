@@ -35,6 +35,14 @@ namespace OpenGL_Game.Objects
             mask |= component.ComponentType;
         }
 
+        public IComponent FindComponentByType(ComponentTypes type)
+        {
+            return componentList.Find(delegate (IComponent component)
+            {
+                return component.ComponentType == type;
+            });
+        }
+
         public String Name
         {
             get { return name; }

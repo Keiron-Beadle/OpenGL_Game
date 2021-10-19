@@ -19,11 +19,7 @@ namespace OpenGL_Game.GameEngine.Components.Physics
         /// <param name="maxPos">Max Vector3 point for Bounding Box</param>
         public ComponentBoxCollider(Entity entity, Vector3 minPos, Vector3 maxPos)
         {
-            List<IComponent> components = entity.Components;
-            IComponent trans = components.Find(delegate (IComponent component)
-            {
-                return component.ComponentType == ComponentTypes.COMPONENT_TRANSFORM;
-            });
+            IComponent trans = entity.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM);
             transform = (trans as ComponentTransform);
             Min = minPos;
             Max = maxPos;
@@ -36,14 +32,8 @@ namespace OpenGL_Game.GameEngine.Components.Physics
         /// <param name="entity">Entity which has Transform & Geometry Component</param>
         public ComponentBoxCollider(Entity entity)
         {
-            List<IComponent> components = entity.Components;
-            IComponent trans = components.Find(delegate (IComponent component)
-            {
-                return component.ComponentType == ComponentTypes.COMPONENT_TRANSFORM;
-            });
-            IComponent geom = components.Find(delegate (IComponent component) {
-                return component.ComponentType == ComponentTypes.COMPONENT_GEOMETRY;
-            });
+            IComponent trans = entity.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM);
+            IComponent geom = entity.FindComponentByType(ComponentTypes.COMPONENT_GEOMETRY);
             transform = trans as ComponentTransform;
 
             Vector3[] vertices = (geom as ComponentGeometry).GetVertices();

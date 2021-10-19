@@ -39,8 +39,7 @@ namespace OpenGL_Game.GameEngine.Systems
         {
             foreach (var entity in entities)
             {
-                IComponent collider = entity.Components.Find(delegate (IComponent component)
-                { return component.ComponentType == ComponentTypes.COMPONENT_COLLIDER; });
+                IComponent collider = entity.FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
                 ((Collider)collider).Update();
             }
         }
@@ -54,10 +53,8 @@ namespace OpenGL_Game.GameEngine.Systems
                 {
                     if (entities[i] == entities[j]) continue;
 
-                    IComponent collider1 = entities[i].Components.Find(delegate (IComponent component)
-                    { return component.ComponentType == ComponentTypes.COMPONENT_COLLIDER; });
-                    IComponent collider2 = entities[j].Components.Find(delegate (IComponent component)
-                    { return component.ComponentType == ComponentTypes.COMPONENT_COLLIDER; });
+                    IComponent collider1 = entities[i].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
+                    IComponent collider2 = entities[j].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
 
                     if (collider1 is ComponentBoxCollider b1 && collider2 is ComponentBoxCollider b2)
                     {

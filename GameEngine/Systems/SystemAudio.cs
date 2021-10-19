@@ -27,10 +27,7 @@ namespace OpenGL_Game.Systems
         {
             try
             {
-                IComponent audioComp = entity.Components.Find(delegate (IComponent component)
-                {
-                    return component.ComponentType == ComponentTypes.COMPONENT_AUDIO;
-                });
+                IComponent audioComp = entity.FindComponentByType(ComponentTypes.COMPONENT_AUDIO);
                 ComponentAudio acomp = audioComp as ComponentAudio;
                 AL.SourcePlay(acomp.Source);
             }
@@ -47,22 +44,9 @@ namespace OpenGL_Game.Systems
 
             for (int i = 0; i < entities.Count; i++)
             {
-                List<IComponent> components = entities[i].Components;
-
-                IComponent transformComponent = components.Find(delegate (IComponent component)
-                {
-                    return component.ComponentType == ComponentTypes.COMPONENT_TRANSFORM;
-                });
-
-                IComponent velocityComponent = components.Find(delegate (IComponent component)
-                {
-                    return component.ComponentType == ComponentTypes.COMPONENT_VELOCITY;
-                });
-
-                IComponent audioComponent = components.Find(delegate (IComponent component)
-                {
-                    return component.ComponentType == ComponentTypes.COMPONENT_AUDIO;
-                });
+                IComponent transformComponent = entities[i].FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM);
+                IComponent velocityComponent = entities[i].FindComponentByType(ComponentTypes.COMPONENT_VELOCITY);
+                IComponent audioComponent = entities[i].FindComponentByType(ComponentTypes.COMPONENT_AUDIO);
 
                 ((ComponentAudio)audioComponent).Update((ComponentTransform)transformComponent, (ComponentVelocity)velocityComponent);
             }

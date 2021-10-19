@@ -26,23 +26,12 @@ namespace OpenGL_Game.Systems
         {
             foreach (Entity entity in entities)
             {
-                List<IComponent> components = entity.Components;
+                IComponent geometryComponent = entity.FindComponentByType(ComponentTypes.COMPONENT_GEOMETRY);
+                IComponent transformComponent = entity.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM);
+                IComponent shaderComponent = entity.FindComponentByType(ComponentTypes.COMPONENT_SHADER);
 
-                IComponent geometryComponent = components.Find(delegate (IComponent component)
-                {
-                    return component.ComponentType == ComponentTypes.COMPONENT_GEOMETRY;
-                });
                 OpenGLGeometry geometry = (OpenGLGeometry)((ComponentGeometry)geometryComponent).Geometry();
 
-                IComponent transformComponent = components.Find(delegate (IComponent component)
-                {
-                    return component.ComponentType == ComponentTypes.COMPONENT_TRANSFORM;
-                });
-
-                IComponent shaderComponent = components.Find(delegate (IComponent component)
-                {
-                    return component.ComponentType == ComponentTypes.COMPONENT_SHADER;
-                });
                 Vector3 position = ((ComponentTransform)transformComponent).Position;
                 Vector3 scale = ((ComponentTransform)transformComponent).Scale;
                 Vector3 rotation = ((ComponentTransform)transformComponent).Rotation;
