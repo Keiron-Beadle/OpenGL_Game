@@ -26,7 +26,7 @@ namespace OpenGL_Game.Systems
 
         public abstract void OnAction();
 
-        public void InitialiseEntities(EntityManager em)
+        public virtual void InitialiseEntities(EntityManager em)
         {
             foreach (Entity e in em.Entities())
             {

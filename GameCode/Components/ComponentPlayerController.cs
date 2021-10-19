@@ -94,12 +94,7 @@ namespace OpenGL_Game.GameCode.Components
                 transform.Position += movement;
             }
 
-            //Check if we need to change scene
-            if (inputManager.IsActive("Continue"))
-                sceneManager.ChangeScene(SceneType.GAME_OVER_SCENE);
-            //Check if we need to exit
-            if (inputManager.IsActive("Escape"))
-                sceneManager.Exit();
+
 
             //Process mouse movement for the current frame
             UpdateView(dt);

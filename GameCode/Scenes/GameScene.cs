@@ -69,8 +69,6 @@ namespace OpenGL_Game.Scenes
 
             GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-            // Set Camera
-            //camera = new Camera(new Vector3(0, 1.06f, 0), new Vector3(0, 2.23f, 5), (float)(sceneManager.Width) / (float)(sceneManager.Height), 0.1f, 100f);
             CreateEntities();
             CreateSystems();
         }
@@ -93,7 +91,8 @@ namespace OpenGL_Game.Scenes
             player.AddComponent(new ComponentAudio("GameCode\\Audio\\footsteps.wav", playerCamera, playerTransform));
             playerController = new ComponentPlayerController(sceneManager, inputManager, player);
             player.AddComponent(playerController);
-            //player.AddComponent(new ComponentSphereCollider(player));
+            player.AddComponent(new ComponentBoxCollider(player, new Vector3(-0.1f,-0.1f,-0.1f), new Vector3(0.1f,0.1f,0.1f)));
+            entityManager.AddEntity(player);
 
             scriptManager.LoadMaze("GameCode/map.xml", entityManager, renderSystem);
         }
@@ -117,13 +116,26 @@ namespace OpenGL_Game.Scenes
             //System.Console.WriteLine("fps=" + (int)(1.0/dt));
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();
-            //Console.WriteLine(camera.cameraPosition);
+
+            //Console.WriteLine(playerCamera.cameraPosition);
             inputManager.Update(e);
-            playerController.Update(audioSystem, dt);
+            ProcessInput();
 
             //Action NON-RENDER systems
             systemManager.ActionNonRenderSystems();
             collisionManager.Update();
+        }
+
+        private void ProcessInput()
+        {
+            //Check if we need to change scene
+            if (inputManager.IsActive("Continue"))
+                sceneManager.ChangeScene(SceneType.GAME_OVER_SCENE);
+            //Check if we need to exit
+            if (inputManager.IsActive("Escape"))
+                sceneManager.Exit();
+
+            playerController.Update(audioSystem, dt); //Update the player with the newly updating input
         }
 
         /// <summary>

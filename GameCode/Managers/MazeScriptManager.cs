@@ -29,7 +29,7 @@ namespace OpenGL_Game.GameCode.Managers
                                             float.Parse(worldNode.Attributes["ZTranslate"].Value));
 
             LoadLights(doc);
-            LoadObjects(entityManager, renderSystem, doc, worldTranslate);
+            LoadWorldObjects(entityManager, renderSystem, doc, worldTranslate);
         }
 
         private void LoadLights(XmlDocument doc)
@@ -60,13 +60,18 @@ namespace OpenGL_Game.GameCode.Managers
             }
         }
 
-        private void LoadObjects(EntityManager entityManager, SystemRender renderSystem, XmlDocument doc, Vector3 worldTranslate)
+        private void LoadWorldObjects(EntityManager entityManager, SystemRender renderSystem, XmlDocument doc, Vector3 worldTranslate)
         {
             XmlNodeList objectNodeList = doc.SelectSingleNode("MapConfig/Objects").ChildNodes;
             Random rnd = new Random();
             foreach (XmlNode n in objectNodeList)
             {
-                Entity temp = new Entity(n.Attributes["Name"].Value);
+                TAGS tag;
+                if (n.Attributes["Type"].Value != "Floor")
+                    tag = TAGS.WORLD;
+                else
+                    tag = TAGS.NONE;
+                Entity temp = new Entity(n.Attributes["Name"].Value, tag);
                 XmlNodeList components = n.ChildNodes;
                 foreach (XmlNode component in components)
                 {
@@ -88,7 +93,6 @@ namespace OpenGL_Game.GameCode.Managers
                     }
 
                 }
-
                 entityManager.AddEntity(temp);
             }
         }

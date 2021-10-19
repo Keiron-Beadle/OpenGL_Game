@@ -1,4 +1,5 @@
 ﻿using OpenGL_Game.Components;
+using OpenGL_Game.GameEngine.Components.Physics;
 using OpenGL_Game.Objects;
 using OpenGL_Game.Systems;
 using OpenTK;
@@ -73,6 +74,7 @@ namespace OpenGL_Game.Managers
             try
             {
                 temp.AddComponent(new ComponentGeometry("GameCode/Geometry/" + type + '/' + type + ".obj", renderSystem));
+                temp.AddComponent(new ComponentBoxCollider(temp));
             }
             catch(Exception e)
             {

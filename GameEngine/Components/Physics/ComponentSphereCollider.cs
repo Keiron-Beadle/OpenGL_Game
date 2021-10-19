@@ -6,7 +6,7 @@ using System.Text;
 
 namespace OpenGL_Game.GameEngine.Components.Physics
 {
-    class ComponentSphereCollider : Collider
+    class ComponentSphereCollider : ComponentCollider
     {
         public override ComponentTypes ComponentType { get { return ComponentTypes.COMPONENT_COLLIDER; } }
     }

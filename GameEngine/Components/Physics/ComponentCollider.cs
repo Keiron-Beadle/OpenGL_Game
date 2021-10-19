@@ -7,7 +7,7 @@ using System.Text;
 
 namespace OpenGL_Game.GameEngine.Components.Physics
 {
-    abstract class Collider : IComponent
+    abstract class ComponentCollider : IComponent
     {
         protected ComponentTransform transform;
         public override abstract ComponentTypes ComponentType { get; }

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace OpenGL_Game.GameEngine.Components.Physics
 {
-    class ComponentBoxCollider : Collider
+    class ComponentBoxCollider : ComponentCollider
     {
         public override ComponentTypes ComponentType { get { return ComponentTypes.COMPONENT_COLLIDER; } }
 
@@ -37,8 +37,13 @@ namespace OpenGL_Game.GameEngine.Components.Physics
             IComponent trans = entity.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM);
             IComponent geom = entity.FindComponentByType(ComponentTypes.COMPONENT_GEOMETRY);
             transform = trans as ComponentTransform;
-
+            Matrix4 rot = Matrix4.CreateRotationX(transform.Rotation.X) * 
+                          Matrix4.CreateRotationY(transform.Rotation.Y) * Matrix4.CreateRotationZ(transform.Rotation.Z);
             Vector3[] vertices = (geom as ComponentGeometry).GetVertices();
+            for (int i = 0; i <vertices.Length; i++)
+            {
+                vertices[i] = (new Vector4(vertices[i], 1.0f) * rot).Xyz;
+            }
             FindMinMax(vertices);
         }
 
