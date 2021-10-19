@@ -47,7 +47,7 @@ namespace OpenGL_Game.GameCode.Components
             {
                 if (walkingUp)
                 {
-                    velocity.Velocity += new Vector3(0, walkingVelocity, 0);
+                    velocity.Velocity += new Vector3(0, walkingVelocity, 0); 
                     walkingUp = camera.cameraPosition.Y < 1.06f;
                     walkingDown = camera.cameraPosition.Y > 1.06f;
                 }
@@ -97,11 +97,19 @@ namespace OpenGL_Game.GameCode.Components
                 movementY = movementVec.Y * Vector3.Cross(camera.cameraDirection.Normalized(), camera.cameraUp.Normalized());
                 movementY.Y = 0;
             }
-            velocity.Velocity.X = movementX.X + movementY.X;
-            velocity.Velocity.Z = movementX.Z + movementY.Z;
-            velocity.Velocity.Y = 0;
-
-
+            if (movementX.Length != 0 || movementY.Length != 0)
+            {
+                movementX += movementY;
+                movementX.Normalize(); //Normalize so diagonal movement isn't > orthogonal
+                movementX *= cameraVelocity;
+                velocity.Velocity.X = movementX.X;
+                velocity.Velocity.Z = movementX.Z;
+                velocity.Velocity.Y = 0;
+            }
+            else
+            {
+                velocity.Velocity = Vector3.Zero;
+            }
             //Process mouse movement for the current frame
             UpdateView(dt);
             Mouse.SetPosition((sceneManager.Bounds.Left + sceneManager.Bounds.Right) / 2,

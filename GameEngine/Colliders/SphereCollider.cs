@@ -11,31 +11,32 @@ namespace OpenGL_Game.GameEngine.Colliders
     class SphereCollider
     {
         public Vector3 Center;
-        private float radius;
+        public float Radius;
         public float RadiusSquared;
 
 
         public SphereCollider(Vector3 pCenter, float pRadius)
         {
             Center = pCenter;
-            radius = pRadius;
-            RadiusSquared = radius * radius;
+            Radius = pRadius;
+            RadiusSquared = Radius * Radius;
         }
 
         public bool Intersect(ComponentSphereCollider spherecomp)
         {
             float dist = Vector3.Distance(Center, spherecomp.Collider.Center);
-            return dist < (radius + spherecomp.Collider.radius);
+            return dist < (Radius + spherecomp.Collider.Radius);
         }
 
-        public bool Intersect(ComponentBoxCollider box) 
+        public Tuple<bool, Vector3, Vector3> Intersect(ComponentBoxCollider box) 
         {
             foreach (var b in box.Colliders)
             {
-                //if (b.Intersect(this))
-                //    return true;
+                var result = b.Intersect(this);
+                if (result.Item1)
+                    return result;
             }
-            return false;
+            return new Tuple<bool, Vector3, Vector3>(false, Vector3.Zero, Vector3.Zero);
         }
 
         public void Update(ComponentTransform transform)

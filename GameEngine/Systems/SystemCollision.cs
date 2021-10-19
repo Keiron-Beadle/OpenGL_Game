@@ -3,6 +3,7 @@ using OpenGL_Game.GameEngine.Components.Physics;
 using OpenGL_Game.Managers;
 using OpenGL_Game.Objects;
 using OpenGL_Game.Systems;
+using OpenTK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,13 +16,13 @@ namespace OpenGL_Game.GameEngine.Systems
         private List<Entity> actors;
         public bool HasCollisions = false;
 
-        public List<Tuple<Entity,Entity>> Collisions { get; private set; }
+        public List<Tuple<Entity,Entity,Vector3, Vector3>> Collisions { get; private set; }
 
         public SystemCollision()
         {
             Name = "System Collision";
             actors = new List<Entity>();
-            Collisions = new List<Tuple<Entity, Entity>>();
+            Collisions = new List<Tuple<Entity, Entity, Vector3, Vector3>>();
             MASK = ComponentTypes.COMPONENT_COLLIDER | ComponentTypes.COMPONENT_TRANSFORM;
         }
 
@@ -83,22 +84,22 @@ namespace OpenGL_Game.GameEngine.Systems
                     IComponent collider1 = actors[i].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
                     IComponent collider2 = entities[j].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
 
-                    if (collider1 is ComponentBoxCollider b1 && collider2 is ComponentBoxCollider b2)
-                    {
-                        foreach (var box in b2.Colliders)
-                        {
-                            if (!b1.Colliders[0].Intersect(box)) continue;
-                            var collision = new Tuple<Entity, Entity>(actors[i], entities[j]);
-                            Collisions.Add(collision);
-                        }
-                    }
-                    else if (collider1 is ComponentSphereCollider s1 && collider2 is ComponentBoxCollider b3)
+                    //if (collider1 is ComponentBoxCollider b1 && collider2 is ComponentBoxCollider b2)
+                    //{
+                    //    foreach (var box in b2.Colliders)
+                    //    {
+                    //        if (!b1.Colliders[0].Intersect(box)) continue;
+                    //        var collision = new Tuple<Entity, Entity>(actors[i], entities[j]);
+                    //        Collisions.Add(collision);
+                    //    }
+                    //}
+                     if (collider1 is ComponentSphereCollider s1 && collider2 is ComponentBoxCollider b3)
                     {
                         foreach (var box in b3.Colliders)
                         {
                             var result = s1.Collider.Intersect(b3);
-                           // if (!result.Item1) continue;
-                            var collision = new Tuple<Entity, Entity>(actors[i], entities[j]);
+                            if (!result.Item1) continue;
+                            var collision = new Tuple<Entity, Entity, Vector3, Vector3>(actors[i], entities[j], result.Item2, result.Item3);
                             Collisions.Add(collision);
                         }
                     }

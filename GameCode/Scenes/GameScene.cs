@@ -132,7 +132,7 @@ namespace OpenGL_Game.Scenes
 
             //Action NON-RENDER systems
             systemManager.ActionNonRenderSystems();
-            //collisionManager.Update();
+            collisionManager.Update();
         }
 
         private void ProcessInput()

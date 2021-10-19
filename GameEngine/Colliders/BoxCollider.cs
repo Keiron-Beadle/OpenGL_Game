@@ -90,25 +90,30 @@ namespace OpenGL_Game.GameEngine.Colliders
             return maxVec;
         }
 
-        public Tuple<bool,Vector3,Vector3> Intersect(SphereCollider sphere)
+        public Tuple<bool,Vector3, Vector3> Intersect(SphereCollider sphere)
         {
-            float squareDist = 0.0f;
-            var center = sphere.Center;
-            if (center.X < WorldMin.X) squareDist += (WorldMin.X - center.X) * (WorldMin.X - center.X);
-            if (center.X > WorldMax.X) squareDist += (center.X - WorldMax.X) * (center.X - WorldMax.X);
+            Vector3 direction = Vector3.UnitY;
+            Vector3 difference = Vector3.Zero;
+            bool intersect = false;
 
-            if (center.Y < WorldMin.Y) squareDist += (WorldMin.Y - center.Y) * (WorldMin.Y - center.Y);
-            if (center.Y > WorldMax.Y) squareDist += (center.Y - WorldMax.Y) * (center.Y - WorldMax.Y);
+            Vector3 closestBoxPointToSphere = new Vector3(
+                            Math.Max(WorldMin.X,Math.Min(sphere.Center.X, WorldMax.X)),
+                            Math.Max(WorldMin.Y, Math.Min(sphere.Center.Y, WorldMax.Y)),
+                            Math.Max(WorldMin.Z, Math.Min(sphere.Center.Z, WorldMax.Z)));
 
-            if (center.Z < WorldMin.Z) squareDist += (WorldMin.Z - center.Z) * (WorldMin.Z - center.Z);
-            if (center.Z > WorldMax.Z) squareDist += (center.Z - WorldMax.Z) * (center.Z - WorldMax.Z);
+            //Vector3 v = closestBoxPointToSphere - sphere.Center;
+            Vector3 delta = sphere.Center - closestBoxPointToSphere;
+            float distSquared = Vector3.Dot(delta,delta);
+            if (distSquared <= sphere.RadiusSquared)
+            {
+                direction = delta.Normalized();
+                difference = direction * (sphere.Radius - delta.Length);
+                intersect = true;
+            }
+            else
+                intersect = false;
 
-
-            bool collided = squareDist <= sphere.RadiusSquared;
-            Vector3 dir = Vector3.UnitY;
-            Vector3 diff = Vector3.Zero;
-
-            return new Tuple<bool,Vector3,Vector3>(collided,dir,diff);
+            return new Tuple<bool,Vector3, Vector3>(intersect, direction, difference);
         }
 
         public bool Intersect(BoxCollider box)
