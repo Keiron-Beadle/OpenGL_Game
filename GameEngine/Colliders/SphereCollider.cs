@@ -32,8 +32,8 @@ namespace OpenGL_Game.GameEngine.Colliders
         {
             foreach (var b in box.Colliders)
             {
-                if (b.Intersect(this))
-                    return true;
+                //if (b.Intersect(this))
+                //    return true;
             }
             return false;
         }

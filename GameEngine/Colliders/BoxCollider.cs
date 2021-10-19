@@ -90,7 +90,7 @@ namespace OpenGL_Game.GameEngine.Colliders
             return maxVec;
         }
 
-        public bool Intersect(SphereCollider sphere)
+        public Tuple<bool,Vector3,Vector3> Intersect(SphereCollider sphere)
         {
             float squareDist = 0.0f;
             var center = sphere.Center;
@@ -103,7 +103,12 @@ namespace OpenGL_Game.GameEngine.Colliders
             if (center.Z < WorldMin.Z) squareDist += (WorldMin.Z - center.Z) * (WorldMin.Z - center.Z);
             if (center.Z > WorldMax.Z) squareDist += (center.Z - WorldMax.Z) * (center.Z - WorldMax.Z);
 
-            return squareDist <= sphere.RadiusSquared;
+
+            bool collided = squareDist <= sphere.RadiusSquared;
+            Vector3 dir = Vector3.UnitY;
+            Vector3 diff = Vector3.Zero;
+
+            return new Tuple<bool,Vector3,Vector3>(collided,dir,diff);
         }
 
         public bool Intersect(BoxCollider box)

@@ -21,6 +21,7 @@ namespace OpenGL_Game.GameCode.Components
         private InputManager inputManager;
         private ComponentCamera camera;
         private ComponentAudio footstepAudio;
+        private ComponentVelocity velocity;
         private float mouseHAngle = 0.0f;
         private float mouseVAngle = 0.0f;
         static float MOUSE_SENSITIVITY = 0.14f;
@@ -36,28 +37,29 @@ namespace OpenGL_Game.GameCode.Components
             camera = player.FindComponentByType(ComponentTypes.COMPONENT_CAMERA) as ComponentCamera;
             transform = player.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;
             footstepAudio = player.FindComponentByType(ComponentTypes.COMPONENT_AUDIO) as ComponentAudio;
+            velocity = player.FindComponentByType(ComponentTypes.COMPONENT_VELOCITY) as ComponentVelocity;
         }
 
         public void Update(SystemAudio audioSystem, float dt)
         {
+            CheckForInputFlags(dt);
             if (walking)
             {
                 if (walkingUp)
                 {
-                    transform.Position = new Vector3(transform.Position.X, transform.Position.Y + walkingVelocity * dt , transform.Position.Z);
+                    velocity.Velocity += new Vector3(0, walkingVelocity, 0);
                     walkingUp = camera.cameraPosition.Y < 1.06f;
                     walkingDown = camera.cameraPosition.Y > 1.06f;
                 }
                 else if (walkingDown)
                 {
-                    transform.Position = new Vector3(transform.Position.X, transform.Position.Y-walkingVelocity * dt , transform.Position.Z);
+                    velocity.Velocity += new Vector3(0, -walkingVelocity, 0);
                     walkingUp = camera.cameraPosition.Y < 1.0f;
                     walkingDown = camera.cameraPosition.Y > 1.0f;
                     if (walkingUp)
                         audioSystem.PlaySound(footstepAudio);
                 }
             }
-            CheckForInputFlags(dt);
         }
 
         private void CheckForInputFlags(float dt)
@@ -65,35 +67,39 @@ namespace OpenGL_Game.GameCode.Components
             Vector2 movementVec = new Vector2(0, 0);
             //Process any movement commands
             if (inputManager.IsActive("Forward"))
-                movementVec.X = cameraVelocity * dt;
+                movementVec.X = cameraVelocity;
             if (inputManager.IsActive("Backward"))
-                movementVec.X = -cameraVelocity * dt;
+                movementVec.X = -cameraVelocity;
             if (inputManager.IsActive("Left"))
-                movementVec.Y = -cameraVelocity * dt;
+                movementVec.Y = -cameraVelocity;
             if (inputManager.IsActive("Right"))
-                movementVec.Y = cameraVelocity * dt;
+                movementVec.Y = cameraVelocity;
 
-            if (movementVec.Length == 0 && walking)
+            if (velocity.Velocity.X == 0 && velocity.Velocity.Z == 0 && walking)
             {
                 transform.Position = new Vector3(transform.Position.X, 1.06f, transform.Position.Z);
                 walking = false; //Walking is used for Visual effect of 'head-bob'
+                walkingUp = false;
+                walkingDown = true;
             }
             else if (movementVec.Length > 0 && !walking)
                 walking = true;
 
+            Vector3 movementX = Vector3.Zero;
+            Vector3 movementY = Vector3.Zero;
             if (movementVec.X != 0)
             {
-                Vector3 movement = movementVec.X * camera.cameraDirection;
-                movement.Y = 0;
-                transform.Position += movement;                
+                movementX = movementVec.X * camera.cameraDirection;
+                movementX.Y = 0;
             }
             if (movementVec.Y != 0)
             {
-                Vector3 movement = movementVec.Y * Vector3.Cross(camera.cameraDirection.Normalized(), camera.cameraUp.Normalized());
-                movement.Y = 0;
-                transform.Position += movement;
+                movementY = movementVec.Y * Vector3.Cross(camera.cameraDirection.Normalized(), camera.cameraUp.Normalized());
+                movementY.Y = 0;
             }
-
+            velocity.Velocity.X = movementX.X + movementY.X;
+            velocity.Velocity.Z = movementX.Z + movementY.Z;
+            velocity.Velocity.Y = 0;
 
 
             //Process mouse movement for the current frame

@@ -89,6 +89,7 @@ namespace OpenGL_Game.Scenes
             playerCamera = new ComponentCamera(player, new Vector3(0, 2.23f, 5), 
                 (float)sceneManager.Width / (float)sceneManager.Height, 0.1f, 100f);
             player.AddComponent(playerCamera);
+            player.AddComponent(new ComponentVelocity(Vector3.Zero));
             player.AddComponent(new ComponentAudio("GameCode\\Audio\\footsteps.wav", playerCamera, playerTransform));
             playerController = new ComponentPlayerController(sceneManager, inputManager, player);
             player.AddComponent(playerController);
@@ -131,7 +132,7 @@ namespace OpenGL_Game.Scenes
 
             //Action NON-RENDER systems
             systemManager.ActionNonRenderSystems();
-            collisionManager.Update();
+            //collisionManager.Update();
         }
 
         private void ProcessInput()

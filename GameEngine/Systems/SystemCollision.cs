@@ -12,7 +12,7 @@ namespace OpenGL_Game.GameEngine.Systems
 {
     class SystemCollision : ASystem
     {
-        private List<Entity> colliderables;
+        private List<Entity> actors;
         public bool HasCollisions = false;
 
         public List<Tuple<Entity,Entity>> Collisions { get; private set; }
@@ -20,7 +20,7 @@ namespace OpenGL_Game.GameEngine.Systems
         public SystemCollision()
         {
             Name = "System Collision";
-            colliderables = new List<Entity>();
+            actors = new List<Entity>();
             Collisions = new List<Tuple<Entity, Entity>>();
             MASK = ComponentTypes.COMPONENT_COLLIDER | ComponentTypes.COMPONENT_TRANSFORM;
         }
@@ -42,7 +42,7 @@ namespace OpenGL_Game.GameEngine.Systems
                     }
                     else if (entity.Tag == TAGS.PLAYER)
                     {
-                        colliderables.Add(entity);
+                        actors.Add(entity);
                     }
 
                 }
@@ -59,7 +59,7 @@ namespace OpenGL_Game.GameEngine.Systems
 
         private void UpdateColliders()
         {
-            foreach (var entity in colliderables)
+            foreach (var entity in actors)
             {
                 IComponent collider = entity.FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
                 ((ComponentCollider)collider).Update();
@@ -76,11 +76,11 @@ namespace OpenGL_Game.GameEngine.Systems
             //will consider spatial segmentation if this is too intensive.
             
             //Test for collision between actors + world
-            for (int i = 0; i < colliderables.Count; i++) //List of moving actors
+            for (int i = 0; i < actors.Count; i++) //List of moving actors
             {
                 for (int j = 0; j < entities.Count; j++) //List of world objects
                 {
-                    IComponent collider1 = colliderables[i].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
+                    IComponent collider1 = actors[i].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
                     IComponent collider2 = entities[j].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
 
                     if (collider1 is ComponentBoxCollider b1 && collider2 is ComponentBoxCollider b2)
@@ -88,7 +88,7 @@ namespace OpenGL_Game.GameEngine.Systems
                         foreach (var box in b2.Colliders)
                         {
                             if (!b1.Colliders[0].Intersect(box)) continue;
-                            var collision = new Tuple<Entity, Entity>(colliderables[i], entities[j]);
+                            var collision = new Tuple<Entity, Entity>(actors[i], entities[j]);
                             Collisions.Add(collision);
                         }
                     }
@@ -96,8 +96,9 @@ namespace OpenGL_Game.GameEngine.Systems
                     {
                         foreach (var box in b3.Colliders)
                         {
-                            if (!s1.Collider.Intersect(b3)) continue;
-                            var collision = new Tuple<Entity, Entity>(colliderables[i], entities[j]);
+                            var result = s1.Collider.Intersect(b3);
+                           // if (!result.Item1) continue;
+                            var collision = new Tuple<Entity, Entity>(actors[i], entities[j]);
                             Collisions.Add(collision);
                         }
                     }
