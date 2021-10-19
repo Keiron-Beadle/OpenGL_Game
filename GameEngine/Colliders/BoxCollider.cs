@@ -20,10 +20,9 @@ namespace OpenGL_Game.GameEngine.Colliders
         {
             Min = pMin;
             Max = pMax;
-            Matrix4 rot = Matrix4.CreateRotationX(transform.Rotation.X) *
-                          Matrix4.CreateRotationY(transform.Rotation.Y) * Matrix4.CreateRotationZ(transform.Rotation.Z);
-            WorldMax = (new Vector4(Max, 1.0f) * rot).Xyz;
-            WorldMin = (new Vector4(Min, 1.0f) * rot).Xyz;
+            Matrix4 model = Matrix4.CreateScale(transform.Scale) * Matrix4.CreateTranslation(transform.Position);
+            WorldMax = (new Vector4(Max, 1.0f) * model).Xyz;
+            WorldMin = (new Vector4(Min, 1.0f) * model).Xyz;
         }
 
         public BoxCollider(Vector3[] vertices, ComponentTransform transform)
@@ -31,8 +30,11 @@ namespace OpenGL_Game.GameEngine.Colliders
             FindMinMax(vertices);
             Matrix4 rot = Matrix4.CreateRotationX(transform.Rotation.X) *
                           Matrix4.CreateRotationY(transform.Rotation.Y) * Matrix4.CreateRotationZ(transform.Rotation.Z);
-            WorldMax = (new Vector4(Max, 1.0f) * rot).Xyz;
-            WorldMin = (new Vector4(Min, 1.0f) * rot).Xyz;
+            Matrix4 model = Matrix4.CreateScale(transform.Scale) * Matrix4.CreateTranslation(transform.Position);
+            Min = (new Vector4(Min, 1.0f) * rot).Xyz;
+            Max = (new Vector4(Max, 1.0f) * rot).Xyz;
+            WorldMax = (new Vector4(Max, 1.0f) * model).Xyz;
+            WorldMin = (new Vector4(Min, 1.0f) * model).Xyz;
         }
 
         private void FindMinMax(Vector3[] vertices)

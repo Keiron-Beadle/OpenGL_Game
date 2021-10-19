@@ -91,7 +91,7 @@ namespace OpenGL_Game.Scenes
             player.AddComponent(new ComponentAudio("GameCode\\Audio\\footsteps.wav", playerCamera, playerTransform));
             playerController = new ComponentPlayerController(sceneManager, inputManager, player);
             player.AddComponent(playerController);
-            player.AddComponent(new ComponentBoxCollider(player, new Vector3(-0.1f,-0.1f,-0.1f), new Vector3(0.1f,0.1f,0.1f)));
+            player.AddComponent(new ComponentBoxCollider(player, new Vector3(-0.3f), new Vector3(0.3f)));
             entityManager.AddEntity(player);
 
             scriptManager.LoadMaze("GameCode/map.xml", entityManager, renderSystem);
