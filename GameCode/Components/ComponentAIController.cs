@@ -32,23 +32,14 @@ namespace OpenGL_Game.GameCode.Components
 
         public void Update(SystemAudio audioSystem, float dt)
         {
-            if (ObstructedVision)
+            if (!ObstructedVision && PlayerVisible())
             {
-                Console.WriteLine("Vision obstructed");
+                Console.WriteLine("Player visible");
             }
             else
             {
-                Console.WriteLine("Clear vision to player");
+                Console.WriteLine("Player not visible");
             }
-
-            //if (!ObstructedVision && PlayerVisible())
-            //{
-            //    Console.WriteLine("Player visible");
-            //}
-            //else
-            //{
-            //    Console.WriteLine("Player not visible");
-            //}
             ObstructedVision = false; //Reset value for next frame.
         }
 

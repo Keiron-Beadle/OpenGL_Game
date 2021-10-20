@@ -79,15 +79,14 @@ namespace OpenGL_Game.GameEngine.Systems
 
         private void DoCollisionDetection()
         {
-            //will consider spatial segmentation if this is too intensive.
-            
-            //Test for collision between actors + world
-            for (int i = 0; i < actors.Count; i++) //List of moving actors
+            bool lineOfSight = true;
+            for (int i = 0; i < entities.Count; i++) //List of world objects
             {
-                for (int j = 0; j < entities.Count; j++) //List of world objects
+                //Collide terrain with actors/player (Precedes collision resolution)
+                for (int j = 0; j < actors.Count; j++) //List of moving actors
                 {
-                    IComponent collider1 = actors[i].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
-                    IComponent collider2 = entities[j].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
+                    IComponent collider1 = actors[j].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
+                    IComponent collider2 = entities[i].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
 
                     //if (collider1 is ComponentBoxCollider b1 && collider2 is ComponentBoxCollider b2)
                     //{
@@ -98,59 +97,62 @@ namespace OpenGL_Game.GameEngine.Systems
                     //        Collisions.Add(collision);
                     //    }
                     //}
-                     if (collider1 is ComponentSphereCollider s1 && collider2 is ComponentBoxCollider b3)
-                     {
+                    if (collider1 is ComponentSphereCollider s1 && collider2 is ComponentBoxCollider b3)
+                    {
                         foreach (var box in b3.Colliders)
                         {
                             var result = s1.Collider.Intersect(b3);
                             if (!result.Item1) continue;
-                            var collision = new Tuple<Entity, Entity, Vector3, Vector3>(actors[i], entities[j], result.Item2, result.Item3);
+                            var collision = new Tuple<Entity, Entity, Vector3, Vector3>(actors[j], entities[i], result.Item2, result.Item3);
                             Collisions.Add(collision);
                         }
-                     }
-                }
-
-                for (int j = 0; j < enemies.Count; j++)
-                {
-                    IComponent actorCollider = actors[i].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
-                    IComponent enemyCollider = enemies[j].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
-                    if (actorCollider is ComponentSphereCollider s1 && enemyCollider is ComponentBoxCollider b3)
-                    {
-                        var result = s1.Collider.Intersect(b3);
-                        if (!result.Item1) goto End;
-                        var collision = new Tuple<Entity, Entity, Vector3, Vector3>(actors[i], enemies[j], result.Item2, result.Item3);
-                        Collisions.Add(collision);
                     }
-                    End:
-                    ComponentTransform actorTransform = actors[i].FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;
-                    ComponentTransform enemyTransform = enemies[j].FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;
-                    Vector2 actorPos = actorTransform.Position.Xz;
-                    Vector2 enemyPos = enemyTransform.Position.Xz;
-                    if (CheckForWallObstruction(enemyPos, actorPos, enemies[j]))
+
+
+                    if (!lineOfSight) continue;
+                    for (int k = 0; k < enemies.Count; k++)
                     {
-                        break;
-                    }                                    
+                        //Do player collisions with enemies (remove life if collided, etc)
+                        IComponent actorCollider = actors[j].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
+                        IComponent enemyCollider = enemies[k].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
+                        if (actorCollider is ComponentSphereCollider s2 && enemyCollider is ComponentBoxCollider b4)
+                        {
+                            var result = s2.Collider.Intersect(b4);
+                            if (!result.Item1) continue;
+                            var collision = new Tuple<Entity, Entity, Vector3, Vector3>(actors[j], enemies[k], result.Item2, result.Item3);
+                            Collisions.Add(collision);
+                        }
+                    }
+                    for (int k = 0; k < enemies.Count; k++) 
+                    { 
+                        //Collisions for enemy -> player line of sight
+                        ComponentTransform actorTransform = actors[j].FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;
+                        ComponentTransform enemyTransform = enemies[k].FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;
+                        Vector2 actorPos = actorTransform.Position.Xz;
+                        Vector2 enemyPos = enemyTransform.Position.Xz;
+                        if (CheckForWallObstruction(enemyPos, actorPos, enemies[k], entities[i]))
+                        {
+                            lineOfSight = false;
+                        }
+                    }
                 }
             }
         }
 
-        private bool CheckForWallObstruction(Vector2 enemyPos, Vector2 actorPos, Entity enemy)
+        private bool CheckForWallObstruction(Vector2 enemyPos, Vector2 actorPos, Entity enemy, Entity wall)
         {
-            for (int k = 0; k < entities.Count; k++)
+            ComponentBoxCollider wallCollider = wall.FindComponentByType(ComponentTypes.COMPONENT_COLLIDER) as ComponentBoxCollider;
+            foreach (var c in wallCollider.Colliders)
             {
-                ComponentBoxCollider wallCollider = entities[k].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER) as ComponentBoxCollider;
-                foreach (var c in wallCollider.Colliders)
+                Vector2 wallMin = new Vector2(c.WorldMin.X, c.WorldMin.Z);
+                Vector2 wallMax = new Vector2(c.WorldMax.X, c.WorldMax.Z);
+                if (LineCollisionCheck(enemyPos, actorPos, wallMin, wallMax))
                 {
-                    Vector2 wallMin = new Vector2(c.WorldMin.X, c.WorldMin.Z);
-                    Vector2 wallMax = new Vector2(c.WorldMax.X, c.WorldMax.Z);
-                    if (LineCollisionCheck(enemyPos, actorPos, wallMin, wallMax))
-                    {
-                        var collision = new Tuple<Entity, Entity, Vector3, Vector3>(enemy, entities[k], Vector3.Zero, Vector3.Zero);
-                        Collisions.Add(collision);
-                        return true; //There is a wall obstruction
-                    }
+                    var collision = new Tuple<Entity, Entity, Vector3, Vector3>(enemy, wall, Vector3.Zero, Vector3.Zero);
+                    Collisions.Add(collision);
+                    return true; //There is a wall obstruction
                 }
-            }
+            }   
             return false; //No wall obstruction
         }
 
