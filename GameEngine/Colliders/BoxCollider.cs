@@ -45,17 +45,14 @@ namespace OpenGL_Game.GameEngine.Colliders
             Vector3 min = vertices[0];
             Vector3 max = vertices[0];
 
-            foreach (Vector3 v in vertices)
+            for (int i = 0; i < vertices.Length; i++)
             {
-                for (int i = 0; i < vertices.Length; i++)
-                {
-                    min = MinVec(min, vertices[i]);
-                    max = MaxVec(max, vertices[i]);
-                }
-
-                Min = min;
-                Max = max;
+                min = MinVec(min, vertices[i]);
+                max = MaxVec(max, vertices[i]);
             }
+
+            Min = min;
+            Max = max;
         }
 
         protected Vector3 MinVec(Vector3 u, Vector3 v)

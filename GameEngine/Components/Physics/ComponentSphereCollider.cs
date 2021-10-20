@@ -24,7 +24,7 @@ namespace OpenGL_Game.GameEngine.Components.Physics
         public ComponentSphereCollider(Entity entity)
         {
             IComponent trans = entity.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM);
-            IComponent geom = entity.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM);
+            IComponent geom = entity.FindComponentByType(ComponentTypes.COMPONENT_GEOMETRY);
             transform = trans as ComponentTransform;
             Vector3[][] vertices = (geom as ComponentGeometry).GetVertices();
             Vector3 midpoint = new Vector3();

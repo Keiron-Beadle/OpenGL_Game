@@ -13,7 +13,7 @@
   </Lights>
   <Objects>
     <Object Type="Wall" Name="MapObject1.0">
-      <Transform XPos="0" YPos="0" ZPos="0" XRot="0" YRot="-1.57079632679" ZRot="0" XScale="1" YScale="1" ZScale="1" />
+      <Transform XPos="0" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
     </Object>
   </Objects>

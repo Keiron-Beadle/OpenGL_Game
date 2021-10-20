@@ -74,6 +74,7 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="GameCode\Components\ComponentAIController.cs" />
     <Compile Include="GameCode\Components\ComponentPlayerController.cs" />
     <Compile Include="GameCode\Managers\CollisionManager.cs" />
     <Compile Include="GameCode\Managers\MazeScriptManager.cs" />
@@ -189,23 +190,17 @@
     <None Include="GameCode\Geometry\Corner\Corner.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="GameCode\Geometry\Drone\Drone.mtl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="GameCode\Geometry\Drone\Drone.obj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="GameCode\Geometry\Floor\Floor.mtl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="GameCode\Geometry\Floor\Floor.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="GameCode\Geometry\Intergalactic_Ship\Intergalactic_Spaceship.mtl">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="GameCode\Geometry\Intergalactic_Ship\Intergalactic_Spaceship.obj">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="GameCode\Geometry\Moon\moon.mtl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="GameCode\Geometry\Moon\moon.obj">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="GameCode\Geometry\Portal\Portal.mtl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -230,12 +225,6 @@
     </None>
     <None Include="GameCode\Geometry\Wall\wall.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="GameCode\Geometry\Wraith_Raider_Starship\Wraith_Raider_Starship.mtl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="GameCode\Geometry\Wraith_Raider_Starship\Wraith_Raider_Starship.obj">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
@@ -316,17 +305,14 @@
     <Content Include="GameCode\Geometry\Floor\Metal_Rusted_009_normal.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="GameCode\Geometry\Intergalactic_Ship\Intergalactic_Spaceship_color_4.jpg">
+    <Content Include="GameCode\Geometry\Drone\Intergalactic_Spaceship_color_4.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="GameCode\Geometry\Intergalactic_Ship\Intergalactic_Spaceship_nmap_2_Tris.jpg">
+    <Content Include="GameCode\Geometry\Drone\Intergalactic_Spaceship_nmap_2_Tris.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="GameCode\Geometry\Intergalactic_Ship\Intergalactic_Spaceship_rough.jpg">
+    <Content Include="GameCode\Geometry\Drone\Intergalactic_Spaceship_rough.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="GameCode\Geometry\Moon\moon_diffuse.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="GameCode\Geometry\Portal\Obsidian_001_basecolor.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -342,33 +328,6 @@
     </Content>
     <Content Include="GameCode\Geometry\Wall\MetalPipeWallRusty_normal.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="GameCode\Geometry\Wraith_Raider_Starship\bmq1.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="GameCode\Geometry\Wraith_Raider_Starship\cockpit_mtl1_diffcol.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="GameCode\Geometry\Wraith_Raider_Starship\d10.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="GameCode\Geometry\Wraith_Raider_Starship\d17.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="GameCode\Geometry\Wraith_Raider_Starship\d17b.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="GameCode\Geometry\Wraith_Raider_Starship\door_mtl1_diffcol.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="GameCode\Geometry\Wraith_Raider_Starship\door_mtl2_diffcol.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="GameCode\Geometry\Wraith_Raider_Starship\vj2c.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="GameCode\Geometry\Wraith_Raider_Starship\yx1_02_01_01.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="GameCode\collisionmap.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

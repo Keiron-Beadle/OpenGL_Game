@@ -39,6 +39,8 @@ namespace OpenGL_Game.Scenes
         ComponentPlayerController playerController;
         public ComponentCamera playerCamera; //Static camera manager in future to access this
 
+        ComponentAIController droneController;
+
         public static GameScene gameInstance;
 
         public GameScene(SceneManager sceneManager) : base(sceneManager)
@@ -84,7 +86,7 @@ namespace OpenGL_Game.Scenes
             entityManager.AddEntity(skyBox);
 
             Entity player = new Entity("Player", TAGS.PLAYER);
-            ComponentTransform playerTransform = new ComponentTransform(new Vector3(0, 1.06f, 0));
+            ComponentTransform playerTransform = new ComponentTransform(new Vector3(-0.0254f, 0.8f, 3.5669f));
             player.AddComponent(playerTransform);
             playerCamera = new ComponentCamera(player, new Vector3(0, 2.23f, 5), 
                 (float)sceneManager.Width / (float)sceneManager.Height, 0.1f, 100f);
@@ -96,14 +98,16 @@ namespace OpenGL_Game.Scenes
             player.AddComponent(new ComponentSphereCollider(player, Vector3.Zero, 0.14f));
             entityManager.AddEntity(player);
 
-            //Entity test = new Entity("TesTcube", TAGS.WORLD);
-            //test.AddComponent(new ComponentTransform(new Vector3(0.0f, 0.0f, 0.0f), Vector3.One, new Vector3(0f,0f, 0f)));
-            //test.AddComponent(new ComponentGeometry("GameCode\\Geometry\\TestCube\\untitled.obj", renderSystem));
-            //test.AddComponent(new ComponentShaderBasic("GameCode/Shaders/vs.glsl", "GameCode/Shaders/fs.glsl"));
-            //test.AddComponent(new ComponentBoxCollider(test));
-            //entityManager.AddEntity(test);
+            Entity drone = new Entity("Drone", TAGS.ENEMY);
+            drone.AddComponent(new ComponentTransform(new Vector3(0.139f, 0.6f, -4.984f), new Vector3(0.1f), Vector3.Zero));
+            drone.AddComponent(new ComponentGeometry("GameCode\\Geometry\\Drone\\Drone.obj", renderSystem));
+            drone.AddComponent(new ComponentShaderPointLight("GameCode\\Shaders\\vsPointLight.glsl", "GameCode\\Shaders\\fsPointLight.glsl"));
+            droneController = new ComponentAIController(drone, player);
+            drone.AddComponent(droneController);
+            drone.AddComponent(new ComponentBoxCollider(drone));
+            entityManager.AddEntity(drone);
 
-            scriptManager.LoadMaze("GameCode/map.xml", entityManager, renderSystem);
+            scriptManager.LoadMaze("GameCode/collisionmap.xml", entityManager, renderSystem);
         }
 
         private void CreateSystems()
@@ -126,7 +130,7 @@ namespace OpenGL_Game.Scenes
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();
 
-            //Console.WriteLine(playerCamera.cameraPosition);
+            Console.WriteLine(playerCamera.cameraPosition);
             inputManager.Update(e);
             ProcessInput();
 
@@ -145,6 +149,7 @@ namespace OpenGL_Game.Scenes
                 sceneManager.Exit();
 
             playerController.Update(audioSystem, dt); //Update the player with the newly updating input
+            droneController.Update(audioSystem, dt);
         }
 
         /// <summary>

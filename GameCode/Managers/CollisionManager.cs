@@ -1,4 +1,5 @@
 ﻿using OpenGL_Game.Components;
+using OpenGL_Game.GameCode.Components;
 using OpenGL_Game.GameEngine.Systems;
 using OpenGL_Game.Objects;
 using OpenTK;
@@ -49,6 +50,12 @@ namespace OpenGL_Game.GameCode.Managers
                 else if (tag1 == TAGS.PLAYER && tag2 == TAGS.ENEMY || tag1 == TAGS.ENEMY && tag2 == TAGS.PLAYER)
                 {
                     Console.WriteLine("Player collided with enemy.");
+                }
+                else if (tag1 == TAGS.ENEMY && tag2 == TAGS.WORLD || tag1 == TAGS.WORLD && tag2 == TAGS.ENEMY)
+                {
+                    Entity enemy = collision.Item1;
+                    ComponentAIController enemyController = enemy.FindComponentByType(ComponentTypes.COMPONENT_CONTROLLER) as ComponentAIController;
+                    enemyController.ObstructedVision = true;
                 }
             }
         }

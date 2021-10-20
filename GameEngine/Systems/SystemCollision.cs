@@ -14,6 +14,7 @@ namespace OpenGL_Game.GameEngine.Systems
     class SystemCollision : ASystem
     {
         private List<Entity> actors;
+        private List<Entity> enemies;
         public bool HasCollisions = false;
 
         public List<Tuple<Entity,Entity,Vector3, Vector3>> Collisions { get; private set; }
@@ -22,6 +23,7 @@ namespace OpenGL_Game.GameEngine.Systems
         {
             Name = "System Collision";
             actors = new List<Entity>();
+            enemies = new List<Entity>();
             Collisions = new List<Tuple<Entity, Entity, Vector3, Vector3>>();
             MASK = ComponentTypes.COMPONENT_COLLIDER | ComponentTypes.COMPONENT_TRANSFORM;
         }
@@ -45,7 +47,10 @@ namespace OpenGL_Game.GameEngine.Systems
                     {
                         actors.Add(entity);
                     }
-
+                    else if (entity.Tag == TAGS.ENEMY)
+                    {
+                        enemies.Add(entity);
+                    }
                 }
             }
         }
@@ -94,7 +99,7 @@ namespace OpenGL_Game.GameEngine.Systems
                     //    }
                     //}
                      if (collider1 is ComponentSphereCollider s1 && collider2 is ComponentBoxCollider b3)
-                    {
+                     {
                         foreach (var box in b3.Colliders)
                         {
                             var result = s1.Collider.Intersect(b3);
@@ -102,9 +107,70 @@ namespace OpenGL_Game.GameEngine.Systems
                             var collision = new Tuple<Entity, Entity, Vector3, Vector3>(actors[i], entities[j], result.Item2, result.Item3);
                             Collisions.Add(collision);
                         }
+                     }
+                }
+
+                for (int j = 0; j < enemies.Count; j++)
+                {
+                    IComponent actorCollider = actors[i].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
+                    IComponent enemyCollider = enemies[j].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
+                    if (actorCollider is ComponentSphereCollider s1 && enemyCollider is ComponentBoxCollider b3)
+                    {
+                        var result = s1.Collider.Intersect(b3);
+                        if (!result.Item1) goto End;
+                        var collision = new Tuple<Entity, Entity, Vector3, Vector3>(actors[i], enemies[j], result.Item2, result.Item3);
+                        Collisions.Add(collision);
+                    }
+                    End:
+                    ComponentTransform actorTransform = actors[i].FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;
+                    ComponentTransform enemyTransform = enemies[j].FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;
+                    Vector2 actorPos = actorTransform.Position.Xz;
+                    Vector2 enemyPos = enemyTransform.Position.Xz;
+                    if (CheckForWallObstruction(enemyPos, actorPos, enemies[j]))
+                    {
+                        break;
+                    }                                    
+                }
+            }
+        }
+
+        private bool CheckForWallObstruction(Vector2 enemyPos, Vector2 actorPos, Entity enemy)
+        {
+            for (int k = 0; k < entities.Count; k++)
+            {
+                ComponentBoxCollider wallCollider = entities[k].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER) as ComponentBoxCollider;
+                foreach (var c in wallCollider.Colliders)
+                {
+                    Vector2 wallMin = new Vector2(c.WorldMin.X, c.WorldMin.Z);
+                    Vector2 wallMax = new Vector2(c.WorldMax.X, c.WorldMax.Z);
+                    if (LineCollisionCheck(enemyPos, actorPos, wallMin, wallMax))
+                    {
+                        var collision = new Tuple<Entity, Entity, Vector3, Vector3>(enemy, entities[k], Vector3.Zero, Vector3.Zero);
+                        Collisions.Add(collision);
+                        return true; //There is a wall obstruction
                     }
                 }
             }
+            return false; //No wall obstruction
+        }
+
+        private bool LineCollisionCheck(Vector2 enemyPos, Vector2 targetPos, Vector2 wallStart, Vector2 wallEnd)
+        {
+            Vector2 wallVec = wallEnd - wallStart;
+            Vector2 wallNormal = new Vector2(-wallVec.Y, wallVec.X);
+            Vector2 wallToPlayer = targetPos - wallStart;
+            Vector2 wallToEnemy = enemyPos - wallStart;
+            float pDotN = Vector2.Dot(wallToPlayer, wallNormal);
+            float eDotN = Vector2.Dot(wallToEnemy, wallNormal);
+
+            Vector2 playerToEnemy = targetPos - enemyPos;
+            Vector2 entityNormal = new Vector2(-playerToEnemy.Y, playerToEnemy.X);
+            Vector2 entityToWallStart = wallStart - enemyPos;
+            Vector2 entityToWallEnd = wallEnd - enemyPos;
+            float eDotS = Vector2.Dot(entityToWallStart, entityNormal);
+            float eDotE = Vector2.Dot(entityToWallEnd, entityNormal);
+
+            return (pDotN * eDotN < 0) && (eDotS * eDotE < 0);
         }
     }
 }
