@@ -143,5 +143,42 @@ namespace OpenGL_Game.Managers
             writer.Flush();
             writer.Close();
         }
+
+        public static int[,] LoadMap(string inMapFilePath)
+        {
+            int maxRowLength = 0;
+            List<string> lines = new List<string>();
+            using (StreamReader s = new StreamReader(inMapFilePath)) 
+            {
+                string line;
+                while ((line = s.ReadLine()) != null) 
+                {
+                    lines.Add(line);
+                    if (line.Length > maxRowLength)
+                    { 
+                        maxRowLength = line.Length;
+                    } 
+                }
+            }
+            int[,] map = new int[maxRowLength, maxRowLength];
+
+            for (int y = 0; y < maxRowLength; y++)
+            {
+                for (int x = 0; x < maxRowLength; x++)
+                {
+                    char node;
+                    try
+                    {
+                        node = lines[y][x];
+                    }
+                    catch { break; }
+                    if (node == '.' || node == ',' || node == 'x' || node == '-') { map[x, y] = 0; }
+                    else
+                        map[x, y] = 1;
+                }
+            }
+
+            return map;
+        }
     }
 }

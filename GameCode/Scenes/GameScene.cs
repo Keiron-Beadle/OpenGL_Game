@@ -24,6 +24,7 @@ namespace OpenGL_Game.Scenes
     class GameScene : Scene
     {
         public static float dt = 0;
+        public static Vector3 WorldTranslate = Vector3.Zero;
         EntityManager entityManager; //Used to hold entities and manage them
         MazeScriptManager scriptManager; //Used to hot-load data
         OpenTKInputManager inputManager; //Used as a means of getting universal control responses from
@@ -86,7 +87,7 @@ namespace OpenGL_Game.Scenes
             entityManager.AddEntity(skyBox);
 
             Entity player = new Entity("Player", TAGS.PLAYER);
-            ComponentTransform playerTransform = new ComponentTransform(new Vector3(0, 1.06f, 0));
+            ComponentTransform playerTransform = new ComponentTransform(new Vector3(7f, 1.06f, 2f));
             player.AddComponent(playerTransform);
             playerCamera = new ComponentCamera(player, new Vector3(0, 2.23f, 5), 
                 (float)sceneManager.Width / (float)sceneManager.Height, 0.1f, 100f);
@@ -99,8 +100,9 @@ namespace OpenGL_Game.Scenes
             entityManager.AddEntity(player);
 
             Entity drone = new Entity("Drone", TAGS.ENEMY);
-            drone.AddComponent(new ComponentTransform(new Vector3(-1.0f, 1.0f, -1.0f), new Vector3(0.1f), Vector3.Zero));
+            drone.AddComponent(new ComponentTransform(new Vector3(0.0f, 1.0f, 0f), new Vector3(0.1f), Vector3.Zero));
             drone.AddComponent(new ComponentGeometry("GameCode\\Geometry\\Drone\\Drone.obj", renderSystem));
+            drone.AddComponent(new ComponentVelocity(Vector3.Zero));
             drone.AddComponent(new ComponentShaderPointLight("GameCode\\Shaders\\vsPointLight.glsl", "GameCode\\Shaders\\fsPointLight.glsl"));
             droneController = new ComponentAIController(drone, player);
             drone.AddComponent(droneController);

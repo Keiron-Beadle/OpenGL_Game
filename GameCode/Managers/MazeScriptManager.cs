@@ -1,6 +1,7 @@
 ﻿using OpenGL_Game.Components;
 using OpenGL_Game.Managers;
 using OpenGL_Game.Objects;
+using OpenGL_Game.Scenes;
 using OpenGL_Game.Systems;
 using OpenTK;
 using System;
@@ -27,7 +28,7 @@ namespace OpenGL_Game.GameCode.Managers
             XmlNode worldNode = doc.SelectSingleNode("MapConfig/WorldTranslate");
             worldTranslate = new Vector3(float.Parse(worldNode.Attributes["XTranslate"].Value), 0.0f,
                                             float.Parse(worldNode.Attributes["ZTranslate"].Value));
-
+            GameScene.WorldTranslate = worldTranslate;
             LoadLights(doc);
             LoadWorldObjects(entityManager, renderSystem, doc, worldTranslate);
         }
