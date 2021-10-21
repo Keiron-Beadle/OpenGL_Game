@@ -15,7 +15,7 @@ namespace OpenGL_Game.GameEngine.Pathing
         public AStarPathfinder(string inMapFilePath)
         {
             Path = new List<Vector3>();
-            grid = new Graph(inMapFilePath);
+            grid = new Graph("GameCode\\testmap.txt");
         }
 
         public void GeneratePath(Vector3 startPos, Vector3 targetPos, Vector3 worldTranslate)

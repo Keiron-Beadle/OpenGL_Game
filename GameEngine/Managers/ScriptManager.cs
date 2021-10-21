@@ -1,5 +1,6 @@
 ﻿using OpenGL_Game.Components;
 using OpenGL_Game.GameEngine.Components.Physics;
+using OpenGL_Game.GameEngine.Pathing;
 using OpenGL_Game.Objects;
 using OpenGL_Game.Systems;
 using OpenTK;
@@ -144,41 +145,144 @@ namespace OpenGL_Game.Managers
             writer.Close();
         }
 
-        public static int[,] LoadMap(string inMapFilePath)
+        public static List<Node> LoadMap(string inMapFilePath)
         {
-            int maxRowLength = 0;
             List<string> lines = new List<string>();
+            List<int> columnCounts = new List<int>();
             using (StreamReader s = new StreamReader(inMapFilePath)) 
             {
                 string line;
                 while ((line = s.ReadLine()) != null) 
                 {
                     lines.Add(line);
-                    if (line.Length > maxRowLength)
-                    { 
-                        maxRowLength = line.Length;
-                    } 
+                    columnCounts.Add(line.Length);
                 }
             }
-            int[,] map = new int[maxRowLength, maxRowLength];
-
-            for (int y = 0; y < maxRowLength; y++)
+            char[][] map = new char[lines.Count][];
+            for (int i = 0; i <= map.GetUpperBound(0); i++) 
             {
-                for (int x = 0; x < maxRowLength; x++)
+                map[i] = new char[columnCounts[i]]; 
+            }
+            List<Node> nodes = new List<Node>();
+            for (int i = 0; i < map.Length; i++)
+            {
+                for (int j = 0; j < map[i].Length; j++)
                 {
-                    char node;
-                    try
+                    if (lines[i][j] == 'n')
                     {
-                        node = lines[y][x];
+                        Node n = new Node
+                        {
+                            Position = new Vector2(j, i),
+                            neighbours = new List<Node>()
+                        };
+                        nodes.Add(n);
                     }
-                    catch { break; }
-                    if (node == '.' || node == ',' || node == 'x' || node == '-') { map[x, y] = 0; }
-                    else
-                        map[x, y] = 1;
+                    map[i][j] = lines[i][j];
                 }
             }
 
-            return map;
+            foreach (Node node in nodes)
+            {
+                foreach (Node neighbour in nodes)
+                {
+                    if (neighbour.Position == node.Position) continue;
+                    if (StraightLineToNeighbour(map, node.Position, neighbour.Position))
+                    {
+                        node.neighbours.Add(neighbour);
+                    }
+                }
+            }
+
+
+            return nodes;
+        }
+
+        private static bool StraightLineToNeighbour(char[][] map, Vector2 position1, Vector2 position2)
+        {
+            //Bresenham Line Rasterization algorithm
+            //https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm#Algorithm
+
+            if (Math.Abs(position2.Y - position1.Y) < Math.Abs(position2.X - position1.X))
+            {
+                if (position1.X > position2.X)
+                    return PlotLowLine(map, position2, position1);
+                else
+                    return PlotLowLine(map, position1, position2);
+            }
+            else
+            {
+                if (position1.Y > position2.Y)
+                    return PlotHighLine(map, position2, position1);
+                else
+                    return PlotHighLine(map, position1, position2);
+            }
+        }
+
+        private static bool PlotLowLine(char[][] map, Vector2 start, Vector2 end)
+        {
+            try
+            {
+                Vector2 dir = end - start;
+                int yi = 1;
+                if (dir.Y < 0)
+                {
+                    yi = -1;
+                    dir.Y *= -1;
+                }
+                int d = (2 * (int)dir.Y) - (int)dir.X;
+                int y = (int)start.Y;
+
+                for (int x = (int)start.X; x <= (int)end.X; x++) //Traverse line 
+                {
+                    char c = map[y][x];
+                    if (c != ' ' && c != 'n' && c != 'o' && c != 'l') return false;
+                    if (d > 0)
+                    {
+                        y = y + yi;
+                        d = d + (2 * ((int)dir.Y - (int)dir.X));
+                    }
+                    else
+                        d = d + 2 * (int)dir.Y;
+                }
+                return true;
+            }
+            catch { return false; }
+
+        }
+
+        private static bool PlotHighLine(char[][] map, Vector2 start, Vector2 end)
+        {
+            try
+            {
+                Vector2 dir = end - start;
+                int xi = 1;
+                if (dir.X < 0)
+                {
+                    xi = -1;
+                    dir.X = -dir.X;
+                }
+                int d = (2 * (int)dir.X) - (int)dir.Y;
+                int x = (int)start.X;
+                for (int y = (int)start.Y; y < (int)end.Y; y++)
+                {
+                    char c = map[y][x];
+                    if (c != ' ' && c != 'n' && c != 'o' && c != 'l') return false;
+                    if (d > 0)
+                    {
+                        x = x + xi;
+                        d = d + (2 * ((int)dir.X * (int)dir.Y));
+                    }
+                    else
+                    {
+                        d = d + (2 * (int)dir.X);
+                    }
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
