@@ -31,7 +31,6 @@ namespace OpenGL_Game.GameEngine.Pathing
         {
             for (int i = 0; i < grid.Count; i++)
             {
-                AdjacencyMatrix[i,0] = i;
                 for (int j = 0; j < grid[i].neighbours.Count; j++)
                 {
                     int indexOf = grid.IndexOf(grid[i].neighbours[j]);

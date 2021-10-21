@@ -67,7 +67,7 @@ namespace OpenGL_Game.GameEngine.Pathing
 
             openSet.Add(startNode);
 
-            for (int i = 0; i < grid.MatrixSize; i++)
+            for (int i = 0; i <= grid.MatrixSize; i++)
             {
                 if (i != startNode)
                 {
@@ -88,7 +88,7 @@ namespace OpenGL_Game.GameEngine.Pathing
                 }
                 openSet.Remove(currentNode);
                 closedSet.Add(currentNode);
-                for (int neighbour = 0; neighbour < grid.MatrixSize; neighbour++)
+                for (int neighbour = 0; neighbour <= grid.MatrixSize; neighbour++)
                 {
                     if (grid.AdjacencyMatrix[currentNode,neighbour] != 0)
                     {
@@ -97,14 +97,15 @@ namespace OpenGL_Game.GameEngine.Pathing
                         {
                             continue;
                         }
-                        actualDistance[neighbour] = tempDist;
-                        predictedDistance[neighbour] = actualDistance[neighbour] + Vector2.Distance(NodeToVector(neighbour), target2D);
+
                         if (closedSet.Contains(neighbour) && tempDist >= actualDistance[neighbour])
                         {
                             continue;
                         }
                         if (!closedSet.Contains(neighbour) || tempDist < actualDistance[neighbour])
                         {
+                            actualDistance[neighbour] = tempDist;
+                            predictedDistance[neighbour] = actualDistance[neighbour] + Vector2.Distance(NodeToVector(neighbour), target2D);
                             if (cameFrom.Keys.Contains(neighbour))
                             {
                                 cameFrom[neighbour] = currentNode;
@@ -130,7 +131,7 @@ namespace OpenGL_Game.GameEngine.Pathing
         {
             if (!cameFrom.Keys.Contains(currentNode))
             {
-                return new List<Vector3>();
+                return new List<Vector3> { };
             }
 
             List<Vector3> path = RebuildPath(cameFrom, cameFrom[currentNode]);
