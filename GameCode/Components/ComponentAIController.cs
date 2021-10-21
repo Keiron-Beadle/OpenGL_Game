@@ -15,6 +15,7 @@ namespace OpenGL_Game.GameCode.Components
 {
     enum AI_STATE
     {
+        NONE,
         WALKING_ON_PATH,
         CHASE,
         GET_TO_NODE,
@@ -24,7 +25,6 @@ namespace OpenGL_Game.GameCode.Components
     class ComponentAIController : ComponentController
     {
         private AStarPathfinder pathingModule;
-        private Entity entity;
         private ComponentTransform target;
         private Random randomFunc;
 
@@ -33,22 +33,22 @@ namespace OpenGL_Game.GameCode.Components
         private AI_STATE state;
 
         private float viewDist = 4.0f;
+        private float speed = 1.0f;
         
         public bool ObstructedVision;
 
         public ComponentAIController(Entity ai, Entity pTarget)
         {
-            entity = ai;
             randomFunc = new Random();
             target = pTarget.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;
             transform = ai.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;
             pathingModule = new AStarPathfinder("GameCode\\graphMap.txt");
+            state = AI_STATE.NONE;
         }
 
         public void Update(SystemAudio audioSystem, float dt)
         {
-            if (false)
-            //if (!ObstructedVision && PlayerVisible())
+            if (!ObstructedVision && PlayerVisible())
             {
                 state = AI_STATE.CHASE;
                 if (pathingModule.IsOnPath())
@@ -65,27 +65,23 @@ namespace OpenGL_Game.GameCode.Components
                 {
                     state = AI_STATE.GET_NEW_PATH;
                 }
-                else if (nextLocation == Vector3.Zero)
+                else if (state == AI_STATE.CHASE || nextLocation == Vector3.Zero)
                     state = AI_STATE.GET_TO_NODE;
             }
 
             switch (state)
             {
                 case AI_STATE.WALKING_ON_PATH:
-                    Console.WriteLine("Walking To Next Node");
                     AStarWalk();
                     break;
                 case AI_STATE.GET_NEW_PATH:
-                    Console.WriteLine("Creating new path");
                     AStarCreatePath();
                     break;
                 case AI_STATE.GET_TO_NODE:
-                    Console.WriteLine("Moving to closest node");
-                    pathingModule.GetClosestNode(transform.Position);
+                    nextLocation = pathingModule.GetClosestNode(transform.Position) + GameScene.WorldTranslate;
                     break;
                 case AI_STATE.CHASE:
-                    //Console.WriteLine("Chasing");
-                    //nextLocation = target.Position;
+                    nextLocation = target.Position;
                     break;
             }
 
@@ -119,7 +115,9 @@ namespace OpenGL_Game.GameCode.Components
             if (nextLocation != Vector3.Zero) //we have next destination, move to it
             {
                 Vector3 vec = (nextLocation - transform.Position);
-                transform.Position += (vec.Normalized() * 1.0f) * dt;
+                if (vec.Length > -0.01f && vec.Length < 0.0f) nextLocation = Vector3.Zero;
+                if (float.IsNaN(vec.Length)) return;
+                transform.Position += (vec.Normalized() * speed) * dt;
             }
         }
 
@@ -136,9 +134,10 @@ namespace OpenGL_Game.GameCode.Components
         {
             if (nextLocation == Vector3.Zero) return; //Get NaN if normalize V3.Zero
 
-            Vector3 vec = (nextLocation - transform.Position).Normalized();
-            if (float.IsNaN(vec.X)) { return; }
+            Vector3 vec = (nextLocation - transform.Position);
             if (vec.Length < 1.0f) { return; }
+            vec.Normalize();
+            if (float.IsNaN(vec.X)) { return; }
             float rotAngle = (float)Math.Acos(Vector3.Dot(viewDir, vec));
 
             if (rotAngle < 0.01f || float.IsNaN(rotAngle))

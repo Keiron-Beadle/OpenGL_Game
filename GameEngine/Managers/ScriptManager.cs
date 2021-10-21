@@ -194,6 +194,23 @@ namespace OpenGL_Game.Managers
             }
 
 
+            //Code for writing nodes + neighbours to text file to check connections
+            using (StreamWriter s = new StreamWriter("nodes.txt"))
+            {
+                for (int i = 0; i < nodes.Count; i++)
+                {
+                    s.Write("Node: " + i + ' ' + nodes[i].Position + "   Neighbours: ");
+                    for (int j = 0; j < nodes.Count; j++)
+                    {
+                        if (nodes[i].neighbours.Contains(nodes[j]))
+                        {
+                            s.Write(j + " ");
+                        }
+                    }
+                    s.WriteLine();
+                }
+            }
+
             return nodes;
         }
 
@@ -266,11 +283,11 @@ namespace OpenGL_Game.Managers
                 for (int y = (int)start.Y; y < (int)end.Y; y++)
                 {
                     char c = map[y][x];
-                    if (c != ' ' && c != 'n' && c != 'o' && c != 'l') return false;
+                    if (c == 'x') return false;
                     if (d > 0)
                     {
                         x = x + xi;
-                        d = d + (2 * ((int)dir.X * (int)dir.Y));
+                        d = d + (2 * ((int)dir.X - (int)dir.Y));
                     }
                     else
                     {
