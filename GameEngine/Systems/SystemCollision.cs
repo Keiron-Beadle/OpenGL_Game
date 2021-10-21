@@ -75,6 +75,11 @@ namespace OpenGL_Game.GameEngine.Systems
                 IComponent collider = entity.FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
                 ((ComponentCollider)collider).Update();
             }
+            foreach (var entity in enemies)
+            {
+                IComponent collider = entity.FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
+                ((ComponentCollider)collider).Update();
+            }
         }
 
         private void DoCollisionDetection()

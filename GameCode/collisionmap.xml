@@ -12,9 +12,5 @@
     <PointLight XPos="9.705" YPos="1.06" ZPos="1.461" Constant="1.0" Linear="0.75" Quadratic="0.152" XAmb="0.01" YAmb="0.01" ZAmb ="0.01" XDiff="0.4274" YDiff="0.04705" ZDiff="0.4294" XSpec="0.1" YSpec="0.1" ZSpec="0.1" />
   </Lights>
   <Objects>
-    <Object Type="Wall" Name="MapObject1.0">
-      <Transform XPos="0" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
-      <Geometry />
-    </Object>
   </Objects>
 </MapConfig>

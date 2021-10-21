@@ -1,5 +1,6 @@
 ﻿using OpenGL_Game.Components;
 using OpenGL_Game.GameEngine.Components;
+using OpenGL_Game.GameEngine.Components.Physics;
 using OpenGL_Game.GameEngine.Pathing;
 using OpenGL_Game.Objects;
 using OpenGL_Game.Scenes;
@@ -14,65 +15,109 @@ namespace OpenGL_Game.GameCode.Components
 {
     enum AI_STATE
     {
-        RANDOM_PATH,
-        CHASE
+        WALKING_ON_PATH,
+        CHASE,
+        GET_TO_NODE,
+        GET_NEW_PATH
     }
 
     class ComponentAIController : ComponentController
     {
-        ComponentTransform target;
-        float viewDist = 4.0f;
-        Vector3 viewDir = new Vector3(0.0f, 0.0f, 3.0f);
-        AStarPathfinder pathingModule;
-        Vector3 nextLocation = Vector3.Zero;
-        AI_STATE state;
+        private AStarPathfinder pathingModule;
+        private Entity entity;
+        private ComponentTransform target;
 
+        private Vector3 nextLocation = Vector3.Zero;
+        private Vector3 viewDir = new Vector3(0.0f, 0.0f, 1.0f);
+        private AI_STATE state;
+
+        private float viewDist = 4.0f;
+        
         public bool ObstructedVision;
 
         public ComponentAIController(Entity ai, Entity pTarget)
         {
+            entity = ai;
             target = pTarget.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;
             transform = ai.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;
             pathingModule = new AStarPathfinder("GameCode\\map.txt");
-            state = AI_STATE.RANDOM_PATH;
         }
 
         public void Update(SystemAudio audioSystem, float dt)
         {
-            if (!ObstructedVision && PlayerVisible())
+            if (true)
+            //if (!ObstructedVision && PlayerVisible())
             {
                 state = AI_STATE.CHASE;
-                Console.WriteLine("CHASE");
+                if (pathingModule.IsOnPath())
+                    pathingModule.ResetPath();
             }
             else
             {
-                state = AI_STATE.RANDOM_PATH;
-                Console.WriteLine("RANDOM");
-            }
-
-            if (state == AI_STATE.RANDOM_PATH)
-            {
-                if (nextLocation != Vector3.Zero)
+                AStarPathfinder.WorldTranslate = GameScene.WorldTranslate;
+                if (pathingModule.IsOnPath())
                 {
-                    Vector3 vec = (nextLocation - transform.Position);
-                    if (vec.Length > -0.01f && vec.Length < 0.01f)
-                    {
-                        nextLocation = Vector3.Zero;
-                    }
-                    transform.Position += (vec.Normalized() * 1.0f) * dt;
+                    state = AI_STATE.WALKING_ON_PATH;
                 }
-                else if (pathingModule.Path == null || pathingModule.Path.Count == 0)
+                else if (pathingModule.IsOnNode(transform.Position))
                 {
-                    pathingModule.GeneratePath(transform.Position, target.Position, GameScene.WorldTranslate);
+                    state = AI_STATE.GET_NEW_PATH;
                 }
                 else
-                {
-                    nextLocation = pathingModule.Path[0];
-                    pathingModule.Path.RemoveAt(0);
-                }
+                    state = AI_STATE.GET_TO_NODE;
             }
 
+            switch (state)
+            {
+                case AI_STATE.WALKING_ON_PATH:
+                    //Console.WriteLine("Walking To Next Node");
+                    //AStarWalk();
+                    break;
+                case AI_STATE.GET_NEW_PATH:
+                    //Console.WriteLine("Creating new path");
+                    //AStarCreatePath();
+                    break;
+                case AI_STATE.GET_TO_NODE:
+                    //Console.WriteLine("Moving to closest node");
+                    //pathingModule.GetClosestNode(transform.Position);
+                    break;
+                case AI_STATE.CHASE:
+                    //Console.WriteLine("Chasing");
+                    nextLocation = target.Position;
+                    break;
+            }
+
+            MoveToNextLocation(dt);
+            
+            UpdateView(dt);
             ObstructedVision = false; //Reset value for next frame.
+        }
+
+        private void AStarCreatePath()
+        {
+            pathingModule.GeneratePath(transform.Position, target.Position);
+        }
+
+        private void AStarWalk()
+        {
+            if (nextLocation == Vector3.Zero)
+            {
+                nextLocation = pathingModule.Path[0];
+                pathingModule.Path.RemoveAt(0);
+            }
+        }
+
+        private void MoveToNextLocation(float dt)
+        {
+            if (nextLocation != Vector3.Zero) //we have next destination, move to it
+            {
+                Vector3 vec = (nextLocation - transform.Position);
+                if (vec.Length > -0.01f && vec.Length < 0.01f) //we're at location, get next location
+                {
+                    nextLocation = Vector3.Zero;
+                }
+                transform.Position += (vec.Normalized() * 1.0f) * dt;
+            }
         }
 
         private bool PlayerVisible()
@@ -80,18 +125,25 @@ namespace OpenGL_Game.GameCode.Components
             Vector3 toTarget = (target.Position - transform.Position);
             if (toTarget.Length > viewDist) return false;
             toTarget.Normalize();
-            float vDotT = Vector3.Dot(toTarget, viewDir.Normalized());
+            float vDotT = Vector3.Dot(toTarget, viewDir);
             return vDotT >= 0.707;
         }
 
         protected override void UpdateView(float dt)
         {
-            Vector3 dist = target.Position - transform.Position;
-            Vector3 frontDir = Vector3.UnitZ;
-            Vector3 toDir = dist.Normalized();
-            float rotAngle = (float)Math.Acos(Vector3.Dot(frontDir, toDir));
-            Vector3 rotAxis = Vector3.Cross(frontDir, toDir).Normalized();
-            transform.Rotation = rotAxis * rotAngle;
+            if (nextLocation == Vector3.Zero) return; //Get NaN if normalize V3.Zero
+
+            Vector3 vec = (target.Position - transform.Position).Normalized();
+            if (vec.Length < 1.0f) { return; }
+            float rotAngle = (float)Math.Acos(Vector3.Dot(viewDir, vec));
+
+            if (rotAngle < 0.01f || float.IsNaN(rotAngle))
+            { 
+                return;
+            }
+            Vector3 rotAxis = Vector3.Cross(viewDir, vec);
+            transform.Rotation += rotAxis.Normalized() * rotAngle;
+            viewDir = vec;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace OpenGL_Game.GameEngine.Pathing
     {
         public List<Vector3> Path;
         Graph grid;
-        Vector3 worldTrans;
+        public static Vector3 WorldTranslate;
 
         public AStarPathfinder(string inMapFilePath)
         {
@@ -18,13 +18,31 @@ namespace OpenGL_Game.GameEngine.Pathing
             grid = new Graph(inMapFilePath);
         }
 
-        public void GeneratePath(Vector3 startPos, Vector3 targetPos, Vector3 worldTranslate)
+        public void ResetPath() { Path = new List<Vector3>(); }
+
+        public bool IsOnPath() { return Path.Count != 0; }
+
+        public bool IsOnNode(Vector3 position)
         {
-            worldTrans = worldTranslate;
-            Vector2 start2D = new Vector2(startPos.X - worldTranslate.X, startPos.Z - worldTranslate.Z);
+            Vector3 undoneWorld = position - WorldTranslate;
+            Vector2 converted2D = new Vector2((float)Math.Round(undoneWorld.X), (float)Math.Round(undoneWorld.Z));
+            return VectorToNode(converted2D) != -1;
+        }
+
+        public Vector3 GetClosestNode(Vector3 position)
+        {
+            Vector3 undoneWorld = position - WorldTranslate;
+            Vector2 converted2D = new Vector2((float)Math.Round(undoneWorld.X), (float)Math.Round(undoneWorld.Z));
+            Vector2 closest2D = grid.ClosestNodePositionToTarget(converted2D);
+            return new Vector3(closest2D.X, 1.0f, closest2D.Y);
+        }
+
+        public void GeneratePath(Vector3 startPos, Vector3 targetPos)
+        {
+            Vector2 start2D = new Vector2(startPos.X - WorldTranslate.X, startPos.Z - WorldTranslate.Z);
             start2D.X = (float)Math.Round(start2D.X);
             start2D.Y = (float)Math.Round(start2D.Y);
-            Vector2 target2D = new Vector2(targetPos.X - worldTranslate.X, targetPos.Z - worldTranslate.Z);
+            Vector2 target2D = new Vector2(targetPos.X - WorldTranslate.X, targetPos.Z - WorldTranslate.Z);
             target2D = grid.ClosestNodePositionToTarget(target2D);
             Dictionary<int, double> actualDistance = new Dictionary<int, double>();
             Dictionary<int, double> predictedDistance = new Dictionary<int, double>();
@@ -105,7 +123,7 @@ namespace OpenGL_Game.GameEngine.Pathing
 
             List<Vector3> path = RebuildPath(cameFrom, cameFrom[currentNode]);
             Vector2 v = NodeToVector(currentNode);
-            path.Add(new Vector3(v.X + worldTrans.X, 1.0f, v.Y + worldTrans.Z));
+            path.Add(new Vector3(v.X + WorldTranslate.X, 1.0f, v.Y + WorldTranslate.Z));
             return path;
         }
 
