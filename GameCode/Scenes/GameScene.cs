@@ -100,7 +100,7 @@ namespace OpenGL_Game.Scenes
             entityManager.AddEntity(player);
 
             Entity drone = new Entity("Drone", TAGS.ENEMY);
-            drone.AddComponent(new ComponentTransform(new Vector3(0.0f, 1.0f, 0f), new Vector3(0.1f), Vector3.Zero));
+            drone.AddComponent(new ComponentTransform(new Vector3(-2.5f, 1.0f, 1.5f), new Vector3(0.1f), Vector3.Zero));
             drone.AddComponent(new ComponentGeometry("GameCode\\Geometry\\Drone\\Drone.obj", renderSystem));
             drone.AddComponent(new ComponentVelocity(Vector3.Zero));
             drone.AddComponent(new ComponentShaderPointLight("GameCode\\Shaders\\vsPointLight.glsl", "GameCode\\Shaders\\fsPointLight.glsl"));

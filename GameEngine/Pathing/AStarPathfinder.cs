@@ -15,14 +15,17 @@ namespace OpenGL_Game.GameEngine.Pathing
         public AStarPathfinder(string inMapFilePath)
         {
             Path = new List<Vector3>();
-            grid = new Graph("GameCode\\testmap.txt");
+            grid = new Graph(inMapFilePath);
         }
 
         public void GeneratePath(Vector3 startPos, Vector3 targetPos, Vector3 worldTranslate)
         {
             worldTrans = worldTranslate;
             Vector2 start2D = new Vector2(startPos.X - worldTranslate.X, startPos.Z - worldTranslate.Z);
+            start2D.X = (float)Math.Round(start2D.X);
+            start2D.Y = (float)Math.Round(start2D.Y);
             Vector2 target2D = new Vector2(targetPos.X - worldTranslate.X, targetPos.Z - worldTranslate.Z);
+            target2D = grid.ClosestNodePositionToTarget(target2D);
             Dictionary<int, double> actualDistance = new Dictionary<int, double>();
             Dictionary<int, double> predictedDistance = new Dictionary<int, double>();
             Dictionary<int, int> cameFrom = new Dictionary<int, int>();
@@ -108,12 +111,26 @@ namespace OpenGL_Game.GameEngine.Pathing
 
         private Vector2 NodeToVector(int node)
         {
-            return new Vector2(node % grid.GridSize, (int)Math.Floor((double)node / grid.GridSize));
+            for (int i = 0; i < grid.grid.Count; i++)
+            {
+                if (i == node)
+                {
+                    return grid.grid[i].Position;
+                }
+            }
+            return Vector2.Zero;
         }
 
         private int VectorToNode(Vector2 inPos)
         {
-            return (int)Math.Round(inPos.Y,0) * grid.GridSize + (int)Math.Round(inPos.X,0);
+            for (int i = 0; i < grid.grid.Count; i++)
+            {
+                if (grid.grid[i].Position == inPos)
+                {
+                    return i;
+                }
+            }
+            return -1;
         }
     }
 }
