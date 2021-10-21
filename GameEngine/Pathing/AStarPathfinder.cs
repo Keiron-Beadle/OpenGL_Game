@@ -10,17 +10,19 @@ namespace OpenGL_Game.GameEngine.Pathing
     {
         public List<Vector3> Path;
         Graph grid;
+        Random rnd;
         public static Vector3 WorldTranslate;
 
         public AStarPathfinder(string inMapFilePath)
         {
             Path = new List<Vector3>();
             grid = new Graph(inMapFilePath);
+            rnd = new Random();
         }
 
         public void ResetPath() { Path = new List<Vector3>(); }
 
-        public bool IsOnPath() { return Path.Count != 0; }
+        public bool IsOnPath() { return Path != null && Path.Count != 0; }
 
         public bool IsOnNode(Vector3 position)
         {
@@ -35,6 +37,18 @@ namespace OpenGL_Game.GameEngine.Pathing
             Vector2 converted2D = new Vector2((float)Math.Round(undoneWorld.X), (float)Math.Round(undoneWorld.Z));
             Vector2 closest2D = grid.ClosestNodePositionToTarget(converted2D);
             return new Vector3(closest2D.X, 1.0f, closest2D.Y);
+        }
+
+        public void GenerateRandomPath(Vector3 startPos)
+        {
+            GeneratePath(startPos, GetRandomNode());
+        }
+
+        private Vector3 GetRandomNode()
+        {
+            int nodeToGet = rnd.Next(0, grid.GridSize);
+            Vector2 node2DPos = grid.grid[nodeToGet].Position;
+            return new Vector3(node2DPos.X + WorldTranslate.X, 1.0f, node2DPos.Y + WorldTranslate.X);
         }
 
         public void GeneratePath(Vector3 startPos, Vector3 targetPos)
@@ -110,7 +124,7 @@ namespace OpenGL_Game.GameEngine.Pathing
                     }
                 }
             }
-            Path = null; //No path found
+            Path = new List<Vector3>(); //No path found
 
         }
 

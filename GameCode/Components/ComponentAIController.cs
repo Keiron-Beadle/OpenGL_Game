@@ -45,7 +45,7 @@ namespace OpenGL_Game.GameCode.Components
 
         public void Update(SystemAudio audioSystem, float dt)
         {
-            if (true)
+            if (false)
             //if (!ObstructedVision && PlayerVisible())
             {
                 state = AI_STATE.CHASE;
@@ -63,27 +63,27 @@ namespace OpenGL_Game.GameCode.Components
                 {
                     state = AI_STATE.GET_NEW_PATH;
                 }
-                else
+                else if (nextLocation == Vector3.Zero)
                     state = AI_STATE.GET_TO_NODE;
             }
 
             switch (state)
             {
                 case AI_STATE.WALKING_ON_PATH:
-                    //Console.WriteLine("Walking To Next Node");
-                    //AStarWalk();
+                    Console.WriteLine("Walking To Next Node");
+                    AStarWalk();
                     break;
                 case AI_STATE.GET_NEW_PATH:
-                    //Console.WriteLine("Creating new path");
-                    //AStarCreatePath();
+                    Console.WriteLine("Creating new path");
+                    AStarCreatePath();
                     break;
                 case AI_STATE.GET_TO_NODE:
-                    //Console.WriteLine("Moving to closest node");
-                    //pathingModule.GetClosestNode(transform.Position);
+                    Console.WriteLine("Moving to closest node");
+                    pathingModule.GetClosestNode(transform.Position);
                     break;
                 case AI_STATE.CHASE:
                     //Console.WriteLine("Chasing");
-                    nextLocation = target.Position;
+                    //nextLocation = target.Position;
                     break;
             }
 
@@ -95,15 +95,20 @@ namespace OpenGL_Game.GameCode.Components
 
         private void AStarCreatePath()
         {
-            pathingModule.GeneratePath(transform.Position, target.Position);
+            pathingModule.GenerateRandomPath(transform.Position);
         }
 
         private void AStarWalk()
         {
-            if (nextLocation == Vector3.Zero)
+            Vector3 vec = (nextLocation - transform.Position);
+            if (vec.Length > -0.01f && vec.Length < 0.01f) //we're at location, get next location
+            {
+                nextLocation = Vector3.Zero;
+                pathingModule.Path.RemoveAt(0);
+            }
+            else
             {
                 nextLocation = pathingModule.Path[0];
-                pathingModule.Path.RemoveAt(0);
             }
         }
 
@@ -112,10 +117,6 @@ namespace OpenGL_Game.GameCode.Components
             if (nextLocation != Vector3.Zero) //we have next destination, move to it
             {
                 Vector3 vec = (nextLocation - transform.Position);
-                if (vec.Length > -0.01f && vec.Length < 0.01f) //we're at location, get next location
-                {
-                    nextLocation = Vector3.Zero;
-                }
                 transform.Position += (vec.Normalized() * 1.0f) * dt;
             }
         }
@@ -133,7 +134,8 @@ namespace OpenGL_Game.GameCode.Components
         {
             if (nextLocation == Vector3.Zero) return; //Get NaN if normalize V3.Zero
 
-            Vector3 vec = (target.Position - transform.Position).Normalized();
+            Vector3 vec = (nextLocation - transform.Position).Normalized();
+            if (float.IsNaN(vec.X)) { return; }
             if (vec.Length < 1.0f) { return; }
             float rotAngle = (float)Math.Acos(Vector3.Dot(viewDir, vec));
 
