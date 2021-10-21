@@ -13,9 +13,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace OpenGL_Game.GameCode.Components
+namespace OpenGL_Game.GameCode.Components.Controllers
 {
-    class ComponentPlayerController : ComponentController
+    class ComponentPlayerController : ComponentController, IControllerWithView
     {
         private SceneManager sceneManager;
         private InputManager inputManager;
@@ -116,7 +116,7 @@ namespace OpenGL_Game.GameCode.Components
                             (sceneManager.Bounds.Top + sceneManager.Bounds.Bottom) / 2);
         }
 
-        protected override void UpdateView(float dt)
+        public void UpdateView(float dt)
         {
             mouseHAngle += (-MOUSE_SENSITIVITY * inputManager.DeltaAxis.X) * dt; //Append a new delta mouse change
             mouseVAngle += (-MOUSE_SENSITIVITY * inputManager.DeltaAxis.Y) * dt;

@@ -1,6 +1,7 @@
 ﻿using OpenGL_Game.Components;
 using OpenGL_Game.GameEngine.Components.Render;
 using OpenGL_Game.Managers;
+using OpenGL_Game.Objects;
 using OpenTK;
 using OpenTK.Audio.OpenAL;
 using System;
@@ -19,14 +20,14 @@ namespace OpenGL_Game.GameEngine.Components.Physics
         public int Source { get; private set; }
         public int Buffer;
 
-        public ComponentAudio(string audioFilePath, ComponentCamera pListener, ComponentTransform pSourceTransform)
+        public ComponentAudio(string audioFilePath, ComponentCamera pListener, Entity pSource)
         {
             Source = AL.GenSource();
             Buffer = ResourceManager.LoadAudioBuffer(audioFilePath);
             AL.Source(Source, ALSourcei.Buffer, Buffer);
 
             listener = pListener;
-            sourceTransform = pSourceTransform;
+            sourceTransform = pSource.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;
             listener.AttachObserver(this);
             sourceTransform.AttachObserver(this);
         }

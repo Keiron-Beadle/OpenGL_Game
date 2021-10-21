@@ -1,6 +1,4 @@
 ﻿using OpenGL_Game.Components;
-using OpenGL_Game.GameEngine.Components;
-using OpenGL_Game.GameEngine.Components.Physics;
 using OpenGL_Game.GameEngine.Pathing;
 using OpenGL_Game.Objects;
 using OpenGL_Game.Scenes;
@@ -11,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace OpenGL_Game.GameCode.Components
+namespace OpenGL_Game.GameCode.Components.Controllers
 {
     enum AI_STATE
     {
@@ -22,31 +20,53 @@ namespace OpenGL_Game.GameCode.Components
         GET_NEW_PATH
     }
 
-    class ComponentAIController : ComponentController
+    class ComponentDroneController : ComponentAIController, IControllerWithView
     {
         private AStarPathfinder pathingModule;
         private ComponentTransform target;
-        private Random randomFunc;
-
-        private Vector3 nextLocation = Vector3.Zero;
         private Vector3 viewDir = new Vector3(0.0f, 0.0f, 1.0f);
         private AI_STATE state;
-
         private float viewDist = 4.0f;
-        private float speed = 1.0f;
-        
         public bool ObstructedVision;
 
-        public ComponentAIController(Entity ai, Entity pTarget)
+        public ComponentDroneController(Entity AI, Entity pTarget, string graphMapTxtPath) : base(AI)
         {
-            randomFunc = new Random();
             target = pTarget.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;
-            transform = ai.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;
-            pathingModule = new AStarPathfinder("GameCode\\graphMap.txt");
+            pathingModule = new AStarPathfinder(graphMapTxtPath);
             state = AI_STATE.NONE;
+            speed = 1.0f;
+
         }
 
-        public void Update(SystemAudio audioSystem, float dt)
+        private void AStarCreatePath()
+        {
+            pathingModule.GenerateRandomPath(transform.Position, randomFunc);
+        }
+
+        private void AStarWalk()
+        {
+            Vector3 vec = (nextLocation - transform.Position);
+            if (vec.Length > -0.01f && vec.Length < 0.01f) //we're at location, get next location
+            {
+                nextLocation = Vector3.Zero;
+                pathingModule.Path.RemoveAt(0);
+            }
+            else
+            {
+                nextLocation = pathingModule.Path[0];
+            }
+        }
+
+        private bool PlayerVisible()
+        {
+            Vector3 toTarget = (target.Position - transform.Position);
+            if (toTarget.Length > viewDist) return false;
+            toTarget.Normalize();
+            float vDotT = Vector3.Dot(toTarget, viewDir);
+            return vDotT >= 0.707;
+        }
+
+        public override void Update(SystemAudio audioSystem, float dt)
         {
             if (!ObstructedVision && PlayerVisible())
             {
@@ -86,62 +106,23 @@ namespace OpenGL_Game.GameCode.Components
             }
 
             MoveToNextLocation(dt);
-            
+
             UpdateView(dt);
             ObstructedVision = false; //Reset value for next frame.
         }
 
-        private void AStarCreatePath()
-        {
-            pathingModule.GenerateRandomPath(transform.Position, randomFunc);
-        }
-
-        private void AStarWalk()
-        {
-            Vector3 vec = (nextLocation - transform.Position);
-            if (vec.Length > -0.01f && vec.Length < 0.01f) //we're at location, get next location
-            {
-                nextLocation = Vector3.Zero;
-                pathingModule.Path.RemoveAt(0);
-            }
-            else
-            {
-                nextLocation = pathingModule.Path[0];
-            }
-        }
-
-        private void MoveToNextLocation(float dt)
-        {
-            if (nextLocation != Vector3.Zero) //we have next destination, move to it
-            {
-                Vector3 vec = (nextLocation - transform.Position);
-                if (vec.Length > -0.01f && vec.Length < 0.0f) nextLocation = Vector3.Zero;
-                if (float.IsNaN(vec.Length)) return;
-                transform.Position += (vec.Normalized() * speed) * dt;
-            }
-        }
-
-        private bool PlayerVisible()
-        {
-            Vector3 toTarget = (target.Position - transform.Position);
-            if (toTarget.Length > viewDist) return false;
-            toTarget.Normalize();
-            float vDotT = Vector3.Dot(toTarget, viewDir);
-            return vDotT >= 0.707;
-        }
-
-        protected override void UpdateView(float dt)
+        public void UpdateView(float dt)
         {
             if (nextLocation == Vector3.Zero) return; //Get NaN if normalize V3.Zero
 
             Vector3 vec = (nextLocation - transform.Position);
-            if (vec.Length < 1.0f) { return; }
+            if (vec.Length < 0.8f) { return; }
             vec.Normalize();
             if (float.IsNaN(vec.X)) { return; }
             float rotAngle = (float)Math.Acos(Vector3.Dot(viewDir, vec));
 
             if (rotAngle < 0.01f || float.IsNaN(rotAngle))
-            { 
+            {
                 return;
             }
             Vector3 rotAxis = Vector3.Cross(viewDir, vec);

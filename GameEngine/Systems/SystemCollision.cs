@@ -106,10 +106,13 @@ namespace OpenGL_Game.GameEngine.Systems
                     {
                         foreach (var box in b3.Colliders)
                         {
-                            var result = s1.Collider.Intersect(b3);
-                            if (!result.Item1) continue;
-                            var collision = new Tuple<Entity, Entity, Vector3, Vector3>(actors[j], entities[i], result.Item2, result.Item3);
-                            Collisions.Add(collision);
+                            foreach (var sphere in s1.Colliders)
+                            {
+                                var result = sphere.Intersect(b3);
+                                if (!result.Item1) continue;
+                                var collision = new Tuple<Entity, Entity, Vector3, Vector3>(actors[j], entities[i], result.Item2, result.Item3);
+                                Collisions.Add(collision);
+                            }
                         }
                     }
 
@@ -122,10 +125,23 @@ namespace OpenGL_Game.GameEngine.Systems
                         IComponent enemyCollider = enemies[k].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
                         if (actorCollider is ComponentSphereCollider s2 && enemyCollider is ComponentBoxCollider b4)
                         {
-                            var result = s2.Collider.Intersect(b4);
-                            if (!result.Item1) continue;
-                            var collision = new Tuple<Entity, Entity, Vector3, Vector3>(actors[j], enemies[k], result.Item2, result.Item3);
-                            Collisions.Add(collision);
+                            foreach (var sphere in s2.Colliders)
+                            {
+                                var result = sphere.Intersect(b4);
+                                if (!result.Item1) continue;
+                                var collision = new Tuple<Entity, Entity, Vector3, Vector3>(actors[j], enemies[k], result.Item2, result.Item3);
+                                Collisions.Add(collision);
+                            }
+                        }
+                        else if (actorCollider is ComponentSphereCollider s3 && enemyCollider is ComponentSphereCollider s4)
+                        {
+                            foreach (var sphere in s3.Colliders)
+                            {
+                                var result = sphere.Intersect(s4.Colliders[0]);
+                                if (!result.Item1) continue;
+                                var collision = new Tuple<Entity, Entity, Vector3, Vector3>(actors[j], enemies[k], result.Item2, result.Item3);
+                                Collisions.Add(collision);
+                            }
                         }
                     }
                     for (int k = 0; k < enemies.Count; k++) 

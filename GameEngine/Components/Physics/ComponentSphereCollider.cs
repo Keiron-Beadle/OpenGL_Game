@@ -12,13 +12,14 @@ namespace OpenGL_Game.GameEngine.Components.Physics
     class ComponentSphereCollider : ComponentCollider
     {
         public override ComponentTypes ComponentType { get { return ComponentTypes.COMPONENT_COLLIDER; } }
-        public SphereCollider Collider;
+        public List<SphereCollider> Colliders = new List<SphereCollider>();
+        public Vector3 localOffSet = Vector3.Zero;
 
         public ComponentSphereCollider(Entity entity, Vector3 pCenter, float pRadius)
         {
             IComponent trans = entity.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM);
             transform = trans as ComponentTransform;
-            Collider = new SphereCollider(pCenter, pRadius);
+            Colliders.Add(new SphereCollider(pCenter, pRadius));
         }
 
         public ComponentSphereCollider(Entity entity)
@@ -44,12 +45,18 @@ namespace OpenGL_Game.GameEngine.Components.Physics
                 }
             }
             midpoint /= counter; //Work out mid point of vertices to form sphere around
-            Collider = new SphereCollider(midpoint, maxDist);
+            Colliders.Add(new SphereCollider(new Vector3(0,0,0), maxDist));
         }
 
         public override void Update()
         {
-            Collider.Update(transform);
+            foreach (SphereCollider c in Colliders)
+                c.Update(transform.Position + localOffSet);
+        }
+
+        public void AddCollider(SphereCollider sphereCollider)
+        {
+            Colliders.Add(sphereCollider);
         }
     }
 }

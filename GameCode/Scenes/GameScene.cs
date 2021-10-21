@@ -15,6 +15,8 @@ using OpenTK.Audio.OpenAL;
 using OpenGL_Game.GameEngine.Systems;
 using OpenGL_Game.GameEngine.Components.Render;
 using OpenGL_Game.GameCode.Components;
+using OpenGL_Game.GameCode.Components.Controllers;
+using OpenGL_Game.GameEngine.Colliders;
 
 namespace OpenGL_Game.Scenes
 {
@@ -40,6 +42,7 @@ namespace OpenGL_Game.Scenes
         ComponentPlayerController playerController;
         public ComponentCamera playerCamera; //Static camera manager in future to access this
 
+        ComponentAIController ballController;
         ComponentAIController droneController;
 
         public static GameScene gameInstance;
@@ -87,27 +90,43 @@ namespace OpenGL_Game.Scenes
             entityManager.AddEntity(skyBox);
 
             Entity player = new Entity("Player", TAGS.PLAYER);
-            ComponentTransform playerTransform = new ComponentTransform(new Vector3(7f, 1.06f, 2f));
-            player.AddComponent(playerTransform);
+            //player.AddComponent(new ComponentTransform(new Vector3(7f, 1.06f, 2f)));
+
+            Vector3 playerPos = new Vector3(-8.21f, 1.06f, -6.38f);
+            player.AddComponent(new ComponentTransform(playerPos));
             playerCamera = new ComponentCamera(player, new Vector3(0, 2.23f, 5), 
                 (float)sceneManager.Width / (float)sceneManager.Height, 0.1f, 100f);
             player.AddComponent(playerCamera);
             player.AddComponent(new ComponentVelocity(Vector3.Zero));
-            player.AddComponent(new ComponentAudio("GameCode\\Audio\\footsteps.wav", playerCamera, playerTransform));
+            player.AddComponent(new ComponentAudio("GameCode\\Audio\\footsteps.wav", playerCamera, player));
             playerController = new ComponentPlayerController(sceneManager, inputManager, player);
             player.AddComponent(playerController);
-            player.AddComponent(new ComponentSphereCollider(player, Vector3.Zero, 0.14f));
+            ComponentSphereCollider playerCollider = new ComponentSphereCollider(player, Vector3.Zero, 0.14f);
+            playerCollider.AddCollider(new SphereCollider(Vector3.Zero, 0.14f, new Vector3(0,-1.06f,0)));
+            player.AddComponent(playerCollider); //Head collider for drone
+            //player.AddComponent(new ComponentSphereCollider(player, Vector3.Zero, 0.14f, new Vector3(0.0f,-1.06f,0.0f))); //Foot collider for rolling ball
             entityManager.AddEntity(player);
 
             Entity drone = new Entity("Drone", TAGS.ENEMY);
             drone.AddComponent(new ComponentTransform(new Vector3(-2.5f, 1.0f, 1.5f), new Vector3(0.1f), Vector3.Zero));
             drone.AddComponent(new ComponentGeometry("GameCode\\Geometry\\Drone\\Drone.obj", renderSystem));
             drone.AddComponent(new ComponentVelocity(Vector3.Zero));
+            drone.AddComponent(new ComponentAudio("GameCode\\Audio\\buzz.wav", playerCamera, drone));
             drone.AddComponent(new ComponentShaderPointLight("GameCode\\Shaders\\vsPointLight.glsl", "GameCode\\Shaders\\fsPointLight.glsl"));
-            droneController = new ComponentAIController(drone, player);
+            droneController = new ComponentDroneController(drone, player, "GameCode\\graphMap.txt");
             drone.AddComponent(droneController);
             drone.AddComponent(new ComponentBoxCollider(drone));
             entityManager.AddEntity(drone);
+
+            Entity rollingBall = new Entity("RollingBall", TAGS.ENEMY);
+            rollingBall.AddComponent(new ComponentTransform(new Vector3(-8.21f, 0.14f, -6.38f)));
+            rollingBall.AddComponent(new ComponentGeometry("GameCode\\Geometry\\Ball\\Ball.obj", renderSystem));
+            rollingBall.AddComponent(new ComponentVelocity(Vector3.Zero));
+            rollingBall.AddComponent(new ComponentShaderPointLight("GameCode\\Shaders\\vsPointLight.glsl", "GameCode\\Shaders\\fsPointLight.glsl"));
+            ballController = new ComponentRollingController(rollingBall, new Vector2(-4.412f, -4.819f), new Vector2(-11.69f, -8.71f));
+            rollingBall.AddComponent(ballController);
+            rollingBall.AddComponent(new ComponentSphereCollider(rollingBall));
+            entityManager.AddEntity(rollingBall);
 
             scriptManager.LoadMaze("GameCode/map.xml", entityManager, renderSystem);
         }
@@ -132,7 +151,7 @@ namespace OpenGL_Game.Scenes
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();
 
-            //Console.WriteLine(playerCamera.cameraPosition);
+            Console.WriteLine(playerCamera.cameraPosition);
             inputManager.Update(e);
             ProcessInput();
 
@@ -152,6 +171,7 @@ namespace OpenGL_Game.Scenes
 
             playerController.Update(audioSystem, dt); //Update the player with the newly updating input
             droneController.Update(audioSystem, dt);
+            ballController.Update(audioSystem, dt);
         }
 
         /// <summary>

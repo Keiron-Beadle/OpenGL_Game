@@ -10,6 +10,5 @@ namespace OpenGL_Game.GameEngine.Components
     {
         public override ComponentTypes ComponentType { get { return ComponentTypes.COMPONENT_CONTROLLER; } }
         protected ComponentTransform transform;
-        protected abstract void UpdateView(float dt);
     }
 }
