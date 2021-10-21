@@ -1,0 +1,19 @@
+﻿xxxxxxxxxxxxxxxxxxx
+x        xxxxx    x
+x  n     xxxxx n  x
+x        xxxxx    x
+x       n     n n x
+x  n   xnxxxxxxx xx
+xxx xxxx xxxxx   x
+xxx xxxx        nx
+xxx xxxx         xxxxxxxx
+xxx xxxxn        xxx    x
+xxx xxxx         xxx    x
+xxx xxxx  n     n   n   x
+xxx xx x         xxx    x
+xxx xxxx         xxx    x
+x  n  xx         xxxxxxxx
+x     xxxxx   n  x
+x    n    n      x
+x     xxxxxxxxxxxx
+xxxxxxx

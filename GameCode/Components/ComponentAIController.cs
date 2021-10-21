@@ -26,6 +26,7 @@ namespace OpenGL_Game.GameCode.Components
         private AStarPathfinder pathingModule;
         private Entity entity;
         private ComponentTransform target;
+        private Random randomFunc;
 
         private Vector3 nextLocation = Vector3.Zero;
         private Vector3 viewDir = new Vector3(0.0f, 0.0f, 1.0f);
@@ -38,9 +39,10 @@ namespace OpenGL_Game.GameCode.Components
         public ComponentAIController(Entity ai, Entity pTarget)
         {
             entity = ai;
+            randomFunc = new Random();
             target = pTarget.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;
             transform = ai.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;
-            pathingModule = new AStarPathfinder("GameCode\\map.txt");
+            pathingModule = new AStarPathfinder("GameCode\\graphMap.txt");
         }
 
         public void Update(SystemAudio audioSystem, float dt)
@@ -95,7 +97,7 @@ namespace OpenGL_Game.GameCode.Components
 
         private void AStarCreatePath()
         {
-            pathingModule.GenerateRandomPath(transform.Position);
+            pathingModule.GenerateRandomPath(transform.Position, randomFunc);
         }
 
         private void AStarWalk()

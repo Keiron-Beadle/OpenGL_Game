@@ -10,14 +10,12 @@ namespace OpenGL_Game.GameEngine.Pathing
     {
         public List<Vector3> Path;
         Graph grid;
-        Random rnd;
         public static Vector3 WorldTranslate;
 
         public AStarPathfinder(string inMapFilePath)
         {
             Path = new List<Vector3>();
             grid = new Graph(inMapFilePath);
-            rnd = new Random();
         }
 
         public void ResetPath() { Path = new List<Vector3>(); }
@@ -39,12 +37,12 @@ namespace OpenGL_Game.GameEngine.Pathing
             return new Vector3(closest2D.X, 1.0f, closest2D.Y);
         }
 
-        public void GenerateRandomPath(Vector3 startPos)
+        public void GenerateRandomPath(Vector3 startPos, Random rnd)
         {
-            GeneratePath(startPos, GetRandomNode());
+            GeneratePath(startPos, GetRandomNode(rnd));
         }
 
-        private Vector3 GetRandomNode()
+        private Vector3 GetRandomNode(Random rnd)
         {
             int nodeToGet = rnd.Next(0, grid.GridSize);
             Vector2 node2DPos = grid.grid[nodeToGet].Position;

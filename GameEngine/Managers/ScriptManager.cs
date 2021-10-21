@@ -235,7 +235,7 @@ namespace OpenGL_Game.Managers
                 for (int x = (int)start.X; x <= (int)end.X; x++) //Traverse line 
                 {
                     char c = map[y][x];
-                    if (c != ' ' && c != 'n' && c != 'o' && c != 'l') return false;
+                    if (c == 'x') return false;
                     if (d > 0)
                     {
                         y = y + yi;
