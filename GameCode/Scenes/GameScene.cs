@@ -44,6 +44,7 @@ namespace OpenGL_Game.Scenes
 
         ComponentAIController ballController;
         ComponentAIController droneController;
+        ComponentAIController bouncingController;
 
         public static GameScene gameInstance;
 
@@ -92,7 +93,7 @@ namespace OpenGL_Game.Scenes
             Entity player = new Entity("Player", TAGS.PLAYER);
             //player.AddComponent(new ComponentTransform(new Vector3(7f, 1.06f, 2f)));
 
-            Vector3 playerPos = new Vector3(-8.21f, 1.06f, -6.38f);
+            Vector3 playerPos = new Vector3(-8.0f, 1.06f, 7.92f);
             player.AddComponent(new ComponentTransform(playerPos));
             playerCamera = new ComponentCamera(player, new Vector3(0, 2.23f, 5), 
                 (float)sceneManager.Width / (float)sceneManager.Height, 0.1f, 100f);
@@ -128,6 +129,16 @@ namespace OpenGL_Game.Scenes
             rollingBall.AddComponent(new ComponentSphereCollider(rollingBall));
             entityManager.AddEntity(rollingBall);
 
+            Entity bouncingBall = new Entity("BouncingBall", TAGS.ENEMY);
+            bouncingBall.AddComponent(new ComponentTransform(new Vector3(-10.15f, 1.6f, 8.23f)));
+            bouncingBall.AddComponent(new ComponentGeometry("GameCode\\Geometry\\Ball\\Ball.obj", renderSystem));
+            bouncingBall.AddComponent(new ComponentVelocity(Vector3.Zero));
+            bouncingBall.AddComponent(new ComponentShaderPointLight("GameCode\\Shaders\\vsPointLight.glsl", "GameCode\\Shaders\\fsPointLight.glsl"));
+            bouncingController = new ComponentBouncingController(bouncingBall, new Vector2(1.6f, 8.2583f), new Vector2(0.1f, 3.73f));
+            bouncingBall.AddComponent(bouncingController);
+            bouncingBall.AddComponent(new ComponentSphereCollider(bouncingBall));
+            entityManager.AddEntity(bouncingBall);
+
             scriptManager.LoadMaze("GameCode/map.xml", entityManager, renderSystem);
         }
 
@@ -151,7 +162,7 @@ namespace OpenGL_Game.Scenes
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();
 
-            Console.WriteLine(playerCamera.cameraPosition);
+            //Console.WriteLine(playerCamera.cameraPosition);
             inputManager.Update(e);
             ProcessInput();
 
@@ -172,6 +183,7 @@ namespace OpenGL_Game.Scenes
             playerController.Update(audioSystem, dt); //Update the player with the newly updating input
             droneController.Update(audioSystem, dt);
             ballController.Update(audioSystem, dt);
+            bouncingController.Update(audioSystem, dt);
         }
 
         /// <summary>

@@ -75,6 +75,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="GameCode\Components\Controllers\ComponentAIController.cs" />
+    <Compile Include="GameCode\Components\Controllers\ComponentBouncingController.cs" />
     <Compile Include="GameCode\Components\Controllers\ComponentDroneController.cs" />
     <Compile Include="GameCode\Components\Controllers\ComponentPlayerController.cs" />
     <Compile Include="GameCode\Components\Controllers\ComponentRollingController.cs" />
