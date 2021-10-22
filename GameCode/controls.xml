@@ -9,4 +9,6 @@
   <Config Control="Right" Key="48" />
   <Config Control="Escape" Key="50"/>
   <Config Control="Continue" Key="95"/>
+  <Config Control="StopDrone" Key="110"/>
+  <Config Control="StopCollision" Key="111"/>
 </rootElement>

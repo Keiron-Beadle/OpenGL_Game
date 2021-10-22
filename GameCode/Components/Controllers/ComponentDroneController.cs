@@ -1,6 +1,7 @@
 ﻿using OpenGL_Game.Components;
 using OpenGL_Game.GameEngine.Components.Physics;
 using OpenGL_Game.GameEngine.Pathing;
+using OpenGL_Game.Managers;
 using OpenGL_Game.Objects;
 using OpenGL_Game.Scenes;
 using OpenGL_Game.Systems;
@@ -78,6 +79,7 @@ namespace OpenGL_Game.GameCode.Components.Controllers
 
         public override void Update(SystemAudio audioSystem, float dt)
         {
+            if (InputManager.StopDrone) { return; }
             if (!ObstructedVision && PlayerVisible())
             {
                 state = AI_STATE.CHASE;

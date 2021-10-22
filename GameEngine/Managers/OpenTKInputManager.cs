@@ -65,7 +65,24 @@ namespace OpenGL_Game.Managers
             {
                 if (currentKeyState.IsKeyDown(pair.Key))
                     controlFlags[pair.Value] = true;
+
+                if(pair.Value == "StopCollision")
+                {
+                    if (currentKeyState.IsKeyUp(pair.Key) && prevKeyState.IsKeyDown(pair.Key))
+                    {
+                        StopCollision = !StopCollision;
+                    }
+                }
+
+                if (pair.Value == "StopDrone")
+                {
+                    if (currentKeyState.IsKeyUp(pair.Key) && prevKeyState.IsKeyDown(pair.Key))
+                    {
+                        StopDrone = !StopDrone;
+                    }
+                }
             }
+
 
             AnyKeyPressed = currentKeyState.IsAnyKeyDown && !prevKeyState.IsAnyKeyDown ? true : false;
 
