@@ -139,6 +139,18 @@ namespace OpenGL_Game.Managers
                 int BPS = reader.ReadInt16();
 
                 string data_signature = new string(reader.ReadChars(4));
+                if (data_signature == "cue ") //A sound file has a cue chunk so I skip it.
+                {
+                    int cue_data_size = reader.ReadInt32();
+                    reader.ReadBytes(cue_data_size);
+                    data_signature = new string(reader.ReadChars(4));
+                }
+                if (data_signature == "LIST") //And a list chunk
+                {
+                    int list_data_size = reader.ReadInt32();
+                    reader.ReadBytes(list_data_size);
+                    data_signature = new string(reader.ReadChars(4));
+                }
                 if (data_signature != "data")
                     throw new NotSupportedException("Specified wave file is not supported");
               

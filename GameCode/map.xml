@@ -17,8 +17,13 @@
       <Geometry/>
       <Collider Type="Sphere"/>
     </Object>
+    <Object Type="Key" Name="Key4">
+      <Transform XPos="0" YPos="0.13" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
+      <Geometry/>
+      <Collider Type="Sphere"/>
+    </Object>
     <Object Type="Key" Name="Key2">
-      <Transform XPos="0.61" YPos="0.13" ZPos="21" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
+      <Transform XPos="0.61" YPos="0.13" ZPos="17.092" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry/>
       <Collider Type="Sphere"/>
     </Object>
@@ -1497,9 +1502,10 @@
       <Geometry />
       <Collider Type="Box" />
     </Object>
-    <Object Type="Portal" Name="MapObject23.11">
+    <Object Type="Portal" Name="Portal">
       <Transform XPos="23" YPos="0" ZPos="11" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Audio SourceFile="GameCode\\Audio\\portaloffline.wav"/>
       <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor24.11">

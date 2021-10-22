@@ -26,26 +26,31 @@ namespace OpenGL_Game.Scenes
     /// </summary>
     class GameScene : Scene
     {
-        public int PlayerLives = 3;
-        public int KeysCollected = 0;
-        public static float dt = 0;
-        public static Vector3 WorldTranslate = Vector3.Zero;
+        public static GameScene gameInstance;
+
         EntityManager entityManager; //Used to hold entities and manage them
         MazeScriptManager scriptManager; //Used to hot-load data
         OpenTKInputManager inputManager; //Used as a means of getting universal control responses from
                                          //a varied number of controllers
         CollisionManager collisionManager;
-        public ControllerManager controllerManager;
-        
         SystemManager systemManager; //Manages and actions other systems
         SystemRender renderSystem; //Abstract system to render entities
         SystemAudio audioSystem;
         SystemPhysics physicsSystem; //System to apply motion & rotation
         SystemCollision collisionSystem;
 
+        public static float dt = 0;
+        public static Vector3 WorldTranslate = Vector3.Zero;
+
+        public int PlayerLives = 3;
+        public int KeysCollected = 2;
+        public int PortalOnlineBuffer;
+        private bool swappedPortalAudio = false;
+
+        public ControllerManager controllerManager;
         public ComponentCamera playerCamera; //Static camera manager in future to access this
 
-        public static GameScene gameInstance;
+        private ComponentAudio portalAudio;
 
         public GameScene(SceneManager sceneManager) : base(sceneManager)
         {
@@ -91,6 +96,13 @@ namespace OpenGL_Game.Scenes
             entityManager.AddEntity(skyBox);
 
             scriptManager.LoadMaze("GameCode/map.xml", entityManager, sceneManager, renderSystem, inputManager);
+
+            PortalOnlineBuffer = ResourceManager.LoadAudioBuffer("GameCode\\Audio\\portalonline.wav");
+            Entity portal = entityManager.FindEntity("Portal");
+            portalAudio = portal.FindComponentByType(ComponentTypes.COMPONENT_AUDIO) as ComponentAudio;
+            ComponentTransform portalTransform = portal.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;
+            portalTransform.Position = new Vector3(portalTransform.Position.X, 0.0f, portalTransform.Position.Z);
+            audioSystem.PlaySound(portalAudio, true);
         }
 
         private void CreateSystems()
@@ -112,6 +124,11 @@ namespace OpenGL_Game.Scenes
             //System.Console.WriteLine("fps=" + (int)(1.0/dt));
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();
+            if (KeysCollected == 3 && !swappedPortalAudio)
+            {
+                audioSystem.ReplaceSound(portalAudio, PortalOnlineBuffer);
+                swappedPortalAudio = true;
+            }
 
             //Console.WriteLine(KeysCollected);
             //Console.WriteLine(playerCamera.cameraPosition);

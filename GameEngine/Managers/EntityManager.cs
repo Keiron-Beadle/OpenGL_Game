@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using OpenGL_Game.Objects;
 using System.Diagnostics;
+using System;
 
 namespace OpenGL_Game.Managers
 {
@@ -26,7 +27,7 @@ namespace OpenGL_Game.Managers
             entity = null;
         }
 
-        private Entity FindEntity(string name)
+        public Entity FindEntity(string name)
         {
             return entityList.Find(delegate(Entity e)
             {

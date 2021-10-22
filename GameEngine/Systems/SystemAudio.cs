@@ -27,7 +27,7 @@ namespace OpenGL_Game.Systems
         {
             try
             {
-                AL.Source(audioComp.Source, ALSourceb.Looping, true);
+                AL.Source(audioComp.Source, ALSourceb.Looping, pLooping);
                 AL.SourcePlay(audioComp.Source);
             }
             catch (Exception e)
@@ -61,6 +61,14 @@ namespace OpenGL_Game.Systems
         public override void RemoveEntity(Entity entity)
         {
             entities.Remove(entity);
+        }
+
+        public void ReplaceSound(ComponentAudio portalAudio, int portalOnlineBuffer)
+        {
+            AL.SourceStop(portalAudio.Source);
+            portalAudio.Buffer = portalOnlineBuffer;
+            AL.Source(portalAudio.Source, ALSourcei.Buffer, portalAudio.Buffer);
+            AL.SourcePlay(portalAudio.Source);
         }
     }
 }

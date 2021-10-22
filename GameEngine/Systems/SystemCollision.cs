@@ -120,15 +120,6 @@ namespace OpenGL_Game.GameEngine.Systems
                     IComponent collider1 = actors[j].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
                     IComponent collider2 = entities[i].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
 
-                    //if (collider1 is ComponentBoxCollider b1 && collider2 is ComponentBoxCollider b2)
-                    //{
-                    //    foreach (var box in b2.Colliders)
-                    //    {
-                    //        if (!b1.Colliders[0].Intersect(box)) continue;
-                    //        var collision = new Tuple<Entity, Entity>(actors[i], entities[j]);
-                    //        Collisions.Add(collision);
-                    //    }
-                    //}
                     if (collider1 is ComponentSphereCollider s1 && collider2 is ComponentBoxCollider b3)
                     {
                         foreach (var box in b3.Colliders)

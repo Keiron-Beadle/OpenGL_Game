@@ -15,6 +15,7 @@ namespace OpenGL_Game.GameEngine.Components.Physics
     {
         public override ComponentTypes ComponentType { get { return ComponentTypes.COMPONENT_AUDIO; } }
 
+        private string entityName;
         private ComponentTransform sourceTransform;
         private ComponentCamera listener;
         public int Source { get; private set; }
@@ -22,6 +23,7 @@ namespace OpenGL_Game.GameEngine.Components.Physics
 
         public ComponentAudio(string audioFilePath, ComponentCamera pListener, Entity pSource)
         {
+            entityName = pSource.Name;
             Source = AL.GenSource();
             Buffer = ResourceManager.LoadAudioBuffer(audioFilePath);
             AL.Source(Source, ALSourcei.Buffer, Buffer);
