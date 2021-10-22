@@ -9,7 +9,19 @@
     <PointLight XPos="-0.714" YPos="0.3" ZPos="-3.156" Constant="1.0" Linear="0.1" Quadratic="0.052" XAmb="0.01" YAmb="0.01" ZAmb ="0.01" XDiff="0.0666" YDiff="0.4705" ZDiff="0.23529" XSpec="0.1" YSpec="0.1" ZSpec="0.1" />
     <PointLight XPos="3.835" YPos="0.3" ZPos="6.524" Constant="1.0" Linear="0.1" Quadratic="0.052" XAmb="0.01" YAmb="0.01" ZAmb ="0.01" XDiff="0.0666" YDiff="0.4705" ZDiff="0.23529" XSpec="0.1" YSpec="0.1" ZSpec="0.1" />
     <PointLight XPos="-4.7811" YPos="0.3" ZPos="4.323" Constant="1.0" Linear="0.1" Quadratic="0.052" XAmb="0.01" YAmb="0.01" ZAmb ="0.01" XDiff="0.0666" YDiff="0.4705" ZDiff="0.23529" XSpec="0.1" YSpec="0.1" ZSpec="0.1" />
-    <PointLight XPos="9.705" YPos="1.06" ZPos="1.461" Constant="1.0" Linear="0.3" Quadratic="0.022" XAmb="0.01" YAmb="0.01" ZAmb ="0.01" XDiff="0.4274" YDiff="0.04705" ZDiff="0.4294" XSpec="0.1" YSpec="0.1" ZSpec="0.1" />
+    <PointLight XPos="9.705" YPos="1.06" ZPos="1.461" Constant="1.0" Linear="0.3" Quadratic="0.022" XAmb="0.01" YAmb="0.01" ZAmb ="0.01" XDiff="0.4274" YDiff="0.04705" ZDiff="0.4294" XSpec="0.1" YSpec="0.1" ZSpec="0.1" />   
+    <SpotLight XPos="-0.48" YPos="1" ZPos="1.89" Constant="1.0" Linear="0.8" Quadratic="0.37" XAmb="0.1" 
+               YAmb="0.1" ZAmb ="0.1" XDiff="0.0117" YDiff="0.239" ZDiff="0.9882" XSpec="0.1" 
+               YSpec="0.1" ZSpec="0.1" Cutoff="1.26" XDir="0" YDir="-1" ZDir="0"/>
+    <SpotLight XPos="2.18" YPos="1" ZPos="-8.79" Constant="1.0" Linear="0.7" Quadratic="0.47" XAmb="0.1"
+           YAmb="0.1" ZAmb ="0.1" XDiff="0.0117" YDiff="0.239" ZDiff="0.9882" XSpec="0.1"
+           YSpec="0.1" ZSpec="0.1" Cutoff="1.15" XDir="0" YDir="-1" ZDir="0"/>
+    <SpotLight XPos="-8.28" YPos="1" ZPos="-6.62" Constant="1.0" Linear="0.7" Quadratic="0.47" XAmb="0.1"
+           YAmb="0.1" ZAmb ="0.1" XDiff="0.0117" YDiff="0.239" ZDiff="0.9882" XSpec="0.1"
+           YSpec="0.1" ZSpec="0.1" Cutoff="1.24" XDir="0" YDir="-1" ZDir="0"/>
+    <SpotLight XPos="-10.15" YPos="1" ZPos="6.65" Constant="1.0" Linear="0.7" Quadratic="0.47" XAmb="0.1"
+           YAmb="0.1" ZAmb ="0.1" XDiff="0.0117" YDiff="0.239" ZDiff="0.9882" XSpec="0.1"
+           YSpec="0.1" ZSpec="0.1" Cutoff="1.15" XDir="0" YDir="-1" ZDir="0"/>
   </Lights>
   <Pickups>
     <Object Type="Key" Name="Key1">

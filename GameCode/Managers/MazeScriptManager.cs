@@ -80,26 +80,56 @@ namespace OpenGL_Game.GameCode.Managers
             XmlNodeList listLights = doc.SelectSingleNode("MapConfig/Lights").ChildNodes;
             foreach (XmlNode n in listLights)
             {
-                PointLight light = new PointLight
+                if (n.Name == "PointLight")
                 {
-                    position = new Vector3(float.Parse(n.Attributes["XPos"].Value),
-                                            float.Parse(n.Attributes["YPos"].Value),
-                                            float.Parse(n.Attributes["ZPos"].Value)),
-                    constant = float.Parse(n.Attributes["Constant"].Value),
-                    linear = float.Parse(n.Attributes["Linear"].Value),
-                    quadratic = float.Parse(n.Attributes["Quadratic"].Value),
-                    ambient = new Vector3(float.Parse(n.Attributes["XAmb"].Value),
+                    PointLight light = new PointLight
+                    {
+                        position = new Vector3(float.Parse(n.Attributes["XPos"].Value),
+                            float.Parse(n.Attributes["YPos"].Value),
+                            float.Parse(n.Attributes["ZPos"].Value)),
+                        constant = float.Parse(n.Attributes["Constant"].Value),
+                        linear = float.Parse(n.Attributes["Linear"].Value),
+                        quadratic = float.Parse(n.Attributes["Quadratic"].Value),
+                        ambient = new Vector3(float.Parse(n.Attributes["XAmb"].Value),
+                            float.Parse(n.Attributes["YAmb"].Value),
+                            float.Parse(n.Attributes["ZAmb"].Value)),
+                        diffuse = new Vector3(float.Parse(n.Attributes["XDiff"].Value),
+                            float.Parse(n.Attributes["YDiff"].Value),
+                            float.Parse(n.Attributes["ZDiff"].Value)),
+                        specular = new Vector3(float.Parse(n.Attributes["XSpec"].Value),
+                            float.Parse(n.Attributes["YSpec"].Value),
+                            float.Parse(n.Attributes["ZSpec"].Value)),
+                    };
+
+                    ComponentShaderLight.AddLight(light);
+                }
+                else
+                {
+                    SpotLight light = new SpotLight
+                    {
+                        position = new Vector3(float.Parse(n.Attributes["XPos"].Value),
+                                    float.Parse(n.Attributes["YPos"].Value),
+                                    float.Parse(n.Attributes["ZPos"].Value)),
+                        constant = float.Parse(n.Attributes["Constant"].Value),
+                        linear = float.Parse(n.Attributes["Linear"].Value),
+                        quadratic = float.Parse(n.Attributes["Quadratic"].Value),
+                        ambient = new Vector3(float.Parse(n.Attributes["XAmb"].Value),
                                             float.Parse(n.Attributes["YAmb"].Value),
                                             float.Parse(n.Attributes["ZAmb"].Value)),
-                    diffuse = new Vector3(float.Parse(n.Attributes["XDiff"].Value),
-                                            float.Parse(n.Attributes["YDiff"].Value),
-                                            float.Parse(n.Attributes["ZDiff"].Value)),
-                    specular = new Vector3(float.Parse(n.Attributes["XSpec"].Value),
-                                            float.Parse(n.Attributes["YSpec"].Value),
-                                            float.Parse(n.Attributes["ZSpec"].Value)),
-                };
+                        diffuse = new Vector3(float.Parse(n.Attributes["XDiff"].Value),
+                                              float.Parse(n.Attributes["YDiff"].Value),
+                                              float.Parse(n.Attributes["ZDiff"].Value)),
+                        specular = new Vector3(float.Parse(n.Attributes["XSpec"].Value),
+                                                float.Parse(n.Attributes["YSpec"].Value),
+                                                float.Parse(n.Attributes["ZSpec"].Value)),
+                        cutoff = float.Parse(n.Attributes["Cutoff"].Value),
+                        coneDirection = new Vector3(float.Parse(n.Attributes["XDir"].Value),
+                                                float.Parse(n.Attributes["YDir"].Value),
+                                                float.Parse(n.Attributes["ZDir"].Value))
+                    };
 
-                ComponentShaderPointLight.AddLight(light);
+                    ComponentShaderLight.AddLight(light);
+                }
             }
         }
 
@@ -169,7 +199,7 @@ namespace OpenGL_Game.GameCode.Managers
             switch (type)
             {
                 default:
-                    temp.AddComponent(new ComponentShaderPointLight("GameCode/Shaders/vsPointLight.glsl", "GameCode/Shaders/fsPointLight.glsl"));
+                    temp.AddComponent(new ComponentShaderLight("GameCode/Shaders/vsLights.glsl", "GameCode/Shaders/fsLights.glsl"));
                     //temp.AddComponent(new ComponentShaderBasic("GameCode/Shaders/vs.glsl", "GameCode/Shaders/fs.glsl"));
                     break;
             }

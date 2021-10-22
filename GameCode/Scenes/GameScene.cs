@@ -134,7 +134,7 @@ namespace OpenGL_Game.Scenes
                 sceneManager.Exit();
             DoGameLogic();
             //Console.WriteLine(KeysCollected);
-            //Console.WriteLine(playerCamera.cameraPosition);
+            Console.WriteLine(playerCamera.cameraPosition);
             inputManager.Update(e);
             ProcessInput();
 

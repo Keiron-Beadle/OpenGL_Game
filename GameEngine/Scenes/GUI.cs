@@ -98,7 +98,7 @@ namespace OpenGL_Game.Scenes
             GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
             GL.Enable(EnableCap.Texture2D);
             GL.Hint(HintTarget.PerspectiveCorrectionHint, HintMode.Nicest);
-            if (texture.ID != 0)
+            if (texture!= null && texture.ID != 0)
             {
                 //rect.X = rect.X / ;
                 GL.BindTexture(TextureTarget.Texture2D, texture.ID);

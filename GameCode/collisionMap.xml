@@ -1,0 +1,43 @@
+<MapConfig>
+  <ModelScale>1</ModelScale>
+  <WorldTranslate XTranslate="-12.5" ZTranslate="-9.5" />
+  <Lights>
+    <PointLight XPos="-11.89" YPos="0.3" ZPos="4.907" Constant="1.0" Linear="0.1" Quadratic="0.052" XAmb="0.01" YAmb="0.01" ZAmb ="0.01" XDiff="0.0666" YDiff="0.4705" ZDiff="0.23529" XSpec="0.1" YSpec="0.1" ZSpec="0.1"/>
+    <PointLight XPos="-11.74" YPos="0.3" ZPos="-4.32" Constant="1.0" Linear="0.1" Quadratic="0.052" XAmb="0.01" YAmb="0.01" ZAmb ="0.01" XDiff="0.0666" YDiff="0.4705" ZDiff="0.23529" XSpec="0.1" YSpec="0.1" ZSpec="0.1"/>
+    <PointLight XPos="-4.347" YPos="0.3" ZPos="-8.605" Constant="1.0" Linear="0.1" Quadratic="0.052" XAmb="0.01" YAmb="0.01" ZAmb ="0.01" XDiff="0.0666" YDiff="0.4705" ZDiff="0.23529" XSpec="0.1" YSpec="0.1" ZSpec="0.1"/>
+    <PointLight XPos="2.093" YPos="0.3" ZPos="-9.033" Constant="1.0" Linear="0.1" Quadratic="0.052" XAmb="0.01" YAmb="0.01" ZAmb ="0.01" XDiff="0.0666" YDiff="0.4705" ZDiff="0.23529" XSpec="0.1" YSpec="0.1" ZSpec="0.1"/>
+    <PointLight XPos="-0.714" YPos="0.3" ZPos="-3.156" Constant="1.0" Linear="0.1" Quadratic="0.052" XAmb="0.01" YAmb="0.01" ZAmb ="0.01" XDiff="0.0666" YDiff="0.4705" ZDiff="0.23529" XSpec="0.1" YSpec="0.1" ZSpec="0.1" />
+    <PointLight XPos="3.835" YPos="0.3" ZPos="6.524" Constant="1.0" Linear="0.1" Quadratic="0.052" XAmb="0.01" YAmb="0.01" ZAmb ="0.01" XDiff="0.0666" YDiff="0.4705" ZDiff="0.23529" XSpec="0.1" YSpec="0.1" ZSpec="0.1" />
+    <PointLight XPos="-4.7811" YPos="0.3" ZPos="4.323" Constant="1.0" Linear="0.1" Quadratic="0.052" XAmb="0.01" YAmb="0.01" ZAmb ="0.01" XDiff="0.0666" YDiff="0.4705" ZDiff="0.23529" XSpec="0.1" YSpec="0.1" ZSpec="0.1" />
+    <PointLight XPos="9.705" YPos="1.06" ZPos="1.461" Constant="1.0" Linear="0.3" Quadratic="0.022" XAmb="0.01" YAmb="0.01" ZAmb ="0.01" XDiff="0.4274" YDiff="0.04705" ZDiff="0.4294" XSpec="0.1" YSpec="0.1" ZSpec="0.1" />
+  </Lights>
+  <Pickups>
+  </Pickups>
+  <MovingObjects>
+    <Object Type="Player" Name="Player">
+      <Transform XPos="2" YPos="1.06" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
+      <Camera XTarget="0" YTarget="2.23" ZTarget="5" Near="0.1" Far="100"/>
+      <Velocity XVel="0" YVel="0" ZVel="0"/>
+      <Audio SourceFile="GameCode\\Audio\\footsteps.wav"/>
+      <PlayerController />
+      <Collider Type="Sphere" XCenter="0" YCenter="0" ZCenter="0" Radius="0.2"/>
+      <Collider Type="Sphere" XCenter="0" YCenter="0" ZCenter="0" Radius="0.2" XOffSet="0" YOffSet="-0.50" ZOffSet="0"/>
+      <Collider Type="Sphere" XCenter="0" YCenter="0" ZCenter="0" Radius="0.2" XOffSet="0" YOffSet="-1.06" ZOffSet="0"/>
+    </Object>
+    <Object Type="Drone" Name="Drone">
+      <Transform XPos="-2" YPos="1.0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="0.1" YScale="0.1" ZScale="0.1" />
+      <Geometry />
+      <Velocity XVel="0" YVel="0" ZVel="0"/>
+      <Audio SourceFile="GameCode\\Audio\\buzz.wav"/>
+      <DroneController GraphTextPath="GameCode\\graphMap.txt"/>
+      <Collider Type="Box"/>
+    </Object>
+  </MovingObjects>
+  <Terrain>
+    <Object Type="Connector" Name="Floor0.0">
+      <Transform XPos="0" YPos="0" ZPos="0" XRot="0" YRot="-1.57079632679" ZRot="0" XScale="1" YScale="1" ZScale="1" />
+      <Geometry />
+      <Collider Type="Box" />
+    </Object>
+  </Terrain>
+</MapConfig>

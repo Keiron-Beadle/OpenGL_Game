@@ -95,7 +95,7 @@
     <Compile Include="GameEngine\Components\Render\ComponentCamera.cs" />
     <Compile Include="GameEngine\Components\Shader\ComponentShader.cs" />
     <Compile Include="GameCode\Components\ShaderComponents\ComponentShaderBasic.cs" />
-    <Compile Include="GameCode\Components\ShaderComponents\ComponentShaderPointLight.cs" />
+    <Compile Include="GameCode\Components\ShaderComponents\ComponentShaderLights.cs" />
     <Compile Include="GameEngine\Components\Physics\ComponentTransform.cs" />
     <Compile Include="GameEngine\Components\Physics\ComponentVelocity.cs" />
     <Compile Include="GameEngine\Managers\ControllerManager.cs" />
@@ -248,10 +248,10 @@
     </None>
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
-    <None Include="GameCode\Shaders\fsPointLight.glsl">
+    <None Include="GameCode\Shaders\fsLights.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GameCode\Shaders\vsPointLight.glsl">
+    <None Include="GameCode\Shaders\vsLights.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -377,6 +377,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="GameCode\Icons\key.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GameCode\collisionMap.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="GameCode\map.xml">
