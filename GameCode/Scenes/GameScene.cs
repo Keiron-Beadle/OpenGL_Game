@@ -26,6 +26,8 @@ namespace OpenGL_Game.Scenes
     /// </summary>
     class GameScene : Scene
     {
+        public int PlayerLives = 3;
+        public int KeysCollected = 0;
         public static float dt = 0;
         public static Vector3 WorldTranslate = Vector3.Zero;
         EntityManager entityManager; //Used to hold entities and manage them
@@ -56,7 +58,7 @@ namespace OpenGL_Game.Scenes
             audioSystem = new SystemAudio();
             renderSystem = new OpenGLRenderer();
             collisionSystem = new SystemCollision();
-            collisionManager = new CollisionManager(collisionSystem);
+            collisionManager = new CollisionManager(collisionSystem, entityManager, systemManager);
             controllerManager = new ControllerManager(audioSystem);
             // Set the title of the window
             sceneManager.Title = "Game";
@@ -111,6 +113,7 @@ namespace OpenGL_Game.Scenes
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();
 
+            Console.WriteLine(KeysCollected);
             //Console.WriteLine(playerCamera.cameraPosition);
             inputManager.Update(e);
             ProcessInput();
@@ -147,7 +150,8 @@ namespace OpenGL_Game.Scenes
             // Render score
             float width = sceneManager.Width, height = sceneManager.Height, fontSize = Math.Min(width, height) / 10f;
             GUI.clearColour = Color.Transparent;
-            GUI.Label(new Rectangle(0, 0, (int)width, (int)(fontSize * 2f)), "Score: 000", 18, StringAlignment.Near, Color.White);
+            GUI.Label(new Rectangle(10, 10, (int)width, (int)(fontSize * 2f)), "Keys: " + KeysCollected, 18, StringAlignment.Near, Color.White);
+            GUI.Label(new Rectangle(10, 50, (int)width, (int)(fontSize * 2f)), "Lives: " + PlayerLives, 18, StringAlignment.Near, Color.White);
             GUI.Render();
         }
 

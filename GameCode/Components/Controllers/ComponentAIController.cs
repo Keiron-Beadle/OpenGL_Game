@@ -18,12 +18,18 @@ namespace OpenGL_Game.GameCode.Components.Controllers
         protected Random randomFunc;
         protected Vector3 nextLocation = Vector3.Zero;
         protected float speed;
+        Vector3 originalStartPosition;
 
         public ComponentAIController(Entity ai)
         {
             randomFunc = new Random(System.DateTime.Now.Millisecond);
             transform = ai.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;
+            originalStartPosition = transform.Position;
+        }
 
+        public void ResetPosition()
+        {
+            transform.Position = originalStartPosition;
         }
 
         protected void MoveToNextLocation(float dt)

@@ -39,5 +39,10 @@ namespace OpenGL_Game.Systems
         {
 
         }
+
+        public override void RemoveEntity(Entity entity)
+        {
+            entities.Remove(entity);
+        }
     }
 }

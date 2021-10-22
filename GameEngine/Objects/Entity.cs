@@ -10,7 +10,8 @@ namespace OpenGL_Game.Objects
         NONE,
         WORLD,
         ENEMY,
-        PLAYER
+        PLAYER,
+        PICKUP
     }
 
     class Entity

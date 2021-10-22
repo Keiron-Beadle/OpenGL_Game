@@ -45,6 +45,20 @@ namespace OpenGL_Game.GameCode.Managers
             LoadLights(doc);
             LoadMovingObjects(doc, worldTranslate);
             LoadWorldObjects(doc, worldTranslate);
+            LoadPickups(doc, worldTranslate);
+        }
+
+        private void LoadPickups(XmlDocument doc, Vector3 worldTranslate)
+        {
+            XmlNodeList pickups = doc.SelectSingleNode("MapConfig/Pickups").ChildNodes;
+            foreach (XmlNode n in pickups)
+            {
+                TAGS tag = TAGS.PICKUP;
+                Entity entity = new Entity(n.Attributes["Name"].Value, tag);
+                XmlNodeList components = n.ChildNodes;
+                AddComponents(entity, worldTranslate, n, components);
+                entityManager.AddEntity(entity);
+            }
         }
 
         private void LoadMovingObjects(XmlDocument doc, Vector3 worldTranslate)

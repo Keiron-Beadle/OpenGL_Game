@@ -57,5 +57,10 @@ namespace OpenGL_Game.Systems
 
             ((ComponentTransform)transformComponent).Position += velocity * GameScene.dt;
         }
+
+        public override void RemoveEntity(Entity entity)
+        {
+            entities.Remove(entity);
+        }
     }
 }

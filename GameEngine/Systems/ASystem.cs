@@ -10,6 +10,7 @@ namespace OpenGL_Game.Systems
 {
     abstract class ASystem
     {
+        protected List<int> nullIndices;
         protected List<Entity> entities;
         protected ComponentTypes MASK;
 
@@ -21,10 +22,13 @@ namespace OpenGL_Game.Systems
 
         public ASystem()
         {
+            nullIndices = new List<int>();
             entities = new List<Entity>();
         }
 
         public abstract void OnAction();
+
+        public abstract void RemoveEntity(Entity entity);
 
         public virtual void InitialiseEntities(EntityManager em)
         {

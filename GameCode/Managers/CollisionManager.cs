@@ -2,7 +2,9 @@
 using OpenGL_Game.GameCode.Components;
 using OpenGL_Game.GameCode.Components.Controllers;
 using OpenGL_Game.GameEngine.Systems;
+using OpenGL_Game.Managers;
 using OpenGL_Game.Objects;
+using OpenGL_Game.Scenes;
 using OpenTK;
 using System;
 using System.Collections.Generic;
@@ -15,10 +17,14 @@ namespace OpenGL_Game.GameCode.Managers
     {
         private int counter = 0;
         private SystemCollision collisionSystem;
+        private EntityManager entityManager;
+        private SystemManager systemManager;
 
-        public CollisionManager(SystemCollision pCollisionSystem)
+        public CollisionManager(SystemCollision pCollisionSystem, EntityManager pEntityManager, SystemManager pSystemManager)
         {
+            entityManager = pEntityManager;
             collisionSystem = pCollisionSystem;
+            systemManager = pSystemManager;
         }
 
         public void Update()
@@ -37,7 +43,7 @@ namespace OpenGL_Game.GameCode.Managers
                 TAGS tag1 = collision.Item1.Tag;
                 TAGS tag2 = collision.Item2.Tag;
                 counter++;
-                if (tag1 == TAGS.PLAYER && tag2 == TAGS.WORLD || tag1 == TAGS.WORLD && tag2 == TAGS.PLAYER)
+                if (tag1 == TAGS.PLAYER && tag2 == TAGS.WORLD)
                 {
                     Entity p1 = collision.Item1;
                     ComponentTransform transform = p1.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;
@@ -48,7 +54,7 @@ namespace OpenGL_Game.GameCode.Managers
                     //velocity.Velocity -= collision.Item3 * Vector3.Dot(velocity.Velocity, collision.Item3);
                     //Console.WriteLine($"Player collided with walls: {counter}");
                 }
-                else if (tag1 == TAGS.PLAYER && tag2 == TAGS.ENEMY || tag1 == TAGS.ENEMY && tag2 == TAGS.PLAYER)
+                else if (tag1 == TAGS.PLAYER && tag2 == TAGS.ENEMY)
                 {
                     Console.WriteLine("Player collided with enemy.");
                 }
@@ -60,6 +66,13 @@ namespace OpenGL_Game.GameCode.Managers
                         ComponentDroneController enemyController = enemy.FindComponentByType(ComponentTypes.COMPONENT_CONTROLLER) as ComponentDroneController;
                         enemyController.ObstructedVision = true;
                     }
+                }
+                else if (tag1 == TAGS.PLAYER && tag2 == TAGS.PICKUP)
+                {
+                    Entity pickup = collision.Item2;
+                    systemManager.RemoveEntityFromSystems(pickup);
+                    entityManager.RemoveEntity(ref pickup);
+                    GameScene.gameInstance.KeysCollected++;
                 }
             }
         }

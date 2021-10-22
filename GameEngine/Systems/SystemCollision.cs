@@ -15,6 +15,7 @@ namespace OpenGL_Game.GameEngine.Systems
     {
         private List<Entity> actors;
         private List<Entity> enemies;
+        private List<Entity> pickups;
         public bool HasCollisions = false;
 
         public List<Tuple<Entity,Entity,Vector3, Vector3>> Collisions { get; private set; }
@@ -24,6 +25,7 @@ namespace OpenGL_Game.GameEngine.Systems
             Name = "System Collision";
             actors = new List<Entity>();
             enemies = new List<Entity>();
+            pickups = new List<Entity>();
             Collisions = new List<Tuple<Entity, Entity, Vector3, Vector3>>();
             MASK = ComponentTypes.COMPONENT_COLLIDER | ComponentTypes.COMPONENT_TRANSFORM;
         }
@@ -50,6 +52,10 @@ namespace OpenGL_Game.GameEngine.Systems
                     else if (entity.Tag == TAGS.ENEMY)
                     {
                         enemies.Add(entity);
+                    }
+                    else if (entity.Tag == TAGS.PICKUP)
+                    {
+                        pickups.Add(entity);
                     }
                 }
             }
@@ -85,6 +91,20 @@ namespace OpenGL_Game.GameEngine.Systems
         private void DoCollisionDetection()
         {
             bool lineOfSight = true;
+
+            for (int j = 0; j < actors.Count; j++)
+            {
+                for (int k = 0; k < pickups.Count; k++)
+                {
+                    ComponentSphereCollider sc1 = actors[j].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER) as ComponentSphereCollider;
+                    var sc2 = pickups[k].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER) as ComponentSphereCollider;
+                    var result = sc1.Colliders[1].Intersect(sc2.Colliders[0]);
+                    if (!result.Item1) continue;
+                    var collision = new Tuple<Entity, Entity, Vector3, Vector3>(actors[j], pickups[k], result.Item2, result.Item3);
+                    Collisions.Add(collision);
+                }
+            }
+
             for (int i = 0; i < entities.Count; i++) //List of world objects
             {
                 //Collide terrain with actors/player (Precedes collision resolution)
@@ -116,11 +136,10 @@ namespace OpenGL_Game.GameEngine.Systems
                         }
                     }
 
-
                     if (!lineOfSight) continue;
                     for (int k = 0; k < enemies.Count; k++)
                     {
-                        //Do player collisions with enemies (remove life if collided, etc)
+                        //Do player collisions with enemies 
                         IComponent actorCollider = actors[j].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
                         IComponent enemyCollider = enemies[k].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
                         if (actorCollider is ComponentSphereCollider s2 && enemyCollider is ComponentBoxCollider b4)
@@ -194,6 +213,14 @@ namespace OpenGL_Game.GameEngine.Systems
             float eDotE = Vector2.Dot(entityToWallEnd, entityNormal);
 
             return (pDotN * eDotN < 0) && (eDotS * eDotE < 0);
+        }
+
+        public override void RemoveEntity(Entity entity)
+        {
+            entities.Remove(entity);
+            actors.Remove(entity);
+            enemies.Remove(entity);
+            pickups.Remove(entity);
         }
     }
 }

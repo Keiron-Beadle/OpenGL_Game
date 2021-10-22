@@ -11,6 +11,23 @@
     <PointLight XPos="-4.7811" YPos="0.3" ZPos="4.323" Constant="1.0" Linear="0.25" Quadratic="0.052" XAmb="0.01" YAmb="0.01" ZAmb ="0.01" XDiff="0.0666" YDiff="0.4705" ZDiff="0.23529" XSpec="0.1" YSpec="0.1" ZSpec="0.1" />
     <PointLight XPos="9.705" YPos="1.06" ZPos="1.461" Constant="1.0" Linear="0.75" Quadratic="0.152" XAmb="0.01" YAmb="0.01" ZAmb ="0.01" XDiff="0.4274" YDiff="0.04705" ZDiff="0.4294" XSpec="0.1" YSpec="0.1" ZSpec="0.1" />
   </Lights>
+  <Pickups>
+    <Object Type="Key" Name="Key1">
+      <Transform XPos="1.06" YPos="0.13" ZPos="0.91" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
+      <Geometry/>
+      <Collider Type="Sphere"/>
+    </Object>
+    <Object Type="Key" Name="Key2">
+      <Transform XPos="0.61" YPos="0.13" ZPos="21" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
+      <Geometry/>
+      <Collider Type="Sphere"/>
+    </Object>
+    <Object Type="Key" Name="Key3">
+      <Transform XPos="17.094" YPos="0.13" ZPos="4.5918" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
+      <Geometry/>
+      <Collider Type="Sphere"/>
+    </Object>
+  </Pickups>
   <MovingObjects>
     <Object Type="Player" Name="Player">
       <Transform XPos="19.5" YPos="1.06" ZPos="11.5" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />

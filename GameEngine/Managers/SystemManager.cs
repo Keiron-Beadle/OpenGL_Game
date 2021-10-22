@@ -43,6 +43,18 @@ namespace OpenGL_Game.Managers
             nonRenderList.Add(system);
         }
 
+        public void RemoveEntityFromSystems(Entity entity)
+        {
+            foreach (var system in renderList)
+            {
+                system.RemoveEntity(entity);
+            }
+            foreach (var system in nonRenderList)
+            {
+                system.RemoveEntity(entity);
+            }
+        }
+
         private bool FindSystem(string name)
         {
             ASystem renderReturn = renderList.Find(delegate(ASystem system)

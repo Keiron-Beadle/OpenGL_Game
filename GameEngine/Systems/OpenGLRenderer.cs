@@ -95,5 +95,10 @@ namespace OpenGL_Game.Systems
 
             return texture;
         }
+
+        public override void RemoveEntity(Entity entity)
+        {
+            entities.Remove(entity);
+        }
     }
 }

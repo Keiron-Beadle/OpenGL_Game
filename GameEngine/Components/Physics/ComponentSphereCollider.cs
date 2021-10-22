@@ -45,7 +45,7 @@ namespace OpenGL_Game.GameEngine.Components.Physics
                 }
             }
             midpoint /= counter; //Work out mid point of vertices to form sphere around
-            Colliders.Add(new SphereCollider(new Vector3(0,0,0), maxDist));
+            Colliders.Add(new SphereCollider(transform.Position, maxDist));
         }
 
         public override void Update()

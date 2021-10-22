@@ -20,6 +20,12 @@ namespace OpenGL_Game.Managers
             entityList.Add(entity);
         }
 
+        public void RemoveEntity(ref Entity entity)
+        {
+            entityList.Remove(entity);
+            entity = null;
+        }
+
         private Entity FindEntity(string name)
         {
             return entityList.Find(delegate(Entity e)
