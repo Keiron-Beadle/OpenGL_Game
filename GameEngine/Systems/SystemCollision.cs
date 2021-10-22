@@ -103,12 +103,15 @@ namespace OpenGL_Game.GameEngine.Systems
             {
                 for (int k = 0; k < pickups.Count; k++)
                 {
-                    ComponentSphereCollider sc1 = actors[j].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER) as ComponentSphereCollider;
+                    var sc1 = actors[j].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER) as ComponentSphereCollider;
                     var sc2 = pickups[k].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER) as ComponentSphereCollider;
-                    var result = sc1.Colliders[1].Intersect(sc2.Colliders[0]);
-                    if (!result.Item1) continue;
-                    var collision = new Tuple<Entity, Entity, Vector3, Vector3>(actors[j], pickups[k], result.Item2, result.Item3);
-                    Collisions.Add(collision);
+                    foreach (var collider in sc1.Colliders)
+                    {
+                        var result = collider.Intersect(sc2.Colliders[0]);
+                        if (!result.Item1) continue;
+                        var collision = new Tuple<Entity, Entity, Vector3, Vector3>(actors[j], pickups[k], result.Item2, result.Item3);
+                        Collisions.Add(collision);
+                    }
                 }
             }
 

@@ -14,22 +14,23 @@
   <Pickups>
     <Object Type="Key" Name="Key1">
       <Transform XPos="1.06" YPos="0.13" ZPos="0.91" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
+      <Velocity XVel="0" YVel="0" ZVel="0"/>
       <Geometry/>
-      <Collider Type="Sphere"/>
-    </Object>
-    <Object Type="Key" Name="Key4">
-      <Transform XPos="0" YPos="0.13" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
-      <Geometry/>
+      <Audio SourceFile="GameCode\\Audio\\pickup.wav"/>
       <Collider Type="Sphere"/>
     </Object>
     <Object Type="Key" Name="Key2">
       <Transform XPos="0.61" YPos="0.13" ZPos="17.092" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
+      <Velocity XVel="0" YVel="0" ZVel="0"/>
       <Geometry/>
+      <Audio SourceFile="GameCode\\Audio\\pickup.wav"/>
       <Collider Type="Sphere"/>
     </Object>
     <Object Type="Key" Name="Key3">
       <Transform XPos="17.094" YPos="0.13" ZPos="4.5918" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
+      <Velocity XVel="0" YVel="0" ZVel="0"/>
       <Geometry/>
+      <Audio SourceFile="GameCode\\Audio\\pickup.wav"/>
       <Collider Type="Sphere"/>
     </Object>
   </Pickups>

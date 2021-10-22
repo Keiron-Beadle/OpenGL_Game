@@ -1,10 +1,12 @@
 ﻿using OpenGL_Game.Components;
 using OpenGL_Game.GameCode.Components;
 using OpenGL_Game.GameCode.Components.Controllers;
+using OpenGL_Game.GameEngine.Components.Physics;
 using OpenGL_Game.GameEngine.Systems;
 using OpenGL_Game.Managers;
 using OpenGL_Game.Objects;
 using OpenGL_Game.Scenes;
+using OpenGL_Game.Systems;
 using OpenTK;
 using System;
 using System.Collections.Generic;
@@ -19,12 +21,14 @@ namespace OpenGL_Game.GameCode.Managers
         private SystemCollision collisionSystem;
         private EntityManager entityManager;
         private SystemManager systemManager;
+        private SystemAudio audioSystem;
 
-        public CollisionManager(SystemCollision pCollisionSystem, EntityManager pEntityManager, SystemManager pSystemManager)
+        public CollisionManager(SystemCollision pCollisionSystem, EntityManager pEntityManager, SystemManager pSystemManager, SystemAudio pAudioSystem)
         {
             entityManager = pEntityManager;
             collisionSystem = pCollisionSystem;
             systemManager = pSystemManager;
+            audioSystem = pAudioSystem;
         }
 
         public void Update()
@@ -78,6 +82,8 @@ namespace OpenGL_Game.GameCode.Managers
                 else if (tag1 == TAGS.PLAYER && tag2 == TAGS.PICKUP)
                 {
                     Entity pickup = collision.Item2;
+                    ComponentAudio audioComponent = collision.Item2.FindComponentByType(ComponentTypes.COMPONENT_AUDIO) as ComponentAudio;
+                    audioSystem.PlaySound(audioComponent);
                     systemManager.RemoveEntityFromSystems(pickup);
                     entityManager.RemoveEntity(ref pickup);
                     GameScene.gameInstance.KeysCollected++;

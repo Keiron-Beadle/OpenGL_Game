@@ -43,7 +43,7 @@ namespace OpenGL_Game.Scenes
         public static Vector3 WorldTranslate = Vector3.Zero;
 
         public int PlayerLives = 3;
-        public int KeysCollected = 2;
+        public int KeysCollected = 0;
         public int PortalOnlineBuffer;
         private bool swappedPortalAudio = false;
         private bool swappedPortalColour = false;
@@ -65,7 +65,7 @@ namespace OpenGL_Game.Scenes
             audioSystem = new SystemAudio();
             renderSystem = new OpenGLRenderer();
             collisionSystem = new SystemCollision();
-            collisionManager = new CollisionManager(collisionSystem, entityManager, systemManager);
+            collisionManager = new CollisionManager(collisionSystem, entityManager, systemManager, audioSystem);
             controllerManager = new ControllerManager(audioSystem);
             // Set the title of the window
             sceneManager.Title = "Game";
