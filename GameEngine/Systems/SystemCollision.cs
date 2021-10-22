@@ -166,7 +166,7 @@ namespace OpenGL_Game.GameEngine.Systems
                     }
                     for (int k = 0; k < enemies.Count; k++) 
                     {
-                        //Collisions for enemy -> player line of sight
+                        //Collisions for enemy to world -> player line of sight
                         if (enemies[k].Name != "Drone") continue;
                         ComponentTransform actorTransform = actors[j].FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;
                         ComponentTransform enemyTransform = enemies[k].FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;

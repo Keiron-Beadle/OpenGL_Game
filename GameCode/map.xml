@@ -40,8 +40,9 @@
       <Velocity XVel="0" YVel="0" ZVel="0"/>
       <Audio SourceFile="GameCode\\Audio\\footsteps.wav"/>
       <PlayerController />
-      <Collider Type="Sphere" XCenter="0" YCenter="0" ZCenter="0" Radius="0.14"/>
-      <Collider Type="Sphere" XCenter="0" YCenter="0" ZCenter="0" Radius="0.14" XOffSet="0" YOffSet="-1.06" ZOffSet="0"/>
+      <Collider Type="Sphere" XCenter="0" YCenter="0" ZCenter="0" Radius="0.2"/>
+      <Collider Type="Sphere" XCenter="0" YCenter="0" ZCenter="0" Radius="0.2" XOffSet="0" YOffSet="-0.50" ZOffSet="0"/>
+      <Collider Type="Sphere" XCenter="0" YCenter="0" ZCenter="0" Radius="0.2" XOffSet="0" YOffSet="-1.06" ZOffSet="0"/>
     </Object>
     <Object Type="Drone" Name="Drone">
       <Transform XPos="10" YPos="1.0" ZPos="11" XRot="0" YRot="0" ZRot="0" XScale="0.1" YScale="0.1" ZScale="0.1" />

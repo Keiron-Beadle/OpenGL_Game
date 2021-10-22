@@ -43,7 +43,7 @@ namespace OpenGL_Game.Scenes
         public static Vector3 WorldTranslate = Vector3.Zero;
 
         public int PlayerLives = 3;
-        public int KeysCollected = 3;
+        public int KeysCollected = 2;
         public int PortalOnlineBuffer;
         private bool swappedPortalAudio = false;
         private bool swappedPortalColour = false;
@@ -101,6 +101,7 @@ namespace OpenGL_Game.Scenes
 
             PortalOnlineBuffer = ResourceManager.LoadAudioBuffer("GameCode\\Audio\\portalonline.wav");
             Entity portal = entityManager.FindEntity("Portal");
+            if (portal == null) { return; }
             portalAudio = portal.FindComponentByType(ComponentTypes.COMPONENT_AUDIO) as ComponentAudio;
             ComponentTransform portalTransform = portal.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;
             portalTransform.Position = new Vector3(portalTransform.Position.X, 0.0f, portalTransform.Position.Z);
