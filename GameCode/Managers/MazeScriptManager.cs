@@ -164,6 +164,17 @@ namespace OpenGL_Game.GameCode.Managers
             }
         }
 
+        private void AddShaderComponent(ref Entity temp, string type)
+        {
+            switch (type)
+            {
+                default:
+                    temp.AddComponent(new ComponentShaderPointLight("GameCode/Shaders/vsPointLight.glsl", "GameCode/Shaders/fsPointLight.glsl"));
+                    //temp.AddComponent(new ComponentShaderBasic("GameCode/Shaders/vs.glsl", "GameCode/Shaders/fs.glsl"));
+                    break;
+            }
+        }
+
         private void AddPlayerController(ref Entity entity)
         {
             var controller = new ComponentPlayerController(sceneManger, inputManager, entity);

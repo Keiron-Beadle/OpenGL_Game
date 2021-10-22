@@ -59,17 +59,6 @@ namespace OpenGL_Game.Managers
             writer.Close();
         }
 
-        protected void AddShaderComponent(ref Entity temp, string type)
-        {
-            switch (type)
-            {
-                default:
-                    //temp.AddComponent(new ComponentShaderPointLight("GameCode/Shaders/vsPointLight.glsl", "GameCode/Shaders/fsPointLight.glsl"));
-                    temp.AddComponent(new ComponentShaderBasic("GameCode/Shaders/vs.glsl", "GameCode/Shaders/fs.glsl"));
-                    break;
-            }
-        }
-
         /// <summary>
         /// Adds a velocity component to the entity
         /// </summary>

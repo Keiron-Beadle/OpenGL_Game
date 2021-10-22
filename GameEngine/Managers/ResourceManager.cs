@@ -55,13 +55,46 @@ namespace OpenGL_Game.Managers
 
             return geometry;
         }
-        
+
         public static ITexture LoadTexture(string filename, SystemRender renderSystem) //This return type will need to change for D3D I think
         {
             if (String.IsNullOrEmpty(filename))
                 throw new ArgumentException(filename);
 
-            return renderSystem.LoadTexture(filename, ref textureDictionary);
+            if (renderSystem is OpenGLRenderer)
+            {
+                return LoadGLTexture(filename);
+            }
+            return null;
+        }
+
+        public static ITexture LoadGLTexture(string filepath)
+        {
+            ITexture texture;
+            textureDictionary.TryGetValue(filepath, out texture);
+            if (texture == null)
+            {
+                texture = new OpenGLTexture();
+                texture.ID = GL.GenTexture();
+                textureDictionary.Add(filepath, texture);
+                GL.BindTexture(TextureTarget.Texture2D, texture.ID);
+
+                // We will not upload mipmaps, so disable mipmapping (otherwise the texture will not appear).
+                // We can use GL.GenerateMipmaps() or GL.Ext.GenerateMipmaps() to create
+                // mipmaps automatically. In that case, use TextureMinFilter.LinearMipmapLinear to enable them.
+                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+
+                Bitmap bmp = new Bitmap(filepath);
+                BitmapData bmp_data = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, bmp_data.Width, bmp_data.Height, 0,
+                    OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bmp_data.Scan0);
+
+                bmp.UnlockBits(bmp_data);
+            }
+
+            return texture;
         }
 
         public static int LoadOpenGLShader(string shaderSource, ShaderType type)

@@ -18,6 +18,7 @@ using OpenGL_Game.GameCode.Components;
 using OpenGL_Game.GameCode.Components.Controllers;
 using OpenGL_Game.GameEngine.Colliders;
 using OpenGL_Game.GameEngine.Managers;
+using OpenGL_Game.OBJLoader;
 
 namespace OpenGL_Game.Scenes
 {
@@ -48,6 +49,7 @@ namespace OpenGL_Game.Scenes
         private bool swappedPortalAudio = false;
         private bool swappedPortalColour = false;
         public bool GameOver = false;
+        private ITexture heartTex, keyTex;
 
         public ControllerManager controllerManager;
         public ComponentCamera playerCamera; //Static camera manager in future to access this
@@ -106,6 +108,9 @@ namespace OpenGL_Game.Scenes
             ComponentTransform portalTransform = portal.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;
             portalTransform.Position = new Vector3(portalTransform.Position.X, 0.0f, portalTransform.Position.Z);
             audioSystem.PlaySound(portalAudio, true);
+
+            heartTex = ResourceManager.LoadTexture("GameCode\\Icons\\heart.png", renderSystem);
+            keyTex = ResourceManager.LoadTexture("GameCode\\Icons\\key.png", renderSystem);
         }
 
         private void CreateSystems()
@@ -189,8 +194,17 @@ namespace OpenGL_Game.Scenes
             // Render score
             float width = sceneManager.Width, height = sceneManager.Height, fontSize = Math.Min(width, height) / 10f;
             GUI.clearColour = Color.Transparent;
-            GUI.Label(new Rectangle(10, 10, (int)width, (int)(fontSize * 2f)), "Keys: " + KeysCollected, 18, StringAlignment.Near, Color.White);
-            GUI.Label(new Rectangle(10, 50, (int)width, (int)(fontSize * 2f)), "Lives: " + PlayerLives, 18, StringAlignment.Near, Color.White);
+            GUI.Label(new Rectangle(10, 50, (int)width, (int)(fontSize * 2f)), "Keys: ", 18, StringAlignment.Near, Color.White);
+            //GUI.DrawIcon(new Rectangle(70+(50), sceneManager.Height - 100, 50, 50), heartTex);
+            for (int i = 0; i < KeysCollected; i++)
+            {
+                GUI.DrawIcon(new Rectangle(80 + (55 * i), sceneManager.Height - 95, 50, 50), keyTex);
+            }
+            GUI.Label(new Rectangle(10, 150, (int)width, (int)(fontSize * 2f)), "Lives: ", 18, StringAlignment.Near, Color.White);
+            for (int i = 0; i < PlayerLives; i++)
+            {
+                GUI.DrawIcon(new Rectangle(80 + (55 * i), sceneManager.Height - 200, 50, 50), heartTex);
+            }
             GUI.Render();
         }
 

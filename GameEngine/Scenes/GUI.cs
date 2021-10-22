@@ -3,6 +3,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Drawing;
 using System.Drawing.Imaging;
+using OpenGL_Game.OBJLoader;
 
 namespace OpenGL_Game.Scenes
 {
@@ -90,6 +91,30 @@ namespace OpenGL_Game.Scenes
             }
         }
 
+        static public void DrawIcon(Rectangle rect, ITexture texture)
+        {
+            GL.Disable(EnableCap.DepthTest);
+            GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+            GL.Enable(EnableCap.Texture2D);
+            GL.Hint(HintTarget.PerspectiveCorrectionHint, HintMode.Nicest);
+            if (texture.ID != 0)
+            {
+                //rect.X = rect.X / ;
+                GL.BindTexture(TextureTarget.Texture2D, texture.ID);
+                GL.Begin(PrimitiveType.Quads);
+                GL.TexCoord2(0f, 1f); GL.Vertex2(rect.X, rect.Y);
+                GL.TexCoord2(1f, 1f); GL.Vertex2(rect.X + rect.Width, rect.Y);
+                GL.TexCoord2(1f, 0f); GL.Vertex2(rect.X + rect.Width, rect.Y + rect.Height);
+                GL.TexCoord2(0f, 0f); GL.Vertex2(rect.X, rect.Y + rect.Height);
+                GL.End();
+                GL.BindTexture(TextureTarget.Texture2D, 0);
+            }
+            GL.Disable(EnableCap.Texture2D);
+            GL.Disable(EnableCap.Blend);
+            GL.Enable(EnableCap.DepthTest);
+        }
+
         static public void Label(Rectangle rect, string text, int fontSize, StringAlignment sa, Color color)
         {
             StringFormat stringFormat = new StringFormat();
@@ -102,7 +127,7 @@ namespace OpenGL_Game.Scenes
 
         static public void Render()
         {
-            // Enable the texture
+            GL.Disable(EnableCap.DepthTest);
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactor.One, BlendingFactor.OneMinusSrcAlpha);
 
@@ -124,6 +149,7 @@ namespace OpenGL_Game.Scenes
 
             GL.BindTexture(TextureTarget.Texture2D, 0);
             GL.Disable(EnableCap.Texture2D);
+            GL.Enable(EnableCap.DepthTest);
 
             textGFX.Clear(clearColour);
         }
