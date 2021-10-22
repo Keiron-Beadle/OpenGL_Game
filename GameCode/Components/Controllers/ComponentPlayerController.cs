@@ -38,6 +38,16 @@ namespace OpenGL_Game.GameCode.Components.Controllers
             transform = player.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;
             footstepAudio = player.FindComponentByType(ComponentTypes.COMPONENT_AUDIO) as ComponentAudio;
             velocity = player.FindComponentByType(ComponentTypes.COMPONENT_VELOCITY) as ComponentVelocity;
+            originalPosition = transform.Position;
+        }
+
+        public override void ResetPosition()
+        {
+            base.ResetPosition();
+            camera.cameraPosition = originalPosition;
+            velocity.Velocity = Vector3.Zero;
+            mouseHAngle = 0.0f;
+            mouseVAngle = 0.0f;
         }
 
         public override void Update(SystemAudio audioSystem, float dt)

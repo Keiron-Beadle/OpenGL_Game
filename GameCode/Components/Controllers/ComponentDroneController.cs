@@ -66,6 +66,12 @@ namespace OpenGL_Game.GameCode.Components.Controllers
             return vDotT >= 0.707;
         }
 
+        public override void ResetPosition()
+        {
+            base.ResetPosition();
+            state = AI_STATE.GET_TO_NODE;
+        }
+
         public override void Update(SystemAudio audioSystem, float dt)
         {
             if (!ObstructedVision && PlayerVisible())

@@ -30,7 +30,7 @@
   </Pickups>
   <MovingObjects>
     <Object Type="Player" Name="Player">
-      <Transform XPos="19.5" YPos="1.06" ZPos="11.5" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
+      <Transform XPos="21.62" YPos="1.06" ZPos="10.92" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Camera XTarget="0" YTarget="2.23" ZTarget="5" Near="0.1" Far="100"/>
       <Velocity XVel="0" YVel="0" ZVel="0"/>
       <Audio SourceFile="GameCode\\Audio\\footsteps.wav"/>

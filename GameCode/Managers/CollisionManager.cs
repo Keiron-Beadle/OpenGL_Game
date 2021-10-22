@@ -56,7 +56,11 @@ namespace OpenGL_Game.GameCode.Managers
                 }
                 else if (tag1 == TAGS.PLAYER && tag2 == TAGS.ENEMY)
                 {
-                    Console.WriteLine("Player collided with enemy.");
+                    GameScene.gameInstance.PlayerLives--;
+                    ComponentAIController aiController = collision.Item2.FindComponentByType(ComponentTypes.COMPONENT_CONTROLLER) as ComponentAIController;
+                    aiController.ResetPosition();
+                    ComponentPlayerController playerController = collision.Item1.FindComponentByType(ComponentTypes.COMPONENT_CONTROLLER) as ComponentPlayerController;
+                    playerController.ResetPosition();
                 }
                 else if (tag1 == TAGS.ENEMY && tag2 == TAGS.WORLD || tag1 == TAGS.WORLD && tag2 == TAGS.ENEMY)
                 {

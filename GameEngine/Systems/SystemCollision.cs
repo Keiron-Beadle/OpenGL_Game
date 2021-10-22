@@ -17,6 +17,7 @@ namespace OpenGL_Game.GameEngine.Systems
         private List<Entity> enemies;
         private List<Entity> pickups;
         public bool HasCollisions = false;
+        private bool playerAlreadyAttacked = false;
 
         public List<Tuple<Entity,Entity,Vector3, Vector3>> Collisions { get; private set; }
 
@@ -63,6 +64,7 @@ namespace OpenGL_Game.GameEngine.Systems
 
         public override void OnAction()
         {
+            playerAlreadyAttacked = false;
             Collisions.Clear();
             UpdateColliders();
             DoCollisionDetection();
@@ -82,6 +84,11 @@ namespace OpenGL_Game.GameEngine.Systems
                 ((ComponentCollider)collider).Update();
             }
             foreach (var entity in enemies)
+            {
+                IComponent collider = entity.FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
+                ((ComponentCollider)collider).Update();
+            }
+            foreach (var entity in pickups)
             {
                 IComponent collider = entity.FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
                 ((ComponentCollider)collider).Update();
@@ -139,6 +146,7 @@ namespace OpenGL_Game.GameEngine.Systems
                     if (!lineOfSight) continue;
                     for (int k = 0; k < enemies.Count; k++)
                     {
+                        if (playerAlreadyAttacked) break;
                         //Do player collisions with enemies 
                         IComponent actorCollider = actors[j].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
                         IComponent enemyCollider = enemies[k].FindComponentByType(ComponentTypes.COMPONENT_COLLIDER);
@@ -150,6 +158,7 @@ namespace OpenGL_Game.GameEngine.Systems
                                 if (!result.Item1) continue;
                                 var collision = new Tuple<Entity, Entity, Vector3, Vector3>(actors[j], enemies[k], result.Item2, result.Item3);
                                 Collisions.Add(collision);
+                                playerAlreadyAttacked = true;
                             }
                         }
                         else if (actorCollider is ComponentSphereCollider s3 && enemyCollider is ComponentSphereCollider s4)
@@ -160,6 +169,7 @@ namespace OpenGL_Game.GameEngine.Systems
                                 if (!result.Item1) continue;
                                 var collision = new Tuple<Entity, Entity, Vector3, Vector3>(actors[j], enemies[k], result.Item2, result.Item3);
                                 Collisions.Add(collision);
+                                playerAlreadyAttacked = true;
                             }
                         }
                     }
