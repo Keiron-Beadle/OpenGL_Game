@@ -53,6 +53,15 @@ namespace OpenGL_Game.Systems
             AL.SourceStop(audioComp.Source);
         }
 
+        public void StopAllSounds()
+        {
+            foreach (Entity e in entities)
+            {
+                ComponentAudio ca = e.FindComponentByType(ComponentTypes.COMPONENT_AUDIO) as ComponentAudio;
+                AL.SourceStop(ca.Source);
+            }
+        }
+
         public override void OnAction()
         {
 

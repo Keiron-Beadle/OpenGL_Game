@@ -34,6 +34,10 @@ namespace OpenGL_Game.Managers
                 GL.DeleteShader(shader.Value);
             }
             shaderDictionary.Clear();
+            foreach (var audio in audioBufferDictionary)
+            {
+                AL.DeleteBuffer(audio.Value);
+            }
             audioBufferDictionary.Clear();
         }
 

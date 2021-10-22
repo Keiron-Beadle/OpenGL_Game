@@ -43,9 +43,11 @@ namespace OpenGL_Game.Scenes
         public static Vector3 WorldTranslate = Vector3.Zero;
 
         public int PlayerLives = 3;
-        public int KeysCollected = 0;
+        public int KeysCollected = 3;
         public int PortalOnlineBuffer;
         private bool swappedPortalAudio = false;
+        private bool swappedPortalColour = false;
+        public bool GameOver = false;
 
         public ControllerManager controllerManager;
         public ComponentCamera playerCamera; //Static camera manager in future to access this
@@ -124,16 +126,7 @@ namespace OpenGL_Game.Scenes
             //System.Console.WriteLine("fps=" + (int)(1.0/dt));
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();
-            if (KeysCollected == 3 && !swappedPortalAudio)
-            {
-                audioSystem.ReplaceSound(portalAudio, PortalOnlineBuffer);
-                swappedPortalAudio = true;
-            }
-            if (PlayerLives <= 0)
-            {
-                sceneManager.ChangeScene(SceneType.GAME_OVER_SCENE);
-            }
-
+            DoGameLogic();
             //Console.WriteLine(KeysCollected);
             //Console.WriteLine(playerCamera.cameraPosition);
             inputManager.Update(e);
@@ -144,6 +137,30 @@ namespace OpenGL_Game.Scenes
             if (!inputManager.StopCollision)
             {
                 collisionManager.Update();
+            }
+        }
+
+        private void DoGameLogic()
+        {
+            if (KeysCollected == 3 && !swappedPortalAudio)
+            {
+                audioSystem.ReplaceSound(portalAudio, PortalOnlineBuffer);
+                swappedPortalAudio = true;
+            }
+            if (KeysCollected == 3 && !swappedPortalColour)
+            {
+                Entity portal = entityManager.FindEntity("Portal");
+                ComponentGeometry geometry = portal.FindComponentByType(ComponentTypes.COMPONENT_GEOMETRY) as ComponentGeometry;
+                geometry.SetDiffuse(1.0f, new Vector3((20.0f / 255), (219.0f / 255), (83.0f / 255)), renderSystem);
+                swappedPortalColour = true;
+            }
+            if (PlayerLives <= 0)
+            {
+                sceneManager.ChangeScene(SceneType.GAME_OVER_SCENE);
+            }
+            if (GameOver)
+            {
+                sceneManager.ChangeScene(SceneType.GAME_OVER_SCENE);
             }
         }
 
@@ -181,6 +198,7 @@ namespace OpenGL_Game.Scenes
         /// </summary>
         public override void Close()
         {
+            audioSystem.StopAllSounds();
             ResourceManager.RemoveAllAssets();
         }
     }

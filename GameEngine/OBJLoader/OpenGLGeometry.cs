@@ -245,5 +245,16 @@ namespace OpenGL_Game.OBJLoader
             }
             return vertices;
         }
+
+        public void ChangeDiffuse(float maxColourBeforeChange, Vector3 colour)
+        {
+            for (int i = 0; i < groups.Count; i++)
+            {
+                if (groups[i].diffuse.Length < maxColourBeforeChange)
+                {
+                    groups[i].diffuse = colour;
+                }
+            }
+        }
     }
 }

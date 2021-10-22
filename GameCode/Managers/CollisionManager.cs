@@ -45,6 +45,10 @@ namespace OpenGL_Game.GameCode.Managers
                 counter++;
                 if (tag1 == TAGS.PLAYER && tag2 == TAGS.WORLD)
                 {
+                    if (collision.Item2.Name == "Portal" && GameScene.gameInstance.KeysCollected >= 3)
+                    {
+                        GameScene.gameInstance.GameOver = true;
+                    }
                     Entity p1 = collision.Item1;
                     ComponentTransform transform = p1.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;
                     Vector3 pushbackVector = collision.Item4;

@@ -19,6 +19,15 @@ namespace OpenGL_Game.Components
             get { return ComponentTypes.COMPONENT_GEOMETRY; }
         }
 
+        public void SetDiffuse(float maximumColourBeforeChange, Vector3 colour, SystemRender renderSystem)
+        {
+            if (renderSystem is OpenGLRenderer)
+            {
+                OpenGLGeometry glGeom = geometry as OpenGLGeometry;
+                glGeom.ChangeDiffuse(maximumColourBeforeChange, colour);
+            }
+        }
+
         public IGeometry Geometry()
         {
             return geometry;
