@@ -75,6 +75,7 @@ namespace OpenGL_Game.GameCode.Components.Controllers
         {
             base.ResetPosition();
             state = AI_STATE.GET_TO_NODE;
+            pathingModule.ResetPath();
         }
 
         public override void Update(SystemAudio audioSystem, float dt)
