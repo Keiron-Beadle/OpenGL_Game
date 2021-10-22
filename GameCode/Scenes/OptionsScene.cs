@@ -1,24 +1,27 @@
-﻿using System;
+﻿using OpenGL_Game.Managers;
+using OpenGL_Game.Scenes;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
-using OpenTK.Input;
-using OpenGL_Game.Managers;
+using System.Linq;
+using System.Text;
 
-namespace OpenGL_Game.Scenes
+namespace OpenGL_Game.GameCode.Scenes
 {
-    class MainMenuScene : Scene
+    class OptionsScene : Scene
     {
         OpenTKInputManager inputManager;
 
-        public MainMenuScene(SceneManager sceneManager) : base(sceneManager)
+        public OptionsScene(SceneManager pSceneManager): base(pSceneManager)
         {
             inputManager = new OpenTKInputManager(sceneManager);
             // Set the title of the window
-            sceneManager.Title = "Main Menu";
+            sceneManager.Title = "Options";
             // Set the Render and Update delegates to the Update and Render methods of this class
-            sceneManager.renderer = Render;
-            sceneManager.updater = Update;
+            sceneManager.renderer += Render;
+            sceneManager.updater += Update;
             sceneManager.CursorVisible = true;
             sceneManager.CursorGrabbed = false;
         }
@@ -26,13 +29,9 @@ namespace OpenGL_Game.Scenes
         public override void Update(FrameEventArgs e)
         {
             inputManager.Update(e);
-            if (inputManager.LeftClicked) 
+            if (inputManager.controlFlags["Escape"])
             {
-                sceneManager.ChangeScene(SceneType.GAME_SCENE);
-            }
-            else if (inputManager.controlFlags["Continue"])
-            {
-                sceneManager.ChangeScene(SceneType.OPTIONS_SCENE);
+                Close();
             }
         }
 
@@ -51,13 +50,14 @@ namespace OpenGL_Game.Scenes
             float width = sceneManager.Width, height = sceneManager.Height, fontSize = Math.Min(width, height) / 10f;
             GUI.Background();
             //GUI.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int)(fontSize * 2f)), "Main Menu", (int)fontSize, StringAlignment.Center);
-
             GUI.Render();
         }
 
         public override void Close()
         {
-            
+            sceneManager.updater -= Update;
+            sceneManager.renderer -= Render;
+            sceneManager.ChangeScene(SceneType.MAIN_MENU_SCENE);
         }
     }
 }

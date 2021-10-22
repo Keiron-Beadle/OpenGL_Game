@@ -8,6 +8,7 @@ namespace OpenGL_Game.Scenes
         GAME_SCENE,
         MAIN_MENU_SCENE,
         GAME_OVER_SCENE,
+        OPTIONS_SCENE
     }
 
     interface IScene

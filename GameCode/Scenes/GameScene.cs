@@ -43,7 +43,7 @@ namespace OpenGL_Game.Scenes
         public static Vector3 WorldTranslate = Vector3.Zero;
 
         public int PlayerLives = 3;
-        public int KeysCollected = 2;
+        public int KeysCollected = 0;
         public int PortalOnlineBuffer;
         private bool swappedPortalAudio = false;
 
@@ -129,6 +129,10 @@ namespace OpenGL_Game.Scenes
                 audioSystem.ReplaceSound(portalAudio, PortalOnlineBuffer);
                 swappedPortalAudio = true;
             }
+            if (PlayerLives <= 0)
+            {
+                sceneManager.ChangeScene(SceneType.GAME_OVER_SCENE);
+            }
 
             //Console.WriteLine(KeysCollected);
             //Console.WriteLine(playerCamera.cameraPosition);
@@ -142,9 +146,6 @@ namespace OpenGL_Game.Scenes
 
         private void ProcessInput()
         {
-            //Check if we need to change scene
-            if (inputManager.IsActive("Continue"))
-                sceneManager.ChangeScene(SceneType.GAME_OVER_SCENE);
             //Check if we need to exit
             if (inputManager.IsActive("Escape"))
                 sceneManager.Exit();

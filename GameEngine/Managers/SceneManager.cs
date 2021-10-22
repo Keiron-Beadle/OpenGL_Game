@@ -4,6 +4,7 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using OpenGL_Game.Scenes;
 using System.Collections.Generic;
+using OpenGL_Game.GameCode.Scenes;
 
 namespace OpenGL_Game.Managers
 {
@@ -65,16 +66,30 @@ namespace OpenGL_Game.Managers
                     StartNewGame();
                     break;
                 case SceneType.MAIN_MENU_SCENE:
-                    GUI.LoadImage("GameCode//Scenes//MainMenuImage.jpg");
+                    GUI.LoadImage("GameCode\\Scenes\\MainMenuImage.jpg");
                     StartMenu();
                     break;
                 case SceneType.GAME_OVER_SCENE:
-                    GUI.LoadImage("GameCode//Scenes//GameOverImage.jpg");
+                    GUI.LoadImage("GameCode\\Scenes\\GameOverImage.jpg");
                     StartGameOver();
+                    break;
+                case SceneType.OPTIONS_SCENE:
+                    GUI.LoadImage("GameCode\\Scenes\\OptionsImage.jpg");
+                    StartOptions();
                     break;
                 case SceneType.NULL_SCENE:
                     break;
             }
+        }
+
+        public void PopScene()
+        {
+            scenes.Pop();
+        }
+
+        private void StartOptions()
+        {
+            scenes.Push(new OptionsScene(this));
         }
 
         private void StartGameOver()
