@@ -11,1898 +11,2404 @@
     <PointLight XPos="-4.7811" YPos="0.3" ZPos="4.323" Constant="1.0" Linear="0.25" Quadratic="0.052" XAmb="0.01" YAmb="0.01" ZAmb ="0.01" XDiff="0.0666" YDiff="0.4705" ZDiff="0.23529" XSpec="0.1" YSpec="0.1" ZSpec="0.1" />
     <PointLight XPos="9.705" YPos="1.06" ZPos="1.461" Constant="1.0" Linear="0.75" Quadratic="0.152" XAmb="0.01" YAmb="0.01" ZAmb ="0.01" XDiff="0.4274" YDiff="0.04705" ZDiff="0.4294" XSpec="0.1" YSpec="0.1" ZSpec="0.1" />
   </Lights>
-  <Objects>
+  <MovingObjects>
+    <Object Type="Player" Name="Player">
+      <Transform XPos="19.5" YPos="1.06" ZPos="11.5" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
+      <Camera XTarget="0" YTarget="2.23" ZTarget="5" Near="0.1" Far="100"/>
+      <Velocity XVel="0" YVel="0" ZVel="0"/>
+      <Audio SourceFile="GameCode\\Audio\\footsteps.wav"/>
+      <PlayerController />
+      <Collider Type="Sphere" XCenter="0" YCenter="0" ZCenter="0" Radius="0.14"/>
+      <Collider Type="Sphere" XCenter="0" YCenter="0" ZCenter="0" Radius="0.14" XOffSet="0" YOffSet="-1.06" ZOffSet="0"/>
+    </Object>
+    <Object Type="Drone" Name="Drone">
+      <Transform XPos="10" YPos="1.0" ZPos="11" XRot="0" YRot="0" ZRot="0" XScale="0.1" YScale="0.1" ZScale="0.1" />
+      <Geometry />
+      <Velocity XVel="0" YVel="0" ZVel="0"/>
+      <Audio SourceFile="GameCode\\Audio\\buzz.wav"/>
+      <DroneController GraphTextPath="GameCode\\graphMap.txt"/>
+      <Collider Type="Box"/>
+    </Object>
+    <Object Type="Ball" Name="BouncingBall">
+      <Transform XPos="2.31" YPos="1.6" ZPos="8.235" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
+      <Geometry />
+      <Velocity XVel="0" YVel="0" ZVel="0"/>
+      <BouncingController YMax="1.6" ZMax="8.340" YMin="0.1" ZMin="3.64"/>
+      <Collider Type="Sphere"/>
+    </Object>
+    <Object Type="Ball" Name="RollingBall">
+      <Transform XPos="-10.15" YPos="0.14" ZPos="17.73" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
+      <Geometry />
+      <Velocity XVel="0" YVel="0" ZVel="0"/>
+      <RollingController XMin="-12" ZMin="-9" XMax="-4.080" ZMax="-4.064"/>
+      <Collider Type="Sphere"/>
+    </Object>
+  </MovingObjects>
+  <Terrain>
     <Object Type="Floor" Name="Floor0.0">
       <Transform XPos="0" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Corner" Name="MapObject0.0">
       <Transform XPos="0" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor1.0">
       <Transform XPos="1" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject1.0">
       <Transform XPos="1" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor2.0">
       <Transform XPos="2" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject2.0">
       <Transform XPos="2" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor3.0">
       <Transform XPos="3" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject3.0">
       <Transform XPos="3" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor4.0">
       <Transform XPos="4" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject4.0">
       <Transform XPos="4" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor5.0">
       <Transform XPos="5" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject5.0">
       <Transform XPos="5" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor6.0">
       <Transform XPos="6" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject6.0">
       <Transform XPos="6" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor7.0">
       <Transform XPos="7" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject7.0">
       <Transform XPos="7" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor8.0">
       <Transform XPos="8" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject8.0">
       <Transform XPos="8" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor9.0">
       <Transform XPos="9" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Corner" Name="MapObject9.0">
       <Transform XPos="9" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor13.0">
       <Transform XPos="13" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Corner" Name="MapObject13.0">
       <Transform XPos="13" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor14.0">
       <Transform XPos="14" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject14.0">
       <Transform XPos="14" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor15.0">
       <Transform XPos="15" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject15.0">
       <Transform XPos="15" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor16.0">
       <Transform XPos="16" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject16.0">
       <Transform XPos="16" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor17.0">
       <Transform XPos="17" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject17.0">
       <Transform XPos="17" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor18.0">
       <Transform XPos="18" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Corner" Name="MapObject18.0">
       <Transform XPos="18" YPos="0" ZPos="0" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor0.1">
       <Transform XPos="0" YPos="0" ZPos="1" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject0.1">
       <Transform XPos="0" YPos="0" ZPos="1" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor1.1">
       <Transform XPos="1" YPos="0" ZPos="1" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor2.1">
       <Transform XPos="2" YPos="0" ZPos="1" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor3.1">
       <Transform XPos="3" YPos="0" ZPos="1" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor4.1">
       <Transform XPos="4" YPos="0" ZPos="1" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor5.1">
       <Transform XPos="5" YPos="0" ZPos="1" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor6.1">
       <Transform XPos="6" YPos="0" ZPos="1" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor7.1">
       <Transform XPos="7" YPos="0" ZPos="1" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor8.1">
       <Transform XPos="8" YPos="0" ZPos="1" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor9.1">
       <Transform XPos="9" YPos="0" ZPos="1" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject9.1">
       <Transform XPos="9" YPos="0" ZPos="1" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor13.1">
       <Transform XPos="13" YPos="0" ZPos="1" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject13.1">
       <Transform XPos="13" YPos="0" ZPos="1" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor14.1">
       <Transform XPos="14" YPos="0" ZPos="1" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor15.1">
       <Transform XPos="15" YPos="0" ZPos="1" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor16.1">
       <Transform XPos="16" YPos="0" ZPos="1" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor17.1">
       <Transform XPos="17" YPos="0" ZPos="1" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor18.1">
       <Transform XPos="18" YPos="0" ZPos="1" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject18.1">
       <Transform XPos="18" YPos="0" ZPos="1" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor0.2">
       <Transform XPos="0" YPos="0" ZPos="2" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject0.2">
       <Transform XPos="0" YPos="0" ZPos="2" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor1.2">
       <Transform XPos="1" YPos="0" ZPos="2" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor2.2">
       <Transform XPos="2" YPos="0" ZPos="2" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor3.2">
       <Transform XPos="3" YPos="0" ZPos="2" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor4.2">
       <Transform XPos="4" YPos="0" ZPos="2" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor5.2">
       <Transform XPos="5" YPos="0" ZPos="2" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor6.2">
       <Transform XPos="6" YPos="0" ZPos="2" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor7.2">
       <Transform XPos="7" YPos="0" ZPos="2" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor8.2">
       <Transform XPos="8" YPos="0" ZPos="2" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor9.2">
       <Transform XPos="9" YPos="0" ZPos="2" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject9.2">
       <Transform XPos="9" YPos="0" ZPos="2" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor13.2">
       <Transform XPos="13" YPos="0" ZPos="2" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject13.2">
       <Transform XPos="13" YPos="0" ZPos="2" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor14.2">
       <Transform XPos="14" YPos="0" ZPos="2" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor15.2">
       <Transform XPos="15" YPos="0" ZPos="2" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor16.2">
       <Transform XPos="16" YPos="0" ZPos="2" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor17.2">
       <Transform XPos="17" YPos="0" ZPos="2" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor18.2">
       <Transform XPos="18" YPos="0" ZPos="2" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject18.2">
       <Transform XPos="18" YPos="0" ZPos="2" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor0.3">
       <Transform XPos="0" YPos="0" ZPos="3" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject0.3">
       <Transform XPos="0" YPos="0" ZPos="3" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor1.3">
       <Transform XPos="1" YPos="0" ZPos="3" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor2.3">
       <Transform XPos="2" YPos="0" ZPos="3" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor3.3">
       <Transform XPos="3" YPos="0" ZPos="3" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor4.3">
       <Transform XPos="4" YPos="0" ZPos="3" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor5.3">
       <Transform XPos="5" YPos="0" ZPos="3" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor6.3">
       <Transform XPos="6" YPos="0" ZPos="3" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor7.3">
       <Transform XPos="7" YPos="0" ZPos="3" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor8.3">
       <Transform XPos="8" YPos="0" ZPos="3" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor9.3">
       <Transform XPos="9" YPos="0" ZPos="3" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject9.3">
       <Transform XPos="9" YPos="0" ZPos="3" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor13.3">
       <Transform XPos="13" YPos="0" ZPos="3" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject13.3">
       <Transform XPos="13" YPos="0" ZPos="3" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor14.3">
       <Transform XPos="14" YPos="0" ZPos="3" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor15.3">
       <Transform XPos="15" YPos="0" ZPos="3" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor16.3">
       <Transform XPos="16" YPos="0" ZPos="3" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor17.3">
       <Transform XPos="17" YPos="0" ZPos="3" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor18.3">
       <Transform XPos="18" YPos="0" ZPos="3" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject18.3">
       <Transform XPos="18" YPos="0" ZPos="3" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor0.4">
       <Transform XPos="0" YPos="0" ZPos="4" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject0.4">
       <Transform XPos="0" YPos="0" ZPos="4" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor1.4">
       <Transform XPos="1" YPos="0" ZPos="4" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor2.4">
       <Transform XPos="2" YPos="0" ZPos="4" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor3.4">
       <Transform XPos="3" YPos="0" ZPos="4" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor4.4">
       <Transform XPos="4" YPos="0" ZPos="4" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor5.4">
       <Transform XPos="5" YPos="0" ZPos="4" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor6.4">
       <Transform XPos="6" YPos="0" ZPos="4" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor7.4">
       <Transform XPos="7" YPos="0" ZPos="4" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor8.4">
       <Transform XPos="8" YPos="0" ZPos="4" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor9.4">
       <Transform XPos="9" YPos="0" ZPos="4" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Connector" Name="MapObject9.4">
       <Transform XPos="9" YPos="0" ZPos="4" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor10.4">
       <Transform XPos="10" YPos="0" ZPos="4" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Connector" Name="MapObject10.4">
       <Transform XPos="10" YPos="0" ZPos="4" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor11.4">
       <Transform XPos="11" YPos="0" ZPos="4" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Connector" Name="MapObject11.4">
       <Transform XPos="11" YPos="0" ZPos="4" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor12.4">
       <Transform XPos="12" YPos="0" ZPos="4" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Connector" Name="MapObject12.4">
       <Transform XPos="12" YPos="0" ZPos="4" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor13.4">
       <Transform XPos="13" YPos="0" ZPos="4" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Connector" Name="MapObject13.4">
       <Transform XPos="13" YPos="0" ZPos="4" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor14.4">
       <Transform XPos="14" YPos="0" ZPos="4" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor15.4">
       <Transform XPos="15" YPos="0" ZPos="4" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor16.4">
       <Transform XPos="16" YPos="0" ZPos="4" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor17.4">
       <Transform XPos="17" YPos="0" ZPos="4" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor18.4">
       <Transform XPos="18" YPos="0" ZPos="4" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject18.4">
       <Transform XPos="18" YPos="0" ZPos="4" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor0.5">
       <Transform XPos="0" YPos="0" ZPos="5" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject0.5">
       <Transform XPos="0" YPos="0" ZPos="5" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor1.5">
       <Transform XPos="1" YPos="0" ZPos="5" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor2.5">
       <Transform XPos="2" YPos="0" ZPos="5" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor3.5">
       <Transform XPos="3" YPos="0" ZPos="5" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor4.5">
       <Transform XPos="4" YPos="0" ZPos="5" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor5.5">
       <Transform XPos="5" YPos="0" ZPos="5" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor6.5">
       <Transform XPos="6" YPos="0" ZPos="5" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor7.5">
       <Transform XPos="7" YPos="0" ZPos="5" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor8.5">
       <Transform XPos="8" YPos="0" ZPos="5" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor9.5">
       <Transform XPos="9" YPos="0" ZPos="5" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject9.5">
       <Transform XPos="9" YPos="0" ZPos="5" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor13.5">
       <Transform XPos="13" YPos="0" ZPos="5" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Corner" Name="MapObject13.5">
       <Transform XPos="13" YPos="0" ZPos="5" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor14.5">
       <Transform XPos="14" YPos="0" ZPos="5" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject14.5">
       <Transform XPos="14" YPos="0" ZPos="5" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor15.5">
       <Transform XPos="15" YPos="0" ZPos="5" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject15.5">
       <Transform XPos="15" YPos="0" ZPos="5" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor16.5">
       <Transform XPos="16" YPos="0" ZPos="5" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Connector" Name="MapObject16.5">
       <Transform XPos="16" YPos="0" ZPos="5" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor17.5">
       <Transform XPos="17" YPos="0" ZPos="5" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject17.5">
       <Transform XPos="17" YPos="0" ZPos="5" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor18.5">
       <Transform XPos="18" YPos="0" ZPos="5" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Corner" Name="MapObject18.5">
       <Transform XPos="18" YPos="0" ZPos="5" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor0.6">
       <Transform XPos="0" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Corner" Name="MapObject0.6">
       <Transform XPos="0" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor1.6">
       <Transform XPos="1" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject1.6">
       <Transform XPos="1" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor2.6">
       <Transform XPos="2" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject2.6">
       <Transform XPos="2" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor3.6">
       <Transform XPos="3" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Connector" Name="MapObject3.6">
       <Transform XPos="3" YPos="0" ZPos="6" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor4.6">
       <Transform XPos="4" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject4.6">
       <Transform XPos="4" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor5.6">
       <Transform XPos="5" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject5.6">
       <Transform XPos="5" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor6.6">
       <Transform XPos="6" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject6.6">
       <Transform XPos="6" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor7.6">
       <Transform XPos="7" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject7.6">
       <Transform XPos="7" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor8.6">
       <Transform XPos="8" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Connector" Name="MapObject8.6">
       <Transform XPos="8" YPos="0" ZPos="6" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor9.6">
       <Transform XPos="9" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Corner" Name="MapObject9.6">
       <Transform XPos="9" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor10.6">
       <Transform XPos="10" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject10.6">
       <Transform XPos="10" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor11.6">
       <Transform XPos="11" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject11.6">
       <Transform XPos="11" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor12.6">
       <Transform XPos="12" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject12.6">
       <Transform XPos="12" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor13.6">
       <Transform XPos="13" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Corner" Name="MapObject13.6">
       <Transform XPos="13" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor14.6">
       <Transform XPos="14" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor15.6">
       <Transform XPos="15" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor16.6">
       <Transform XPos="16" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Connector" Name="MapObject16.6">
       <Transform XPos="16" YPos="0" ZPos="6" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor17.6">
       <Transform XPos="17" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Corner" Name="MapObject17.6">
       <Transform XPos="17" YPos="0" ZPos="6" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor3.7">
       <Transform XPos="3" YPos="0" ZPos="7" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Connector" Name="MapObject3.7">
       <Transform XPos="3" YPos="0" ZPos="7" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor8.7">
       <Transform XPos="8" YPos="0" ZPos="7" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Connector" Name="MapObject8.7">
       <Transform XPos="8" YPos="0" ZPos="7" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor9.7">
       <Transform XPos="9" YPos="0" ZPos="7" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor10.7">
       <Transform XPos="10" YPos="0" ZPos="7" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor11.7">
       <Transform XPos="11" YPos="0" ZPos="7" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor12.7">
       <Transform XPos="12" YPos="0" ZPos="7" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor13.7">
       <Transform XPos="13" YPos="0" ZPos="7" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor14.7">
       <Transform XPos="14" YPos="0" ZPos="7" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor15.7">
       <Transform XPos="15" YPos="0" ZPos="7" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor16.7">
       <Transform XPos="16" YPos="0" ZPos="7" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor17.7">
       <Transform XPos="17" YPos="0" ZPos="7" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject17.7">
       <Transform XPos="17" YPos="0" ZPos="7" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor3.8">
       <Transform XPos="3" YPos="0" ZPos="8" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Connector" Name="MapObject3.8">
       <Transform XPos="3" YPos="0" ZPos="8" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor7.8">
       <Transform XPos="7" YPos="0" ZPos="8" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Corner" Name="MapObject7.8">
       <Transform XPos="7" YPos="0" ZPos="8" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor8.8">
       <Transform XPos="8" YPos="0" ZPos="8" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Connector" Name="MapObject8.8">
       <Transform XPos="8" YPos="0" ZPos="8" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor9.8">
       <Transform XPos="9" YPos="0" ZPos="8" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor10.8">
       <Transform XPos="10" YPos="0" ZPos="8" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor11.8">
       <Transform XPos="11" YPos="0" ZPos="8" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor12.8">
       <Transform XPos="12" YPos="0" ZPos="8" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor13.8">
       <Transform XPos="13" YPos="0" ZPos="8" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor14.8">
       <Transform XPos="14" YPos="0" ZPos="8" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor15.8">
       <Transform XPos="15" YPos="0" ZPos="8" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor16.8">
       <Transform XPos="16" YPos="0" ZPos="8" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor17.8">
       <Transform XPos="17" YPos="0" ZPos="8" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject17.8">
       <Transform XPos="17" YPos="0" ZPos="8" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor19.8">
       <Transform XPos="19" YPos="0" ZPos="8" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Corner" Name="MapObject19.8">
       <Transform XPos="19" YPos="0" ZPos="8" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor20.8">
       <Transform XPos="20" YPos="0" ZPos="8" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject20.8">
       <Transform XPos="20" YPos="0" ZPos="8" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor21.8">
       <Transform XPos="21" YPos="0" ZPos="8" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject21.8">
       <Transform XPos="21" YPos="0" ZPos="8" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor22.8">
       <Transform XPos="22" YPos="0" ZPos="8" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject22.8">
       <Transform XPos="22" YPos="0" ZPos="8" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor23.8">
       <Transform XPos="23" YPos="0" ZPos="8" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject23.8">
       <Transform XPos="23" YPos="0" ZPos="8" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor24.8">
       <Transform XPos="24" YPos="0" ZPos="8" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Corner" Name="MapObject24.8">
       <Transform XPos="24" YPos="0" ZPos="8" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor3.9">
       <Transform XPos="3" YPos="0" ZPos="9" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Connector" Name="MapObject3.9">
       <Transform XPos="3" YPos="0" ZPos="9" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor7.9">
       <Transform XPos="7" YPos="0" ZPos="9" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject7.9">
       <Transform XPos="7" YPos="0" ZPos="9" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor8.9">
       <Transform XPos="8" YPos="0" ZPos="9" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor9.9">
       <Transform XPos="9" YPos="0" ZPos="9" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor10.9">
       <Transform XPos="10" YPos="0" ZPos="9" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor11.9">
       <Transform XPos="11" YPos="0" ZPos="9" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor12.9">
       <Transform XPos="12" YPos="0" ZPos="9" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor13.9">
       <Transform XPos="13" YPos="0" ZPos="9" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor14.9">
       <Transform XPos="14" YPos="0" ZPos="9" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor15.9">
       <Transform XPos="15" YPos="0" ZPos="9" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor16.9">
       <Transform XPos="16" YPos="0" ZPos="9" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor17.9">
       <Transform XPos="17" YPos="0" ZPos="9" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject17.9">
       <Transform XPos="17" YPos="0" ZPos="9" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor19.9">
       <Transform XPos="19" YPos="0" ZPos="9" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject19.9">
       <Transform XPos="19" YPos="0" ZPos="9" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor20.9">
       <Transform XPos="20" YPos="0" ZPos="9" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor21.9">
       <Transform XPos="21" YPos="0" ZPos="9" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor22.9">
       <Transform XPos="22" YPos="0" ZPos="9" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor23.9">
       <Transform XPos="23" YPos="0" ZPos="9" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor24.9">
       <Transform XPos="24" YPos="0" ZPos="9" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject24.9">
       <Transform XPos="24" YPos="0" ZPos="9" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor3.10">
       <Transform XPos="3" YPos="0" ZPos="10" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Connector" Name="MapObject3.10">
       <Transform XPos="3" YPos="0" ZPos="10" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor7.10">
       <Transform XPos="7" YPos="0" ZPos="10" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject7.10">
       <Transform XPos="7" YPos="0" ZPos="10" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor8.10">
       <Transform XPos="8" YPos="0" ZPos="10" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor9.10">
       <Transform XPos="9" YPos="0" ZPos="10" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor10.10">
       <Transform XPos="10" YPos="0" ZPos="10" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor11.10">
       <Transform XPos="11" YPos="0" ZPos="10" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor12.10">
       <Transform XPos="12" YPos="0" ZPos="10" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor13.10">
       <Transform XPos="13" YPos="0" ZPos="10" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor14.10">
       <Transform XPos="14" YPos="0" ZPos="10" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor15.10">
       <Transform XPos="15" YPos="0" ZPos="10" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor16.10">
       <Transform XPos="16" YPos="0" ZPos="10" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor17.10">
       <Transform XPos="17" YPos="0" ZPos="10" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject17.10">
       <Transform XPos="17" YPos="0" ZPos="10" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor19.10">
       <Transform XPos="19" YPos="0" ZPos="10" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject19.10">
       <Transform XPos="19" YPos="0" ZPos="10" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor20.10">
       <Transform XPos="20" YPos="0" ZPos="10" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor21.10">
       <Transform XPos="21" YPos="0" ZPos="10" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor22.10">
       <Transform XPos="22" YPos="0" ZPos="10" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor23.10">
       <Transform XPos="23" YPos="0" ZPos="10" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor24.10">
       <Transform XPos="24" YPos="0" ZPos="10" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject24.10">
       <Transform XPos="24" YPos="0" ZPos="10" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor3.11">
       <Transform XPos="3" YPos="0" ZPos="11" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Connector" Name="MapObject3.11">
       <Transform XPos="3" YPos="0" ZPos="11" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor7.11">
       <Transform XPos="7" YPos="0" ZPos="11" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject7.11">
       <Transform XPos="7" YPos="0" ZPos="11" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor8.11">
       <Transform XPos="8" YPos="0" ZPos="11" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor9.11">
       <Transform XPos="9" YPos="0" ZPos="11" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor10.11">
       <Transform XPos="10" YPos="0" ZPos="11" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor11.11">
       <Transform XPos="11" YPos="0" ZPos="11" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor12.11">
       <Transform XPos="12" YPos="0" ZPos="11" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor13.11">
       <Transform XPos="13" YPos="0" ZPos="11" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor14.11">
       <Transform XPos="14" YPos="0" ZPos="11" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor15.11">
       <Transform XPos="15" YPos="0" ZPos="11" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor16.11">
       <Transform XPos="16" YPos="0" ZPos="11" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor17.11">
       <Transform XPos="17" YPos="0" ZPos="11" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Connector" Name="MapObject17.11">
       <Transform XPos="17" YPos="0" ZPos="11" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor18.11">
       <Transform XPos="18" YPos="0" ZPos="11" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Connector" Name="MapObject18.11">
       <Transform XPos="18" YPos="0" ZPos="11" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor19.11">
       <Transform XPos="19" YPos="0" ZPos="11" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Connector" Name="MapObject19.11">
       <Transform XPos="19" YPos="0" ZPos="11" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor20.11">
       <Transform XPos="20" YPos="0" ZPos="11" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor21.11">
       <Transform XPos="21" YPos="0" ZPos="11" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor22.11">
       <Transform XPos="22" YPos="0" ZPos="11" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor23.11">
       <Transform XPos="23" YPos="0" ZPos="11" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Portal" Name="MapObject23.11">
       <Transform XPos="23" YPos="0" ZPos="11" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor24.11">
       <Transform XPos="24" YPos="0" ZPos="11" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject24.11">
       <Transform XPos="24" YPos="0" ZPos="11" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor3.12">
       <Transform XPos="3" YPos="0" ZPos="12" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Connector" Name="MapObject3.12">
       <Transform XPos="3" YPos="0" ZPos="12" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor6.12">
       <Transform XPos="6" YPos="0" ZPos="12" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor7.12">
       <Transform XPos="7" YPos="0" ZPos="12" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject7.12">
       <Transform XPos="7" YPos="0" ZPos="12" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor8.12">
       <Transform XPos="8" YPos="0" ZPos="12" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor9.12">
       <Transform XPos="9" YPos="0" ZPos="12" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor10.12">
       <Transform XPos="10" YPos="0" ZPos="12" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor11.12">
       <Transform XPos="11" YPos="0" ZPos="12" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor12.12">
       <Transform XPos="12" YPos="0" ZPos="12" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor13.12">
       <Transform XPos="13" YPos="0" ZPos="12" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor14.12">
       <Transform XPos="14" YPos="0" ZPos="12" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor15.12">
       <Transform XPos="15" YPos="0" ZPos="12" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor16.12">
       <Transform XPos="16" YPos="0" ZPos="12" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor17.12">
       <Transform XPos="17" YPos="0" ZPos="12" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject17.12">
       <Transform XPos="17" YPos="0" ZPos="12" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor19.12">
       <Transform XPos="19" YPos="0" ZPos="12" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject19.12">
       <Transform XPos="19" YPos="0" ZPos="12" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor20.12">
       <Transform XPos="20" YPos="0" ZPos="12" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor21.12">
       <Transform XPos="21" YPos="0" ZPos="12" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor22.12">
       <Transform XPos="22" YPos="0" ZPos="12" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor23.12">
       <Transform XPos="23" YPos="0" ZPos="12" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor24.12">
       <Transform XPos="24" YPos="0" ZPos="12" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject24.12">
       <Transform XPos="24" YPos="0" ZPos="12" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor0.13">
       <Transform XPos="0" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Corner" Name="MapObject0.13">
       <Transform XPos="0" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor1.13">
       <Transform XPos="1" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject1.13">
       <Transform XPos="1" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor2.13">
       <Transform XPos="2" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject2.13">
       <Transform XPos="2" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor3.13">
       <Transform XPos="3" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Connector" Name="MapObject3.13">
       <Transform XPos="3" YPos="0" ZPos="13" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor4.13">
       <Transform XPos="4" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject4.13">
       <Transform XPos="4" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor5.13">
       <Transform XPos="5" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject5.13">
       <Transform XPos="5" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor6.13">
       <Transform XPos="6" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Corner" Name="MapObject6.13">
       <Transform XPos="6" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor7.13">
       <Transform XPos="7" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject7.13">
       <Transform XPos="7" YPos="0" ZPos="13" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor8.13">
       <Transform XPos="8" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor9.13">
       <Transform XPos="9" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor10.13">
       <Transform XPos="10" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor11.13">
       <Transform XPos="11" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor12.13">
       <Transform XPos="12" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor13.13">
       <Transform XPos="13" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor14.13">
       <Transform XPos="14" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor15.13">
       <Transform XPos="15" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor16.13">
       <Transform XPos="16" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor17.13">
       <Transform XPos="17" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject17.13">
       <Transform XPos="17" YPos="0" ZPos="13" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor19.13">
       <Transform XPos="19" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject19.13">
       <Transform XPos="19" YPos="0" ZPos="13" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor20.13">
       <Transform XPos="20" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor21.13">
       <Transform XPos="21" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor22.13">
       <Transform XPos="22" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor23.13">
       <Transform XPos="23" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor24.13">
       <Transform XPos="24" YPos="0" ZPos="13" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject24.13">
       <Transform XPos="24" YPos="0" ZPos="13" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor0.14">
       <Transform XPos="0" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject0.14">
       <Transform XPos="0" YPos="0" ZPos="14" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor1.14">
       <Transform XPos="1" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor2.14">
       <Transform XPos="2" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor3.14">
       <Transform XPos="3" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor4.14">
       <Transform XPos="4" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor5.14">
       <Transform XPos="5" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor6.14">
       <Transform XPos="6" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject6.14">
       <Transform XPos="6" YPos="0" ZPos="14" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor7.14">
       <Transform XPos="7" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject7.14">
       <Transform XPos="7" YPos="0" ZPos="14" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor8.14">
       <Transform XPos="8" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor9.14">
       <Transform XPos="9" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor10.14">
       <Transform XPos="10" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor11.14">
       <Transform XPos="11" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor12.14">
       <Transform XPos="12" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor13.14">
       <Transform XPos="13" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor14.14">
       <Transform XPos="14" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor15.14">
       <Transform XPos="15" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor16.14">
       <Transform XPos="16" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor17.14">
       <Transform XPos="17" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject17.14">
       <Transform XPos="17" YPos="0" ZPos="14" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor19.14">
       <Transform XPos="19" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Corner" Name="MapObject19.14">
       <Transform XPos="19" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor20.14">
       <Transform XPos="20" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject20.14">
       <Transform XPos="20" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor21.14">
       <Transform XPos="21" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject21.14">
       <Transform XPos="21" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor22.14">
       <Transform XPos="22" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject22.14">
       <Transform XPos="22" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor23.14">
       <Transform XPos="23" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject23.14">
       <Transform XPos="23" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor24.14">
       <Transform XPos="24" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Corner" Name="MapObject24.14">
       <Transform XPos="24" YPos="0" ZPos="14" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor0.15">
       <Transform XPos="0" YPos="0" ZPos="15" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject0.15">
       <Transform XPos="0" YPos="0" ZPos="15" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor1.15">
       <Transform XPos="1" YPos="0" ZPos="15" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor2.15">
       <Transform XPos="2" YPos="0" ZPos="15" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor3.15">
       <Transform XPos="3" YPos="0" ZPos="15" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor4.15">
       <Transform XPos="4" YPos="0" ZPos="15" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor5.15">
       <Transform XPos="5" YPos="0" ZPos="15" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor6.15">
       <Transform XPos="6" YPos="0" ZPos="15" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject6.15">
       <Transform XPos="6" YPos="0" ZPos="15" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor7.15">
       <Transform XPos="7" YPos="0" ZPos="15" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject7.15">
       <Transform XPos="7" YPos="0" ZPos="15" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor8.15">
       <Transform XPos="8" YPos="0" ZPos="15" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Corner" Name="MapObject8.15">
       <Transform XPos="8" YPos="0" ZPos="15" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor9.15">
       <Transform XPos="9" YPos="0" ZPos="15" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor10.15">
       <Transform XPos="10" YPos="0" ZPos="15" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor11.15">
       <Transform XPos="11" YPos="0" ZPos="15" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor12.15">
       <Transform XPos="12" YPos="0" ZPos="15" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor13.15">
       <Transform XPos="13" YPos="0" ZPos="15" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor14.15">
       <Transform XPos="14" YPos="0" ZPos="15" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor15.15">
       <Transform XPos="15" YPos="0" ZPos="15" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor16.15">
       <Transform XPos="16" YPos="0" ZPos="15" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor17.15">
       <Transform XPos="17" YPos="0" ZPos="15" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject17.15">
       <Transform XPos="17" YPos="0" ZPos="15" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor0.16">
       <Transform XPos="0" YPos="0" ZPos="16" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject0.16">
       <Transform XPos="0" YPos="0" ZPos="16" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor1.16">
       <Transform XPos="1" YPos="0" ZPos="16" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor2.16">
       <Transform XPos="2" YPos="0" ZPos="16" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor3.16">
       <Transform XPos="3" YPos="0" ZPos="16" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor4.16">
       <Transform XPos="4" YPos="0" ZPos="16" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor5.16">
       <Transform XPos="5" YPos="0" ZPos="16" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor6.16">
       <Transform XPos="6" YPos="0" ZPos="16" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Connector" Name="MapObject6.16">
       <Transform XPos="6" YPos="0" ZPos="16" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor7.16">
       <Transform XPos="7" YPos="0" ZPos="16" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Connector" Name="MapObject7.16">
       <Transform XPos="7" YPos="0" ZPos="16" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor8.16">
       <Transform XPos="8" YPos="0" ZPos="16" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Connector" Name="MapObject8.16">
       <Transform XPos="8" YPos="0" ZPos="16" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor9.16">
       <Transform XPos="9" YPos="0" ZPos="16" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor10.16">
       <Transform XPos="10" YPos="0" ZPos="16" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor11.16">
       <Transform XPos="11" YPos="0" ZPos="16" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor12.16">
       <Transform XPos="12" YPos="0" ZPos="16" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor13.16">
       <Transform XPos="13" YPos="0" ZPos="16" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor14.16">
       <Transform XPos="14" YPos="0" ZPos="16" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor15.16">
       <Transform XPos="15" YPos="0" ZPos="16" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor16.16">
       <Transform XPos="16" YPos="0" ZPos="16" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor17.16">
       <Transform XPos="17" YPos="0" ZPos="16" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject17.16">
       <Transform XPos="17" YPos="0" ZPos="16" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor0.17">
       <Transform XPos="0" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject0.17">
       <Transform XPos="0" YPos="0" ZPos="17" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor1.17">
       <Transform XPos="1" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor2.17">
       <Transform XPos="2" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor3.17">
       <Transform XPos="3" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor4.17">
       <Transform XPos="4" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor5.17">
       <Transform XPos="5" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor6.17">
       <Transform XPos="6" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject6.17">
       <Transform XPos="6" YPos="0" ZPos="17" XRot="0" YRot="-1.5707964" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor7.17">
       <Transform XPos="7" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor8.17">
       <Transform XPos="8" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Corner" Name="MapObject8.17">
       <Transform XPos="8" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor9.17">
       <Transform XPos="9" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject9.17">
       <Transform XPos="9" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor10.17">
       <Transform XPos="10" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject10.17">
       <Transform XPos="10" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor11.17">
       <Transform XPos="11" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject11.17">
       <Transform XPos="11" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor12.17">
       <Transform XPos="12" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject12.17">
       <Transform XPos="12" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor13.17">
       <Transform XPos="13" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject13.17">
       <Transform XPos="13" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor14.17">
       <Transform XPos="14" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject14.17">
       <Transform XPos="14" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor15.17">
       <Transform XPos="15" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject15.17">
       <Transform XPos="15" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor16.17">
       <Transform XPos="16" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject16.17">
       <Transform XPos="16" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor17.17">
       <Transform XPos="17" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Corner" Name="MapObject17.17">
       <Transform XPos="17" YPos="0" ZPos="17" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor0.18">
       <Transform XPos="0" YPos="0" ZPos="18" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Corner" Name="MapObject0.18">
       <Transform XPos="0" YPos="0" ZPos="18" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor1.18">
       <Transform XPos="1" YPos="0" ZPos="18" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject1.18">
       <Transform XPos="1" YPos="0" ZPos="18" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor2.18">
       <Transform XPos="2" YPos="0" ZPos="18" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject2.18">
       <Transform XPos="2" YPos="0" ZPos="18" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor3.18">
       <Transform XPos="3" YPos="0" ZPos="18" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject3.18">
       <Transform XPos="3" YPos="0" ZPos="18" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor4.18">
       <Transform XPos="4" YPos="0" ZPos="18" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject4.18">
       <Transform XPos="4" YPos="0" ZPos="18" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor5.18">
       <Transform XPos="5" YPos="0" ZPos="18" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Wall" Name="MapObject5.18">
       <Transform XPos="5" YPos="0" ZPos="18" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Floor" Name="Floor6.18">
       <Transform XPos="6" YPos="0" ZPos="18" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
     <Object Type="Corner" Name="MapObject6.18">
       <Transform XPos="6" YPos="0" ZPos="18" XRot="0" YRot="0" ZRot="0" XScale="1" YScale="1" ZScale="1" />
       <Geometry />
+      <Collider Type="Box" />
     </Object>
-  </Objects>
+  </Terrain>
 </MapConfig>

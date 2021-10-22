@@ -40,7 +40,7 @@ namespace OpenGL_Game.GameCode.Components.Controllers
             velocity = player.FindComponentByType(ComponentTypes.COMPONENT_VELOCITY) as ComponentVelocity;
         }
 
-        public void Update(SystemAudio audioSystem, float dt)
+        public override void Update(SystemAudio audioSystem, float dt)
         {
             CheckForInputFlags(dt);
             if (walking)

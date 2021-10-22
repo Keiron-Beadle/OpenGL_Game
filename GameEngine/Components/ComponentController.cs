@@ -1,4 +1,5 @@
 ﻿using OpenGL_Game.Components;
+using OpenGL_Game.Systems;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace OpenGL_Game.GameEngine.Components
     {
         public override ComponentTypes ComponentType { get { return ComponentTypes.COMPONENT_CONTROLLER; } }
         protected ComponentTransform transform;
+        public abstract void Update(SystemAudio audioSystem, float dt);
     }
 }

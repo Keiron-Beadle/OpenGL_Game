@@ -1,5 +1,7 @@
 ﻿using OpenGL_Game.Components;
+using OpenGL_Game.GameEngine.Colliders;
 using OpenGL_Game.GameEngine.Components.Physics;
+using OpenGL_Game.GameEngine.Components.Render;
 using OpenGL_Game.GameEngine.Pathing;
 using OpenGL_Game.Objects;
 using OpenGL_Game.Systems;
@@ -17,21 +19,51 @@ namespace OpenGL_Game.Managers
 {
     class ScriptManager
     {
+        /// <summary>
+        /// Used for the input manager, this will load controls from an .xml file and populate
+        /// a dictionary of Keys/Controls for the caller.
+        /// </summary>
+        /// <param name="controlBindings"></param>
+        public static void LoadTKControls(ref Dictionary<Key, string> controlBindings)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load("GameCode/controls.xml");
+            XmlNode root = null;
+            root = doc.SelectSingleNode("rootElement");
+            foreach (XmlNode n in root.ChildNodes)
+            {
+                string c = n.Attributes["Control"].Value;
+                Key k = (Key)int.Parse(n.Attributes["Key"].Value);
+                controlBindings.Add(k, c);
+            }
+        }
+
+        public static void SaveTKControls(ref Dictionary<Key, string> controlBindings)
+        {
+            XmlWriter writer = XmlWriter.Create("controls.xml");
+            writer.WriteStartDocument();
+            writer.WriteStartElement("rootElement");
+            writer.WriteString("\n");
+            foreach (var pair in controlBindings)
+            {
+                writer.WriteStartElement("Config");
+                writer.WriteAttributeString("Control",pair.Value);
+                writer.WriteAttributeString("Key", ((int)pair.Key).ToString());
+                writer.WriteEndElement();
+                writer.WriteString("\n");
+                writer.Flush();
+            }
+            writer.WriteEndElement();
+            writer.WriteEndDocument();
+            writer.Flush();
+            writer.Close();
+        }
+
         protected void AddShaderComponent(ref Entity temp, string type)
         {
             switch (type)
             {
-                case "Wall":
-                //temp.AddComponent(new ComponentShaderBasic("GameCode/Shaders/vs.glsl", "GameCode/Shaders/fs.glsl"));
-                //break;
-                case "Corner":
-                case "Connector":
-                case "Floor":
-                    //temp.AddComponent(new ComponentShaderBasic("GameCode/Shaders/vs.glsl", "GameCode/Shaders/fs.glsl"));
-                    temp.AddComponent(new ComponentShaderPointLight("GameCode/Shaders/vsPointLight.glsl", "GameCode/Shaders/fsPointLight.glsl"));
-                    break;
-                case "Portal":
-                    //temp.AddComponent(new ComponentShaderBasic("GameCode/Shaders/vs.glsl", "GameCode/Shaders/fs.glsl"));
+                default:
                     temp.AddComponent(new ComponentShaderPointLight("GameCode/Shaders/vsPointLight.glsl", "GameCode/Shaders/fsPointLight.glsl"));
                     break;
             }
@@ -75,9 +107,9 @@ namespace OpenGL_Game.Managers
             try
             {
                 temp.AddComponent(new ComponentGeometry("GameCode/Geometry/" + type + '/' + type + ".obj", renderSystem));
-                temp.AddComponent(new ComponentBoxCollider(temp));
+                //temp.AddComponent(new ComponentBoxCollider(temp));
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine("Error loading geometry component from xml file: " + e.Message);
             }
@@ -92,7 +124,7 @@ namespace OpenGL_Game.Managers
         /// <param name="worldTranslate"></param>
         protected void AddTransformComponent(ref Entity temp, XmlAttributeCollection attributes, Vector3 worldTranslate)
         {
-            Vector3 position = new Vector3( float.Parse(attributes["XPos"].Value),
+            Vector3 position = new Vector3(float.Parse(attributes["XPos"].Value),
                                             float.Parse(attributes["YPos"].Value),
                                             float.Parse(attributes["ZPos"].Value));
             Vector3 rotation = new Vector3(float.Parse(attributes["XRot"].Value),
@@ -106,43 +138,117 @@ namespace OpenGL_Game.Managers
         }
 
         /// <summary>
-        /// Used for the input manager, this will load controls from an .xml file and populate
-        /// a dictionary of Keys/Controls for the caller.
+        /// Adds an audio component to an enitty, by reading attributes from the xml node
         /// </summary>
-        /// <param name="controlBindings"></param>
-        public static void LoadTKControls(ref Dictionary<Key, string> controlBindings)
+        protected void AddAudioComponent(ref Entity entity, XmlAttributeCollection attributes, ComponentCamera listener)
         {
-            XmlDocument doc = new XmlDocument();
-            doc.Load("GameCode/controls.xml");
-            XmlNode root = null;
-            root = doc.SelectSingleNode("rootElement");
-            foreach (XmlNode n in root.ChildNodes)
+            entity.AddComponent(new ComponentAudio(attributes["SourceFile"].Value, listener, entity));
+        }
+
+        protected void AddCameraComponent(ref Entity entity, XmlAttributeCollection attributes, SceneManager pSceneManger)
+        {
+            Vector3 target = new Vector3(float.Parse(attributes["XTarget"].Value),
+                            float.Parse(attributes["YTarget"].Value),
+                            float.Parse(attributes["ZTarget"].Value));
+            float nearPlane = float.Parse(attributes["Near"].Value);
+            float farPlane = float.Parse(attributes["Far"].Value);
+            entity.AddComponent(new ComponentCamera(entity, target, 
+                (float)pSceneManger.Width / (float)pSceneManger.Height, nearPlane, farPlane));
+        }
+
+        protected void AddColliderComponent(ref Entity entity, XmlAttributeCollection attributes)
+        {
+            switch (attributes["Type"].Value)
             {
-                string c = n.Attributes["Control"].Value;
-                Key k = (Key)int.Parse(n.Attributes["Key"].Value);
-                controlBindings.Add(k, c);
+                case "Sphere":
+                    AddSphereColliderComponent(ref entity, attributes);
+                    break;
+                case "Box":
+                    AddBoxColliderComponent(ref entity, attributes);
+                    break;
+            }
+        }
+        
+        private void AddBoxColliderComponent(ref Entity entity, XmlAttributeCollection attributes)
+        {
+            ComponentBoxCollider bc = entity.FindComponentByType(ComponentTypes.COMPONENT_COLLIDER) as ComponentBoxCollider;
+            if (bc == null)
+            {
+                if (attributes["XMin"] != null)
+                {
+                    Vector3 minPos = new Vector3(float.Parse(attributes["XMin"].Value),
+                            float.Parse(attributes["YMin"].Value),
+                            float.Parse(attributes["ZMin"].Value));
+                    Vector3 maxPos = new Vector3(float.Parse(attributes["XMax"].Value),
+                            float.Parse(attributes["YMax"].Value),
+                            float.Parse(attributes["ZMax"].Value));
+                    entity.AddComponent(new ComponentBoxCollider(entity, minPos, maxPos));
+                }
+                else
+                {
+                    entity.AddComponent(new ComponentBoxCollider(entity));
+                }
+            }
+            else
+            {
+                ComponentTransform transform = entity.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;
+                if (attributes["XMin"] != null)
+                {
+                    Vector3 minPos = new Vector3(float.Parse(attributes["XMin"].Value),
+                                    float.Parse(attributes["YMin"].Value),
+                                    float.Parse(attributes["ZMin"].Value));
+                    Vector3 maxPos = new Vector3(float.Parse(attributes["XMax"].Value),
+                            float.Parse(attributes["YMax"].Value),
+                            float.Parse(attributes["ZMax"].Value));
+                    bc.Colliders.Add(new BoxCollider(minPos, maxPos, transform));
+                }
+                else
+                {
+                    ComponentGeometry geom = entity.FindComponentByType(ComponentTypes.COMPONENT_GEOMETRY) as ComponentGeometry;
+                    bc.Colliders.Add(new BoxCollider(geom.GetVertices()[0], transform));
+                }
             }
         }
 
-        public static void SaveTKControls(ref Dictionary<Key, string> controlBindings)
+        private void AddSphereColliderComponent(ref Entity entity, XmlAttributeCollection attributes) 
         {
-            XmlWriter writer = XmlWriter.Create("controls.xml");
-            writer.WriteStartDocument();
-            writer.WriteStartElement("rootElement");
-            writer.WriteString("\n");
-            foreach (var pair in controlBindings)
+            Vector3 center = Vector3.Zero;
+            float radius = -1;
+            if (attributes["XCenter"] != null)
             {
-                writer.WriteStartElement("Config");
-                writer.WriteAttributeString("Control",pair.Value);
-                writer.WriteAttributeString("Key", ((int)pair.Key).ToString());
-                writer.WriteEndElement();
-                writer.WriteString("\n");
-                writer.Flush();
+                center = new Vector3(float.Parse(attributes["XCenter"].Value),
+                                            float.Parse(attributes["YCenter"].Value),
+                                            float.Parse(attributes["ZCenter"].Value));
+                radius = float.Parse(attributes["Radius"].Value);
             }
-            writer.WriteEndElement();
-            writer.WriteEndDocument();
-            writer.Flush();
-            writer.Close();
+
+            ComponentSphereCollider compCollider = entity.FindComponentByType(ComponentTypes.COMPONENT_COLLIDER) as ComponentSphereCollider;
+
+            if (compCollider == null)
+            {
+                if (attributes["XCenter"] != null)
+                {
+                    entity.AddComponent(new ComponentSphereCollider(entity, center,radius));
+                }
+                else
+                {
+                    entity.AddComponent(new ComponentSphereCollider(entity));
+                }
+            }
+            else
+            {
+                if (attributes["XOffSet"] == null)
+                {
+                    compCollider.AddCollider(new GameEngine.Colliders.SphereCollider(center, radius));
+                }
+                else if (attributes["XCenter"] != null)
+                {
+                    Vector3 offset = new Vector3(float.Parse(attributes["XOffSet"].Value),
+                        float.Parse(attributes["YOffSet"].Value),
+                        float.Parse(attributes["ZOffSet"].Value));
+                    compCollider.AddCollider(new GameEngine.Colliders.SphereCollider(center, radius, offset));
+                }
+            }
         }
 
         public static List<Node> LoadMap(string inMapFilePath)

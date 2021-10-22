@@ -26,7 +26,7 @@ namespace OpenGL_Game.GameCode.Components.Controllers
         private ComponentTransform target;
         private Vector3 viewDir = new Vector3(0.0f, 0.0f, 1.0f);
         private AI_STATE state;
-        private float viewDist = 4.0f;
+        private float viewDist = 8.0f;
         public bool ObstructedVision;
 
         public ComponentDroneController(Entity AI, Entity pTarget, string graphMapTxtPath) : base(AI)
@@ -116,12 +116,12 @@ namespace OpenGL_Game.GameCode.Components.Controllers
             if (nextLocation == Vector3.Zero) return; //Get NaN if normalize V3.Zero
 
             Vector3 vec = (nextLocation - transform.Position);
-            if (vec.Length < 0.8f) { return; }
+            if (vec.Length < 1.0f) { return; }
             vec.Normalize();
             if (float.IsNaN(vec.X)) { return; }
             float rotAngle = (float)Math.Acos(Vector3.Dot(viewDir, vec));
 
-            if (rotAngle < 0.01f || float.IsNaN(rotAngle))
+            if (rotAngle < 0.015f || float.IsNaN(rotAngle))
             {
                 return;
             }

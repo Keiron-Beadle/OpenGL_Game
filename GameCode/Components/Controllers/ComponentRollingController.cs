@@ -12,8 +12,8 @@ namespace OpenGL_Game.GameCode.Components.Controllers
     class ComponentRollingController : ComponentAIController
     {
         private Random rnd = new Random();
-        private float speedFactor = 1.0f;
-        private float minSpeed = 0.4f;
+        private float speedFactor = 4.0f;
+        private float minSpeed = 3.0f;
         private Vector2 Max; //This makes the entity controlled 
         private Vector2 Min; //bounded to an area in space, i.e. it cannot leave the room
         private ComponentVelocity velocity;

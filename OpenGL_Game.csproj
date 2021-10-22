@@ -97,6 +97,7 @@
     <Compile Include="GameCode\Components\ShaderComponents\ComponentShaderPointLight.cs" />
     <Compile Include="GameEngine\Components\Physics\ComponentTransform.cs" />
     <Compile Include="GameEngine\Components\Physics\ComponentVelocity.cs" />
+    <Compile Include="GameEngine\Managers\ControllerManager.cs" />
     <Compile Include="GameEngine\Managers\InputManager.cs" />
     <Compile Include="GameEngine\Managers\OpenTKInputManager.cs" />
     <Compile Include="GameEngine\Managers\ScriptManager.cs" />

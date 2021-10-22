@@ -26,8 +26,6 @@ namespace OpenGL_Game.GameCode.Components.Controllers
 
         }
 
-        public abstract void Update(SystemAudio audioSystem, float dt);
-
         protected void MoveToNextLocation(float dt)
         {
             if (nextLocation != Vector3.Zero) //we have next destination, move to it
