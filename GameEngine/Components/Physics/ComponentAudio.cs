@@ -25,7 +25,6 @@ namespace OpenGL_Game.GameEngine.Components.Physics
             Source = AL.GenSource();
             Buffer = ResourceManager.LoadAudioBuffer(audioFilePath);
             AL.Source(Source, ALSourcei.Buffer, Buffer);
-
             listener = pListener;
             sourceTransform = pSource.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;
             listener.AttachObserver(this);

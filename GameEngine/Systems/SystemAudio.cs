@@ -20,7 +20,20 @@ namespace OpenGL_Game.Systems
         public SystemAudio()
         {
             Name = "System Audio";
-            MASK = ComponentTypes.COMPONENT_AUDIO | ComponentTypes.COMPONENT_TRANSFORM | ComponentTypes.COMPONENT_VELOCITY;
+            MASK = ComponentTypes.COMPONENT_AUDIO | ComponentTypes.COMPONENT_TRANSFORM;
+        }
+
+        public void PlaySound(ComponentAudio audioComp, bool pLooping)
+        {
+            try
+            {
+                AL.Source(audioComp.Source, ALSourceb.Looping, true);
+                AL.SourcePlay(audioComp.Source);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         public void PlaySound(ComponentAudio audioComp)
@@ -33,6 +46,11 @@ namespace OpenGL_Game.Systems
             {
                 throw new Exception(e.Message);
             }
+        }
+
+        public void StopSound(ComponentAudio audioComp)
+        {
+            AL.SourceStop(audioComp.Source);
         }
 
         public override void OnAction()

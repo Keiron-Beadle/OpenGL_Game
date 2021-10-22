@@ -1,9 +1,11 @@
 ﻿using OpenGL_Game.Components;
+using OpenGL_Game.GameEngine.Components.Physics;
 using OpenGL_Game.GameEngine.Pathing;
 using OpenGL_Game.Objects;
 using OpenGL_Game.Scenes;
 using OpenGL_Game.Systems;
 using OpenTK;
+using OpenTK.Audio.OpenAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +26,7 @@ namespace OpenGL_Game.GameCode.Components.Controllers
     {
         private AStarPathfinder pathingModule;
         private ComponentTransform target;
+        private ComponentAudio buzzSfx;
         private Vector3 viewDir = new Vector3(0.0f, 0.0f, 1.0f);
         private AI_STATE state;
         private float viewDist = 8.0f;
@@ -32,6 +35,7 @@ namespace OpenGL_Game.GameCode.Components.Controllers
         public ComponentDroneController(Entity AI, Entity pTarget, string graphMapTxtPath) : base(AI)
         {
             target = pTarget.FindComponentByType(ComponentTypes.COMPONENT_TRANSFORM) as ComponentTransform;
+            buzzSfx = AI.FindComponentByType(ComponentTypes.COMPONENT_AUDIO) as ComponentAudio;
             pathingModule = new AStarPathfinder(graphMapTxtPath);
             state = AI_STATE.NONE;
             speed = 1.0f;
@@ -77,6 +81,8 @@ namespace OpenGL_Game.GameCode.Components.Controllers
             if (!ObstructedVision && PlayerVisible())
             {
                 state = AI_STATE.CHASE;
+
+                audioSystem.PlaySound(buzzSfx, true);
                 if (pathingModule.IsOnPath())
                     pathingModule.ResetPath();
             }
@@ -104,6 +110,7 @@ namespace OpenGL_Game.GameCode.Components.Controllers
                     AStarCreatePath();
                     break;
                 case AI_STATE.GET_TO_NODE:
+                    audioSystem.StopSound(buzzSfx);
                     nextLocation = pathingModule.GetClosestNode(transform.Position) + GameScene.WorldTranslate;
                     break;
                 case AI_STATE.CHASE:
