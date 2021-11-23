@@ -13,14 +13,14 @@
     <SpotLight XPos="-0.48" YPos="1" ZPos="1.89" Constant="1.0" Linear="0.8" Quadratic="0.37" XAmb="0.1" 
                YAmb="0.1" ZAmb ="0.1" XDiff="0.0117" YDiff="0.239" ZDiff="0.9882" XSpec="0.1" 
                YSpec="0.1" ZSpec="0.1" Cutoff="1.26" XDir="0" YDir="-1" ZDir="0"/>
-    <SpotLight XPos="2.18" YPos="1" ZPos="-8.79" Constant="1.0" Linear="0.7" Quadratic="0.47" XAmb="0.1"
-           YAmb="0.1" ZAmb ="0.1" XDiff="0.0117" YDiff="0.239" ZDiff="0.9882" XSpec="0.1"
+    <SpotLight XPos="3.06" YPos="1" ZPos="-7.12" Constant="1.0" Linear="0.7" Quadratic="0.47" XAmb="0.1"
+           YAmb="0.1" ZAmb ="0.1" XDiff="0.6235" YDiff="0.0784" ZDiff="0.3529" XSpec="0.1"
            YSpec="0.1" ZSpec="0.1" Cutoff="1.15" XDir="0" YDir="-1" ZDir="0"/>
     <SpotLight XPos="-8.28" YPos="1" ZPos="-6.62" Constant="1.0" Linear="0.7" Quadratic="0.47" XAmb="0.1"
-           YAmb="0.1" ZAmb ="0.1" XDiff="0.0117" YDiff="0.239" ZDiff="0.9882" XSpec="0.1"
+           YAmb="0.1" ZAmb ="0.1" XDiff="1" YDiff="0.34901" ZDiff="0" XSpec="0.1"
            YSpec="0.1" ZSpec="0.1" Cutoff="1.24" XDir="0" YDir="-1" ZDir="0"/>
     <SpotLight XPos="-10.15" YPos="1" ZPos="6.65" Constant="1.0" Linear="0.7" Quadratic="0.47" XAmb="0.1"
-           YAmb="0.1" ZAmb ="0.1" XDiff="0.0117" YDiff="0.239" ZDiff="0.9882" XSpec="0.1"
+           YAmb="0.1" ZAmb ="0.1" XDiff="0.0784" YDiff="0.03529" ZDiff="0.8784" XSpec="0.1"
            YSpec="0.1" ZSpec="0.1" Cutoff="1.15" XDir="0" YDir="-1" ZDir="0"/>
   </Lights>
   <Pickups>

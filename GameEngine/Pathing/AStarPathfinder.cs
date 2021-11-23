@@ -9,8 +9,8 @@ namespace OpenGL_Game.GameEngine.Pathing
     class AStarPathfinder
     {
         public List<Vector3> Path;
-        Graph grid;
         public static Vector3 WorldTranslate;
+        Graph grid;
 
         public AStarPathfinder(string inMapFilePath)
         {

@@ -81,6 +81,7 @@
     <Compile Include="GameCode\Components\Controllers\ComponentRollingController.cs" />
     <Compile Include="GameCode\Components\Controllers\IControllerWithView.cs" />
     <Compile Include="GameCode\Managers\CollisionManager.cs" />
+    <Compile Include="GameCode\Managers\LightManager.cs" />
     <Compile Include="GameCode\Managers\MazeScriptManager.cs" />
     <Compile Include="GameCode\Scenes\OptionsScene.cs" />
     <Compile Include="GameEngine\Colliders\BoxCollider.cs" />
@@ -377,9 +378,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="GameCode\Icons\key.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="GameCode\collisionMap.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="GameCode\map.xml">

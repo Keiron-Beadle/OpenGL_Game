@@ -101,7 +101,7 @@ namespace OpenGL_Game.GameCode.Managers
                             float.Parse(n.Attributes["ZSpec"].Value)),
                     };
 
-                    ComponentShaderLight.AddLight(light);
+                    LightManager.AddLight(light);
                 }
                 else
                 {
@@ -128,7 +128,7 @@ namespace OpenGL_Game.GameCode.Managers
                                                 float.Parse(n.Attributes["ZDir"].Value))
                     };
 
-                    ComponentShaderLight.AddLight(light);
+                    LightManager.AddLight(light);
                 }
             }
         }

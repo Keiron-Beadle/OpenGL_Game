@@ -10,9 +10,9 @@ namespace OpenGL_Game.Managers
 {
     class SceneManager : GameWindow
     {
-        Stack<Scene> scenes;
         public static int width = 1600, height = 1200;
         public static int windowXPos = 200, windowYPos = 80;
+        Stack<Scene> scenes;
 
         public delegate void SceneDelegate(FrameEventArgs e);
         public SceneDelegate renderer;

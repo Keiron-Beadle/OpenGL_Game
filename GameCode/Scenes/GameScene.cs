@@ -91,15 +91,15 @@ namespace OpenGL_Game.Scenes
 
         private void CreateEntities()
         {
-            const string SKYBOX_TEX_RELPATH = "GameCode/Geometry/Skybox/skybox.obj";
+            const string SKYBOX_TEX_RELPATH = "GameCode\\Geometry\\Skybox\\skybox.obj";
 
             Entity skyBox = new Entity("Skybox"); //Skybox needs to be rendered first, as Depth first is disabled for the draw
             skyBox.AddComponent(new ComponentTransform(0.0f, 0.0f, 0.0f));
             skyBox.AddComponent(new ComponentGeometry(SKYBOX_TEX_RELPATH, renderSystem));
-            skyBox.AddComponent(new ComponentShaderBasic("GameCode/Shaders/vs.glsl", "GameCode/Shaders/fs.glsl"));
+            skyBox.AddComponent(new ComponentShaderBasic("GameCode\\Shaders\\vs.glsl", "GameCode\\Shaders\\fs.glsl"));
             entityManager.AddEntity(skyBox);
 
-            scriptManager.LoadMaze("GameCode/map.xml", entityManager, sceneManager, renderSystem, inputManager);
+            scriptManager.LoadMaze("GameCode\\map.xml", entityManager, sceneManager, renderSystem, inputManager);
 
             PortalOnlineBuffer = ResourceManager.LoadAudioBuffer("GameCode\\Audio\\portalonline.wav");
             Entity portal = entityManager.FindEntity("Portal");
@@ -129,17 +129,17 @@ namespace OpenGL_Game.Scenes
         public override void Update(FrameEventArgs e)
         {
             dt = (float)e.Time;
-            //System.Console.WriteLine("fps=" + (int)(1.0/dt));
+
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();
+
             DoGameLogic();
-            //Console.WriteLine(KeysCollected);
-            Console.WriteLine(playerCamera.cameraPosition);
             inputManager.Update(e);
             ProcessInput();
 
             //Action NON-RENDER systems
             systemManager.ActionNonRenderSystems();
+            LightManager.Update(dt);
             if (!inputManager.StopCollision)
             {
                 collisionManager.Update();

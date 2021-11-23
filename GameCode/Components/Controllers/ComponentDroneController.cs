@@ -132,12 +132,12 @@ namespace OpenGL_Game.GameCode.Components.Controllers
             if (nextLocation == Vector3.Zero) return; //Get NaN if normalize V3.Zero
 
             Vector3 vec = (nextLocation - transform.Position);
-            if (vec.Length < 1.0f) { return; }
+            if (vec.Length < 0.8f) { return; }
             vec.Normalize();
             if (float.IsNaN(vec.X)) { return; }
             float rotAngle = (float)Math.Acos(Vector3.Dot(viewDir, vec));
 
-            if (rotAngle < 0.015f || float.IsNaN(rotAngle))
+            if (rotAngle < 0.035f || float.IsNaN(rotAngle))
             {
                 return;
             }

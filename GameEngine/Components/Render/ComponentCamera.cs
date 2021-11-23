@@ -12,10 +12,10 @@ namespace OpenGL_Game.GameEngine.Components.Render
     {
         public override ComponentTypes ComponentType { get { return ComponentTypes.COMPONENT_CAMERA; } }
 
-        private ComponentTransform transform;
         public Matrix4 view, projection;
         public Vector3 cameraPosition, cameraDirection, cameraUp;
         private Vector3 targetPosition;
+        private ComponentTransform transform;
 
         public ComponentCamera(Entity host) : this(host, new Vector3(0, 0, -1f), 1.0f, 0.1f, 100f)
         { }

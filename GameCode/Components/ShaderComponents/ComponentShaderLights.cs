@@ -1,4 +1,5 @@
-﻿using OpenGL_Game.Objects;
+﻿using OpenGL_Game.GameCode.Managers;
+using OpenGL_Game.Objects;
 using OpenGL_Game.OBJLoader;
 using OpenGL_Game.Scenes;
 using OpenTK;
@@ -12,13 +13,6 @@ namespace OpenGL_Game.Components
 {
     class ComponentShaderLight : ComponentShader
     {
-        static int pointLightIndex = 0;
-        static int spotLightIndex = 0;
-        static int NUMOFPOINTLIGHTS = 8;
-        static int NUMOFSPOTLIGHTS = 4;
-        static PointLight[] pointLights = new PointLight[NUMOFPOINTLIGHTS];
-        static SpotLight[] spotLights = new SpotLight[NUMOFSPOTLIGHTS];
-
         private int uniform_stex;
         private int uniform_mproj;
         private int uniform_mmodel;
@@ -70,50 +64,33 @@ namespace OpenGL_Game.Components
             uniform_spotLightDirection = GL.GetUniformLocation(ShaderID, "spotLights[0].coneDirection");
         }
 
-        public static void AddLight(PointLight pointLight)
-        {
-            pointLights[pointLightIndex] = pointLight;
-
-            pointLightIndex++;
-            if (pointLightIndex >= pointLights.Length)
-                pointLightIndex = 0;
-        }
-
-        public static void AddLight(SpotLight spotLight)
-        {
-            spotLights[spotLightIndex] = spotLight;
-            spotLightIndex++;
-            if (spotLightIndex >= spotLights.Length)
-                spotLightIndex = 0;
-        }
-
         public override void ApplyShader(Matrix4 model, IGeometry geometry)
         {
             GL.Uniform1(uniform_stex, 0);
             GL.ActiveTexture(TextureUnit.Texture0);
 
-            for (int i = 0; i < pointLights.Length; i++)
+            for (int i = 0; i < LightManager.PointLights.Length; i++)
             {
-                GL.Uniform3(uniform_pointLightPosition + (i*7) , pointLights[i].position); //Position
-                GL.Uniform1(uniform_pointLightConstant + (i * 7), pointLights[i].constant); //Constant
-                GL.Uniform1(uniform_pointLightLinear + (i * 7), pointLights[i].linear); //Linear
-                GL.Uniform1(uniform_pointLightQuadratic + (i * 7), pointLights[i].quadratic); //Quadratic 
-                GL.Uniform3(uniform_pointLightAmbient + (i * 7), pointLights[i].ambient); //Ambient
-                GL.Uniform3(uniform_pointLightDiffuse + (i * 7), pointLights[i].diffuse); //Diffuse
-                GL.Uniform3(uniform_pointLightSpec + (i * 7), pointLights[i].specular); //Specular
+                GL.Uniform3(uniform_pointLightPosition + (i*7) , LightManager.PointLights[i].position); //Position
+                GL.Uniform1(uniform_pointLightConstant + (i * 7), LightManager.PointLights[i].constant); //Constant
+                GL.Uniform1(uniform_pointLightLinear + (i * 7), LightManager.PointLights[i].linear); //Linear
+                GL.Uniform1(uniform_pointLightQuadratic + (i * 7), LightManager.PointLights[i].quadratic); //Quadratic 
+                GL.Uniform3(uniform_pointLightAmbient + (i * 7), LightManager.PointLights[i].ambient); //Ambient
+                GL.Uniform3(uniform_pointLightDiffuse + (i * 7), LightManager.PointLights[i].diffuse); //Diffuse
+                GL.Uniform3(uniform_pointLightSpec + (i * 7), LightManager.PointLights[i].specular); //Specular
             }
 
-            for (int i = 0; i < spotLights.Length; i++)
+            for (int i = 0; i < LightManager.SpotLights.Length; i++)
             {
-                GL.Uniform3(uniform_spotLightPosition + (i * 9), spotLights[i].position); //Position
-                GL.Uniform1(uniform_spotLightConstant + (i * 9), spotLights[i].constant); //Constant
-                GL.Uniform1(uniform_spotLightLinear + (i * 9), spotLights[i].linear); //Linear
-                GL.Uniform1(uniform_spotLightQuadratic + (i * 9), spotLights[i].quadratic); //Quadratic 
-                GL.Uniform3(uniform_spotLightAmbient + (i * 9), spotLights[i].ambient); //Ambient
-                GL.Uniform3(uniform_spotLightDiffuse + (i * 9), spotLights[i].diffuse); //Diffuse
-                GL.Uniform3(uniform_spotLightSpec + (i * 9), spotLights[i].specular); //Specular
-                GL.Uniform1(uniform_spotLightAngle + (i * 9), (float)Math.Cos(spotLights[i].cutoff)); //Cosine of cutoff angle
-                GL.Uniform3(uniform_spotLightDirection + (i * 9), -Vector3.UnitY); //Cone direction
+                GL.Uniform3(uniform_spotLightPosition + (i * 9), LightManager.SpotLights[i].position); //Position
+                GL.Uniform1(uniform_spotLightConstant + (i * 9), LightManager.SpotLights[i].constant); //Constant
+                GL.Uniform1(uniform_spotLightLinear + (i * 9), LightManager.SpotLights[i].linear); //Linear
+                GL.Uniform1(uniform_spotLightQuadratic + (i * 9), LightManager.SpotLights[i].quadratic); //Quadratic 
+                GL.Uniform3(uniform_spotLightAmbient + (i * 9), LightManager.SpotLights[i].ambient); //Ambient
+                GL.Uniform3(uniform_spotLightDiffuse + (i * 9), LightManager.SpotLights[i].diffuse); //Diffuse
+                GL.Uniform3(uniform_spotLightSpec + (i * 9), LightManager.SpotLights[i].specular); //Specular
+                GL.Uniform1(uniform_spotLightAngle + (i * 9), (float)Math.Cos(LightManager.SpotLights[i].cutoff)); //Cosine of cutoff angle
+                GL.Uniform3(uniform_spotLightDirection + (i * 9), LightManager.SpotLights[i].coneDirection); //Cone direction
             }
 
             GL.UniformMatrix4(uniform_mmodel, false, ref model);
