@@ -51,7 +51,10 @@ namespace OpenGL_Game.GameEngine.Components.Physics
         public override void Update()
         {
             foreach (SphereCollider c in Colliders)
-                c.Update(transform.Position + localOffSet);
+            {
+                ComponentTransform temp = new ComponentTransform(transform.Position + localOffSet);
+                c.Update(temp);
+            }
         }
 
         public void AddCollider(SphereCollider sphereCollider)

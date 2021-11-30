@@ -4,16 +4,17 @@ using OpenTK.Graphics.OpenGL;
 using System.Drawing;
 using OpenTK.Input;
 using OpenGL_Game.Managers;
+using OpenGL_Game.GameCode.Managers;
 
 namespace OpenGL_Game.Scenes
 {
     class MainMenuScene : Scene
     {
-        OpenTKInputManager inputManager;
+        DroneTKInputManager inputManager;
 
         public MainMenuScene(SceneManager sceneManager) : base(sceneManager)
         {
-            inputManager = new OpenTKInputManager(sceneManager);
+            inputManager = new DroneTKInputManager(sceneManager);
             // Set the title of the window
             sceneManager.Title = "Main Menu";
             // Set the Render and Update delegates to the Update and Render methods of this class

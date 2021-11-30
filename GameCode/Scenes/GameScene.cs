@@ -31,7 +31,7 @@ namespace OpenGL_Game.Scenes
 
         EntityManager entityManager; //Used to hold entities and manage them
         MazeScriptManager scriptManager; //Used to hot-load data
-        OpenTKInputManager inputManager; //Used as a means of getting universal control responses from
+        DroneTKInputManager inputManager; //Used as a means of getting universal control responses from
                                          //a varied number of controllers
         CollisionManager collisionManager;
         SystemManager systemManager; //Manages and actions other systems
@@ -61,7 +61,7 @@ namespace OpenGL_Game.Scenes
             gameInstance = this;
             entityManager = new EntityManager();
             scriptManager = new MazeScriptManager(); 
-            inputManager = new OpenTKInputManager(sceneManager);
+            inputManager = new DroneTKInputManager(sceneManager);
             systemManager = new SystemManager();
             physicsSystem = new SystemPhysics();
             audioSystem = new SystemAudio();

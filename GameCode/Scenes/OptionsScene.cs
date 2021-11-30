@@ -1,4 +1,5 @@
-﻿using OpenGL_Game.Managers;
+﻿using OpenGL_Game.GameCode.Managers;
+using OpenGL_Game.Managers;
 using OpenGL_Game.Scenes;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
@@ -12,11 +13,11 @@ namespace OpenGL_Game.GameCode.Scenes
 {
     class OptionsScene : Scene
     {
-        OpenTKInputManager inputManager;
+        DroneTKInputManager inputManager;
 
         public OptionsScene(SceneManager pSceneManager): base(pSceneManager)
         {
-            inputManager = new OpenTKInputManager(sceneManager);
+            inputManager = new DroneTKInputManager(sceneManager);
             // Set the title of the window
             sceneManager.Title = "Options";
             // Set the Render and Update delegates to the Update and Render methods of this class

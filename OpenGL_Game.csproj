@@ -74,6 +74,7 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Delegate1.cs" />
     <Compile Include="GameCode\Components\Controllers\ComponentAIController.cs" />
     <Compile Include="GameCode\Components\Controllers\ComponentBouncingController.cs" />
     <Compile Include="GameCode\Components\Controllers\ComponentDroneController.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="GameCode\Components\Controllers\ComponentRollingController.cs" />
     <Compile Include="GameCode\Components\Controllers\IControllerWithView.cs" />
     <Compile Include="GameCode\Managers\CollisionManager.cs" />
+    <Compile Include="GameCode\Managers\DroneTKInputManager.cs" />
     <Compile Include="GameCode\Managers\LightManager.cs" />
     <Compile Include="GameCode\Managers\MazeScriptManager.cs" />
     <Compile Include="GameCode\Scenes\OptionsScene.cs" />
@@ -187,6 +189,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="EngineDiagram.cd" />
     <None Include="GameCode\Geometry\Ball\Ball.mtl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

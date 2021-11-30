@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="&#xD;&#xA;Physics Components">
+    <Position X="0.5" Y="8.788" Height="1.16" Width="2.466" />
+  </Comment>
+  <Comment CommentText="&#xD;&#xA;Render Components">
+    <Position X="15.25" Y="10.75" Height="0.75" Width="1.7" />
+  </Comment>
+  <Class Name="OpenGL_Game.MainEntry" Collapsed="true">
+    <Position X="11.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Main.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OpenGL_Game.GameEngine.Colliders.BoxCollider" Collapsed="true">
+    <Position X="16.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQgAAAAADAAAAAAECAEAAAgAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameEngine\Colliders\BoxCollider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.575" />
+  </Class>
+  <Class Name="OpenGL_Game.GameEngine.Colliders.SphereCollider" Collapsed="true">
+    <Position X="14.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AASIAAAAAAAAAABAAAAEAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>GameEngine\Colliders\SphereCollider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OpenGL_Game.GameEngine.Components.Physics.ComponentAudio" Collapsed="true">
+    <Position X="0.75" Y="11.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>ACQAAQAAAgAQAAAAIAAAAAAAAIAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>GameEngine\Components\Physics\ComponentAudio.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OpenGL_Game.GameEngine.Components.Physics.ComponentBoxCollider" Collapsed="true">
+    <Position X="4.75" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAQAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>GameEngine\Components\Physics\ComponentBoxCollider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OpenGL_Game.GameEngine.Components.Physics.ComponentCollider" Collapsed="true">
+    <Position X="3.75" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAQAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameEngine\Components\Physics\ComponentCollider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OpenGL_Game.Components.ComponentRotation" Collapsed="true">
+    <Position X="0.75" Y="12.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAIAAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameEngine\Components\Physics\ComponentRotation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OpenGL_Game.GameEngine.Components.Physics.ComponentSphereCollider" Collapsed="true">
+    <Position X="2.75" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAACAAAQgAAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>GameEngine\Components\Physics\ComponentSphereCollider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OpenGL_Game.Components.ComponentTransform" Collapsed="true">
+    <Position X="6.5" Y="11.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAIAgAAKAIAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameEngine\Components\Physics\ComponentTransform.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OpenGL_Game.Components.ComponentVelocity" Collapsed="true">
+    <Position X="6.5" Y="12.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>GameEngine\Components\Physics\ComponentVelocity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OpenGL_Game.GameEngine.Components.Render.ComponentCamera" Collapsed="true">
+    <Position X="15.25" Y="12.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>ABAAEQAAAAAQAAAAIAAAAAAEABAEAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>GameEngine\Components\Render\ComponentCamera.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OpenGL_Game.Components.ComponentGeometry" Collapsed="true">
+    <Position X="14.25" Y="11.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AACAAAkAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>GameEngine\Components\Render\ComponentGeometry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OpenGL_Game.Components.ComponentTexture" Collapsed="true">
+    <Position X="16.25" Y="11.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAAAAAAAAAgAAAAIAAAAAAAA=</HashCode>
+      <FileName>GameEngine\Components\Render\ComponentTexture.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OpenGL_Game.Components.ComponentShader" Collapsed="true">
+    <Position X="13.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQBIAAAQAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>GameEngine\Components\Shader\ComponentShader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OpenGL_Game.GameEngine.Components.ComponentController" Collapsed="true">
+    <Position X="9.5" Y="9.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAACAAQAAAAAAAAAAAAAAAEAACAAAAAAAAAAAA=</HashCode>
+      <FileName>GameEngine\Components\ComponentController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="OpenGL_Game.GameEngine.Colliders.ICollider" Collapsed="true">
+    <Position X="15.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameEngine\Colliders\ICollider.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

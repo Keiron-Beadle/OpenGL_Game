@@ -9,7 +9,7 @@ using System.Text;
 
 namespace OpenGL_Game.GameEngine.Colliders
 {
-    class SphereCollider
+    class SphereCollider : ICollider
     {
         public Vector3 Center;
         private Vector3 OffSet = Vector3.Zero;
@@ -51,9 +51,9 @@ namespace OpenGL_Game.GameEngine.Colliders
             return new Tuple<bool, Vector3, Vector3>(false, Vector3.Zero, Vector3.Zero);
         }
 
-        public void Update(Vector3 transform)
+        public void Update(ComponentTransform transform)
         {
-            Center = transform + OffSet;
+            Center = transform.Position + OffSet;
         }
     }
 }

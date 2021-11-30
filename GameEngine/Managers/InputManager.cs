@@ -14,8 +14,6 @@ namespace OpenGL_Game.Managers
         public Vector2 DeltaAxis { get; protected set; } //Used for rotation of camera
         public Dictionary<string, bool> controlFlags;
         protected List<string> controls;
-        public bool StopCollision { get; protected set; }
-        public static bool StopDrone { get; protected set; }
 
         public bool IsActive(string command) => controlFlags[command];
 
@@ -24,7 +22,6 @@ namespace OpenGL_Game.Managers
             sceneManager = pSceneManager;
             controls = new List<string>();
             controlFlags = new Dictionary<string, bool>();
-
         }
 
         public abstract void Update(FrameEventArgs e);

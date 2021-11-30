@@ -10,18 +10,24 @@ namespace OpenGL_Game.Managers
     class OpenTKInputManager : InputManager
     {
         //Keyboard variables
-        private KeyboardState prevKeyState;
-        private Dictionary<Key, string> controlBindings;
+        protected KeyboardState prevKeyState;
+        protected Dictionary<Key, string> controlBindings;
+        public delegate void KeyboardPoll();
+        protected KeyboardPoll KeyboardPoller;
 
         //Mouse variables
-        private Vector2 centerOfWindow;
-        private MouseState prevMouseState;
-        private bool mouseLeftClick = false; //Bool for if left mouse button clicked right now
-        private bool firstUpdate = true;
+        public delegate void MousePoll();
+        protected MousePoll MousePoller;
+        protected Vector2 centerOfWindow;
+        protected MouseState prevMouseState;
+        protected bool mouseLeftClick = false; //Bool for if left mouse button clicked right now
+        protected bool firstUpdate = true;
 
         //Properties
         public bool LeftClicked { get { return mouseLeftClick; } }
-        public bool AnyKeyPressed { get; private set; }
+        public bool AnyKeyPressed { get; protected set; }
+        public bool StopCollision { get; protected set; }
+        public static bool StopDrone { get; protected set; }
 
         public OpenTKInputManager(SceneManager sceneManger) : base(sceneManger)
         {
@@ -52,65 +58,9 @@ namespace OpenGL_Game.Managers
 
         public override void Update(FrameEventArgs e)
         {
-            UpdateKeyboard();
-            UpdateMouse();
-        }
-
-        private void UpdateKeyboard()
-        {
-            KeyboardState currentKeyState = Keyboard.GetState();
-            for (int i = 0; i < controls.Count; i++)
-            { controlFlags[controls[i]] = false; } //Reset to false
-            foreach (var pair in controlBindings)
-            {
-                if (currentKeyState.IsKeyDown(pair.Key))
-                    controlFlags[pair.Value] = true;
-
-                if(pair.Value == "StopCollision")
-                {
-                    if (currentKeyState.IsKeyUp(pair.Key) && prevKeyState.IsKeyDown(pair.Key))
-                    {
-                        StopCollision = !StopCollision;
-                    }
-                }
-
-                if (pair.Value == "StopDrone")
-                {
-                    if (currentKeyState.IsKeyUp(pair.Key) && prevKeyState.IsKeyDown(pair.Key))
-                    {
-                        StopDrone = !StopDrone;
-                    }
-                }
-            }
-
-
-            AnyKeyPressed = currentKeyState.IsAnyKeyDown && !prevKeyState.IsAnyKeyDown ? true : false;
-
-            prevKeyState = currentKeyState;
-        }
-
-
-        private void UpdateMouse()
-        {
-            float xT = Mouse.GetCursorState().X;
-            float xY = Mouse.GetCursorState().Y;
-            MouseState currentMouseState = Mouse.GetState();
-            DeltaAxis = new Vector2(xT - centerOfWindow.X,
-                                     xY - centerOfWindow.Y);
-            if (currentMouseState.LeftButton == ButtonState.Released && prevMouseState.LeftButton == ButtonState.Pressed)
-                mouseLeftClick = true;
-            else
-                mouseLeftClick = false;
-
-            if (firstUpdate)
-            {
-                DeltaAxis = Vector2.Zero;
-                firstUpdate = false;
-                return;
-            }
-
-            prevMouseState = currentMouseState;
-
+            //Poll the keyboard/mouse depending on game's implementation 
+            KeyboardPoller?.Invoke();
+            MousePoller?.Invoke();
         }
         
         protected override void SaveXMLControls()
