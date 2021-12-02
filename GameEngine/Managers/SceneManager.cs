@@ -66,15 +66,15 @@ namespace OpenGL_Game.Managers
                     StartNewGame();
                     break;
                 case SceneType.MAIN_MENU_SCENE:
-                    GUI.LoadImage("GameCode\\Scenes\\MainMenuImage.jpg");
+                    GUI.LoadImage("GameCode\\Resources\\MainMenuImage.jpg");
                     StartMenu();
                     break;
                 case SceneType.GAME_OVER_SCENE:
-                    GUI.LoadImage("GameCode\\Scenes\\GameOverImage.jpg");
+                    GUI.LoadImage("GameCode\\Resources\\GameOverImage.jpg");
                     StartGameOver();
                     break;
                 case SceneType.OPTIONS_SCENE:
-                    GUI.LoadImage("GameCode\\Scenes\\OptionsImage.jpg");
+                    GUI.LoadImage("GameCode\\Resources\\OptionsImage.jpg");
                     StartOptions();
                     break;
                 case SceneType.NULL_SCENE:
